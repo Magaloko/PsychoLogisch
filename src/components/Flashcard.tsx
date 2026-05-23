@@ -3,9 +3,20 @@
 // Flashcard.tsx - Kernkomponente der Lern-App
 // ============================================================
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCcw, Check, X, Brain, Image as ImageIcon, Calculator } from 'lucide-react';
+import {
+  ArrowRight,
+  Check,
+  Brain,
+  Calculator,
+  Image as ImageIcon,
+  List,
+  RotateCcw,
+  User,
+  X
+} from 'lucide-react';
+import type { Rating } from '../learning';
 
 export interface FlashcardData {
   id: string;
@@ -26,7 +37,7 @@ export interface FlashcardData {
 
 interface FlashcardProps {
   card: FlashcardData;
-  onRate: (cardId: string, rating: 'again' | 'hard' | 'good' | 'easy') => void;
+  onRate: (cardId: string, rating: Rating) => void;
   onSkip: () => void;
 }
 
@@ -34,36 +45,39 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
   const [isFlipped, setIsFlipped] = useState(false);
   const [showExtended, setShowExtended] = useState(false);
 
-  const handleFlip = useCallback(() => {
-    setIsFlipped(!isFlipped);
-  }, [isFlipped]);
+  useEffect(() => {
+    setIsFlipped(false);
+    setShowExtended(false);
+  }, [card.id]);
 
-  const handleRate = useCallback((rating: 'again' | 'hard' | 'good' | 'easy') => {
+  const handleFlip = useCallback(() => {
+    setIsFlipped((current) => !current);
+  }, []);
+
+  const handleRate = useCallback((rating: Rating) => {
     onRate(card.id, rating);
     setIsFlipped(false);
     setShowExtended(false);
   }, [card.id, onRate]);
 
-  // Icon basierend auf Kartentyp
   const TypeIcon = {
     definition: Brain,
     concept: Brain,
-    person: Brain,
+    person: User,
     formula: Calculator,
     image: ImageIcon,
-    list: Brain
+    list: List
   }[card.card_type];
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4 px-2">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 px-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-700">
             {card.chapter_id}
           </span>
           {card.exam_relevant && (
-            <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded-full">
+            <span className="rounded-full bg-amber-100 px-2 py-1 text-xs font-bold text-amber-700">
               PRÜFUNGSRELEVANT
             </span>
           )}
@@ -74,8 +88,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
         </div>
       </div>
 
-      {/* Karte */}
-      <div className="relative h-96 perspective-1000">
+      <div className="relative min-h-[30rem] [perspective:1000px]">
         <AnimatePresence mode="wait">
           {!isFlipped ? (
             <motion.div
@@ -84,11 +97,12 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
               animate={{ rotateY: 0 }}
               exit={{ rotateY: 90 }}
               transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-white rounded-2xl shadow-lg border border-slate-200 p-8 flex flex-col"
+              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-lg sm:p-8"
             >
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold text-slate-800 leading-relaxed">
+                  <p className="mb-3 text-sm font-medium text-slate-400">{card.chapter_title}</p>
+                  <h3 className="text-xl font-semibold leading-relaxed text-slate-800">
                     {card.front}
                   </h3>
                   {card.image_url && (
@@ -101,8 +115,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
 
               <button
                 onClick={handleFlip}
-                className="w-full py-3 bg-indigo-600 text-white rounded-xl font-medium 
-                         hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-teal-600 py-3 font-medium text-white transition-colors hover:bg-teal-700"
               >
                 <RotateCcw className="w-5 h-5" />
                 Aufdecken
@@ -115,19 +128,42 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
               animate={{ rotateY: 0 }}
               exit={{ rotateY: -90 }}
               transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-white rounded-2xl shadow-lg border border-slate-200 p-8 flex flex-col overflow-y-auto"
+              className="absolute inset-0 flex flex-col overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-lg sm:p-8"
             >
               <div className="flex-1">
-                <div className="whitespace-pre-line text-lg text-slate-700 leading-relaxed">
+                <div className="whitespace-pre-line text-lg leading-relaxed text-slate-700">
                   {card.back}
                 </div>
 
-                {/* Erweiterte Erklärung */}
+                {card.formula && (
+                  <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
+                    <div className="font-mono text-lg text-slate-800">{card.formula}</div>
+                    {card.formula_explanation && (
+                      <p className="mt-2 text-sm text-slate-600">{card.formula_explanation}</p>
+                    )}
+                  </div>
+                )}
+
+                {card.image_url && (
+                  <figure className="mt-4 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+                    <img src={card.image_url} alt={card.front} className="max-h-56 w-full object-contain" />
+                    {card.image_labels && card.image_labels.length > 0 && (
+                      <figcaption className="flex flex-wrap gap-2 p-3 text-xs text-slate-500">
+                        {card.image_labels.map((label) => (
+                          <span key={`${label.label}-${label.x}-${label.y}`} className="rounded bg-white px-2 py-1">
+                            {label.label}
+                          </span>
+                        ))}
+                      </figcaption>
+                    )}
+                  </figure>
+                )}
+
                 {card.back_extended && (
                   <div className="mt-4">
                     <button
                       onClick={() => setShowExtended(!showExtended)}
-                      className="text-sm text-indigo-600 font-medium hover:underline"
+                      className="text-sm font-medium text-teal-700 hover:underline"
                     >
                       {showExtended ? 'Weniger anzeigen' : 'Mehr erfahren...'}
                     </button>
@@ -135,7 +171,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="mt-3 p-4 bg-slate-50 rounded-lg text-sm text-slate-600"
+                        className="mt-3 rounded-lg bg-slate-50 p-4 text-sm text-slate-600"
                       >
                         {card.back_extended}
                       </motion.div>
@@ -144,34 +180,29 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
                 )}
               </div>
 
-              {/* Bewertungs-Buttons */}
-              <div className="grid grid-cols-4 gap-2 mt-6">
+              <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
                 <button
                   onClick={() => handleRate('again')}
-                  className="py-3 bg-red-100 text-red-700 rounded-xl font-medium hover:bg-red-200 
-                           transition-colors text-sm"
+                  className="rounded-xl bg-red-100 py-3 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
                 >
                   <X className="w-4 h-4 mx-auto mb-1" />
                   Wieder
                 </button>
                 <button
                   onClick={() => handleRate('hard')}
-                  className="py-3 bg-orange-100 text-orange-700 rounded-xl font-medium hover:bg-orange-200 
-                           transition-colors text-sm"
+                  className="rounded-xl bg-orange-100 py-3 text-sm font-medium text-orange-700 transition-colors hover:bg-orange-200"
                 >
                   Schwer
                 </button>
                 <button
                   onClick={() => handleRate('good')}
-                  className="py-3 bg-blue-100 text-blue-700 rounded-xl font-medium hover:bg-blue-200 
-                           transition-colors text-sm"
+                  className="rounded-xl bg-blue-100 py-3 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-200"
                 >
                   Gut
                 </button>
                 <button
                   onClick={() => handleRate('easy')}
-                  className="py-3 bg-green-100 text-green-700 rounded-xl font-medium hover:bg-green-200 
-                           transition-colors text-sm"
+                  className="rounded-xl bg-green-100 py-3 text-sm font-medium text-green-700 transition-colors hover:bg-green-200"
                 >
                   <Check className="w-4 h-4 mx-auto mb-1" />
                   Einfach
@@ -182,9 +213,8 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
         </AnimatePresence>
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between mt-4 px-2">
-        <div className="flex gap-1">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-2">
+        <div className="flex flex-wrap gap-1">
           {card.tags.map(tag => (
             <span key={tag} className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded">
               #{tag}
@@ -194,6 +224,15 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
         <span className="text-xs text-slate-400">
           Schwierigkeit: {'⭐'.repeat(card.difficulty)}
         </span>
+      </div>
+      <div className="mt-4 flex justify-center">
+        <button
+          onClick={onSkip}
+          className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+        >
+          Überspringen
+          <ArrowRight className="h-4 w-4" />
+        </button>
       </div>
     </div>
   );
