@@ -11,6 +11,7 @@ import {
   HelpCircle,
   ListChecks,
   Network,
+  Newspaper,
   RotateCcw,
   Search,
   Target,
@@ -32,10 +33,11 @@ import {
   isCloseAnswer,
   type QuizMode
 } from './quiz';
+import { createPosterSummary, getKeyTerms } from './studyVisuals';
 
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
 type StudyMode = 'all' | 'due' | 'weak' | 'unseen';
-type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz';
+type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster';
 type SourceFilter = 'all' | 'starter' | 'script';
 
 interface ChapterStat {
@@ -246,6 +248,11 @@ export default function App() {
         .slice(0, 40),
     [filteredCards]
   );
+  const keyTerms = useMemo(() => getKeyTerms(filteredCards, 16), [filteredCards]);
+  const posterSummary = useMemo(
+    () => createPosterSummary(filteredCards, progress),
+    [filteredCards, progress]
+  );
 
   const learnedCount = Object.keys(progress).length;
   const dueCount = cards.filter((card) => isDue(progress[card.id])).length;
@@ -262,6 +269,7 @@ export default function App() {
   const viewItems: ViewItem[] = [
     { key: 'cards', label: 'Karten', icon: BookOpen },
     { key: 'mindmap', label: 'Mindmap', icon: Network },
+    { key: 'poster', label: 'Lernposter', icon: Newspaper },
     { key: 'timeline', label: 'Timeline', icon: Clock3 },
     { key: 'quiz', label: 'Quiz', icon: HelpCircle }
   ];
@@ -493,9 +501,35 @@ export default function App() {
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">Kapitel-Mindmap</h2>
-                <p className="text-sm text-slate-500">Kapitel anklicken, um gezielt darin weiterzulernen.</p>
+                <p className="text-sm text-slate-500">Kapitel und Begriffe anklicken, um gezielt darin weiterzulernen.</p>
               </div>
               <Network className="h-5 w-5 text-teal-600" />
+            </div>
+            <div className="mb-5 rounded-lg border border-teal-100 bg-teal-50 p-4">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+                <div className="rounded-full bg-teal-600 px-5 py-3 text-center font-semibold text-white shadow-sm">
+                  PsychoLogisch
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {keyTerms.length > 0 ? (
+                    keyTerms.map((term) => (
+                      <button
+                        key={term.term}
+                        onClick={() => {
+                          setSearchQuery(term.term);
+                          setViewMode('cards');
+                        }}
+                        className="rounded-full border border-teal-200 bg-white px-3 py-2 text-sm font-medium text-teal-800 shadow-sm hover:bg-teal-100"
+                      >
+                        {term.term}
+                        <span className="ml-2 text-xs text-teal-500">{term.count}</span>
+                      </button>
+                    ))
+                  ) : (
+                    <p className="text-sm text-teal-700">Für diese Filterauswahl wurden noch keine starken Begriffe gefunden.</p>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               {chapterStats.map((chapter) => {
@@ -524,6 +558,81 @@ export default function App() {
                   </button>
                 );
               })}
+            </div>
+          </section>
+        )}
+
+        {viewMode === 'poster' && (
+          <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-5 flex items-center justify-between gap-3">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">Lernposter</h2>
+                <p className="text-sm text-slate-500">Kompakte Übersicht zur aktuellen Filterauswahl.</p>
+              </div>
+              <Newspaper className="h-5 w-5 text-teal-600" />
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-5">
+              {[
+                ['Karten', posterSummary.total],
+                ['Gelernt', posterSummary.learned],
+                ['Definitionen', posterSummary.definitions],
+                ['Personen', posterSummary.people],
+                ['Formeln', posterSummary.formulas]
+              ].map(([label, value]) => (
+                <div key={label as string} className="rounded-lg bg-slate-50 p-3">
+                  <p className="text-xs font-medium uppercase text-slate-400">{label as string}</p>
+                  <p className="mt-1 text-xl font-semibold text-slate-900">{value as number}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-[18rem_1fr]">
+              <div>
+                <h3 className="mb-2 font-semibold text-slate-800">Schlüsselbegriffe</h3>
+                <div className="flex flex-wrap gap-2">
+                  {posterSummary.keyTerms.length > 0 ? (
+                    posterSummary.keyTerms.map((term) => (
+                      <button
+                        key={term.term}
+                        onClick={() => {
+                          setSearchQuery(term.term);
+                          setViewMode('cards');
+                        }}
+                        className="rounded-full bg-teal-50 px-3 py-2 text-sm font-medium text-teal-700 hover:bg-teal-100"
+                      >
+                        {term.term}
+                      </button>
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-500">Noch keine Schlüsselbegriffe für diese Auswahl.</p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-2 font-semibold text-slate-800">Kernaussagen</h3>
+                <div className="grid gap-3">
+                  {posterSummary.highlights.length > 0 ? (
+                    posterSummary.highlights.map((card) => (
+                      <button
+                        key={card.id}
+                        onClick={() => {
+                          const nextIndex = filteredCards.findIndex((item) => item.id === card.id);
+                          setCurrentIndex(Math.max(0, nextIndex));
+                          setViewMode('cards');
+                        }}
+                        className="rounded-lg border border-slate-200 p-3 text-left hover:border-teal-200 hover:bg-teal-50"
+                      >
+                        <span className="block text-sm font-semibold text-slate-800">{card.front}</span>
+                        <span className="mt-1 line-clamp-2 block text-sm text-slate-500">{card.back}</span>
+                      </button>
+                    ))
+                  ) : (
+                    <p className="rounded-lg bg-slate-50 p-4 text-sm text-slate-500">Keine Kernaussagen für diese Auswahl.</p>
+                  )}
+                </div>
+              </div>
             </div>
           </section>
         )}
