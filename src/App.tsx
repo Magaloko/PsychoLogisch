@@ -9,10 +9,12 @@ import {
   Filter,
   GitBranch,
   HelpCircle,
+  ListChecks,
   Network,
   RotateCcw,
   Search,
-  Target
+  Target,
+  TextCursorInput
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Flashcard, type FlashcardData } from './components/Flashcard';
@@ -23,6 +25,13 @@ import {
   type Rating,
   type UserProgress
 } from './learning';
+import {
+  createClozeTask,
+  getMatchingCards,
+  getMultipleChoiceOptions,
+  isCloseAnswer,
+  type QuizMode
+} from './quiz';
 
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
 type StudyMode = 'all' | 'due' | 'weak' | 'unseen';
@@ -77,6 +86,12 @@ const sourceLabels: Record<SourceFilter, string> = {
   script: 'Skriptkarten'
 };
 
+const quizModeLabels: Record<QuizMode, string> = {
+  multipleChoice: 'Multiple Choice',
+  cloze: 'Lückentext',
+  matching: 'Matching'
+};
+
 const loadProgress = (): Record<string, UserProgress> => {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -127,6 +142,10 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState<Record<string, UserProgress>>(loadProgress);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [quizMode, setQuizMode] = useState<QuizMode>('multipleChoice');
+  const [clozeAnswer, setClozeAnswer] = useState('');
+  const [selectedMatchPrompt, setSelectedMatchPrompt] = useState<string | null>(null);
+  const [matchedIds, setMatchedIds] = useState<string[]>([]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -191,6 +210,9 @@ export default function App() {
   useEffect(() => {
     setCurrentIndex(0);
     setSelectedAnswer(null);
+    setClozeAnswer('');
+    setSelectedMatchPrompt(null);
+    setMatchedIds([]);
   }, [chapterFilter, examOnly, searchQuery, sourceFilter, studyMode, typeFilter, viewMode]);
 
   const chapterStats = useMemo(() => {
@@ -244,25 +266,24 @@ export default function App() {
     { key: 'quiz', label: 'Quiz', icon: HelpCircle }
   ];
 
-  const quizOptions = useMemo(() => {
-    if (!currentCard) {
-      return [];
-    }
-    const distractors = cards
-      .filter((card) => card.id !== currentCard.id && card.card_type === currentCard.card_type)
-      .slice(0, 24)
-      .sort((a, b) => a.id.localeCompare(b.id))
-      .slice(0, 3);
-    return [currentCard, ...distractors].sort((a, b) => a.front.localeCompare(b.front));
-  }, [cards, currentCard]);
+  const quizOptions = useMemo(() => (currentCard ? getMultipleChoiceOptions(currentCard, cards) : []), [cards, currentCard]);
+  const clozeTask = useMemo(() => (currentCard ? createClozeTask(currentCard) : null), [currentCard]);
+  const matchingCards = useMemo(() => (currentCard ? getMatchingCards(currentCard, cards) : []), [cards, currentCard]);
+  const matchingAnswers = useMemo(() => [...matchingCards].sort((a, b) => b.id.localeCompare(a.id)), [matchingCards]);
 
   const goToNextCard = () => {
     setSelectedAnswer(null);
+    setClozeAnswer('');
+    setSelectedMatchPrompt(null);
+    setMatchedIds([]);
     setCurrentIndex((previous) => (filteredCards.length === 0 ? 0 : (previous + 1) % filteredCards.length));
   };
 
   const goToPreviousCard = () => {
     setSelectedAnswer(null);
+    setClozeAnswer('');
+    setSelectedMatchPrompt(null);
+    setMatchedIds([]);
     setCurrentIndex((previous) =>
       filteredCards.length === 0 ? 0 : (previous - 1 + filteredCards.length) % filteredCards.length
     );
@@ -546,49 +567,173 @@ export default function App() {
           <section className="mx-auto max-w-3xl rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">Multiple-Choice-Quiz</h2>
-                <p className="text-sm text-slate-500">Wähle die passende Antwort zur Karte.</p>
+                <h2 className="text-lg font-semibold text-slate-900">Interaktives Quiz</h2>
+                <p className="text-sm text-slate-500">Trainiere dieselbe Karte mit verschiedenen Aufgabenformen.</p>
               </div>
               <HelpCircle className="h-5 w-5 text-teal-600" />
             </div>
-            <p className="rounded-lg bg-slate-50 p-4 font-medium text-slate-800">{currentCard.front}</p>
-            <div className="mt-4 grid gap-3">
-              {quizOptions.map((option) => {
-                const isSelected = selectedAnswer === option.id;
-                const isCorrect = option.id === currentCard.id;
-                return (
-                  <button
-                    key={option.id}
-                    onClick={() => setSelectedAnswer(option.id)}
-                    className={`rounded-lg border p-3 text-left text-sm transition-colors ${
-                      !selectedAnswer
-                        ? 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
-                        : isCorrect
-                          ? 'border-green-200 bg-green-50 text-green-800'
-                          : isSelected
-                            ? 'border-red-200 bg-red-50 text-red-800'
-                            : 'border-slate-200 bg-slate-50 text-slate-500'
+
+            <div className="mb-4 flex flex-wrap gap-2">
+              {Object.entries(quizModeLabels).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => {
+                    setQuizMode(key as QuizMode);
+                    setSelectedAnswer(null);
+                    setClozeAnswer('');
+                    setSelectedMatchPrompt(null);
+                    setMatchedIds([]);
+                  }}
+                  className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    quizMode === key ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {key === 'multipleChoice' && <HelpCircle className="h-4 w-4" />}
+                  {key === 'cloze' && <TextCursorInput className="h-4 w-4" />}
+                  {key === 'matching' && <ListChecks className="h-4 w-4" />}
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {quizMode === 'multipleChoice' && (
+              <>
+                <p className="rounded-lg bg-slate-50 p-4 font-medium text-slate-800">{currentCard.front}</p>
+                <div className="mt-4 grid gap-3">
+                  {quizOptions.map((option) => {
+                    const isSelected = selectedAnswer === option.id;
+                    const isCorrect = option.id === currentCard.id;
+                    return (
+                      <button
+                        key={option.id}
+                        onClick={() => setSelectedAnswer(option.id)}
+                        className={`rounded-lg border p-3 text-left text-sm transition-colors ${
+                          !selectedAnswer
+                            ? 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
+                            : isCorrect
+                              ? 'border-green-200 bg-green-50 text-green-800'
+                              : isSelected
+                                ? 'border-red-200 bg-red-50 text-red-800'
+                                : 'border-slate-200 bg-slate-50 text-slate-500'
+                        }`}
+                      >
+                        {option.back}
+                      </button>
+                    );
+                  })}
+                </div>
+                {selectedAnswer && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                      onClick={() => handleRate(currentCard.id, selectedAnswer === currentCard.id ? 'good' : 'again')}
+                      className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                    >
+                      Bewerten und weiter
+                    </button>
+                    <button
+                      onClick={goToNextCard}
+                      className="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200"
+                    >
+                      Nur weiter
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+
+            {quizMode === 'cloze' && clozeTask && (
+              <div>
+                <p className="rounded-lg bg-slate-50 p-4 leading-relaxed text-slate-800">{clozeTask.prompt}</p>
+                <label className="mt-4 block">
+                  <span className="mb-1 block text-sm font-medium text-slate-600">Fehlender Begriff</span>
+                  <input
+                    value={clozeAnswer}
+                    onChange={(event) => setClozeAnswer(event.target.value)}
+                    className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500"
+                    placeholder="Antwort eingeben"
+                  />
+                </label>
+                {clozeAnswer && (
+                  <div
+                    className={`mt-3 rounded-lg p-3 text-sm ${
+                      isCloseAnswer(clozeAnswer, clozeTask.answer)
+                        ? 'bg-green-50 text-green-800'
+                        : 'bg-amber-50 text-amber-800'
                     }`}
                   >
-                    {option.back}
+                    Lösung: <span className="font-semibold">{clozeTask.answer}</span>
+                  </div>
+                )}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleRate(currentCard.id, isCloseAnswer(clozeAnswer, clozeTask.answer) ? 'good' : 'again')}
+                    className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                  >
+                    Bewerten und weiter
                   </button>
-                );
-              })}
-            </div>
-            {selectedAnswer && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                <button
-                  onClick={() => handleRate(currentCard.id, selectedAnswer === currentCard.id ? 'good' : 'again')}
-                  className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
-                >
-                  Bewerten und weiter
-                </button>
-                <button
-                  onClick={goToNextCard}
-                  className="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200"
-                >
-                  Nur weiter
-                </button>
+                </div>
+              </div>
+            )}
+
+            {quizMode === 'matching' && (
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <p className="mb-2 text-sm font-medium text-slate-600">Begriffe</p>
+                  <div className="grid gap-2">
+                    {matchingCards.map((card) => (
+                      <button
+                        key={card.id}
+                        onClick={() => setSelectedMatchPrompt(card.id)}
+                        disabled={matchedIds.includes(card.id)}
+                        className={`rounded-lg border p-3 text-left text-sm transition-colors ${
+                          matchedIds.includes(card.id)
+                            ? 'border-green-200 bg-green-50 text-green-800'
+                            : selectedMatchPrompt === card.id
+                              ? 'border-teal-300 bg-teal-50 text-teal-800'
+                              : 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
+                        }`}
+                      >
+                        {card.front}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="mb-2 text-sm font-medium text-slate-600">Antworten</p>
+                  <div className="grid gap-2">
+                    {matchingAnswers.map((card) => (
+                      <button
+                        key={card.id}
+                        onClick={() => {
+                          if (!selectedMatchPrompt) return;
+                          if (selectedMatchPrompt === card.id) {
+                            setMatchedIds((current) => [...current, card.id]);
+                          }
+                          setSelectedMatchPrompt(null);
+                        }}
+                        disabled={matchedIds.includes(card.id)}
+                        className={`rounded-lg border p-3 text-left text-sm transition-colors ${
+                          matchedIds.includes(card.id)
+                            ? 'border-green-200 bg-green-50 text-green-800'
+                            : 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
+                        }`}
+                      >
+                        {card.back}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-3 text-sm text-slate-500">
+                    Zuordnungen: {matchedIds.length} von {matchingCards.length}
+                  </p>
+                  {matchedIds.length === matchingCards.length && (
+                    <button
+                      onClick={() => handleRate(currentCard.id, 'good')}
+                      className="mt-3 rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                    >
+                      Aufgabe abschließen
+                    </button>
+                  )}
+                </div>
               </div>
             )}
           </section>
