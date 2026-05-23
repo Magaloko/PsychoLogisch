@@ -33,6 +33,7 @@ import {
   isCloseAnswer,
   type QuizMode
 } from './quiz';
+import { findStudyChapter, type StudyContent } from './studyContent';
 import { createPosterSummary, getKeyTerms } from './studyVisuals';
 
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
@@ -91,7 +92,8 @@ const sourceLabels: Record<SourceFilter, string> = {
 const quizModeLabels: Record<QuizMode, string> = {
   multipleChoice: 'Multiple Choice',
   cloze: 'Lückentext',
-  matching: 'Matching'
+  matching: 'Matching',
+  exam: 'Prüfungsfragen'
 };
 
 const loadProgress = (): Record<string, UserProgress> => {
@@ -148,6 +150,7 @@ export default function App() {
   const [clozeAnswer, setClozeAnswer] = useState('');
   const [selectedMatchPrompt, setSelectedMatchPrompt] = useState<string | null>(null);
   const [matchedIds, setMatchedIds] = useState<string[]>([]);
+  const [studyContent, setStudyContent] = useState<StudyContent | null>(null);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -169,6 +172,17 @@ export default function App() {
           const freshCards = cardsFromFile.filter((card) => card.id && !existingIds.has(card.id));
           return freshCards.length === 0 ? current : [...current, ...freshCards];
         });
+      })
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    fetch('/study_content.json')
+      .then((response) => (response.ok ? response.json() : null))
+      .then((content: StudyContent | null) => {
+        if (content?.chapters?.length) {
+          setStudyContent(content);
+        }
       })
       .catch(() => undefined);
   }, []);
@@ -253,6 +267,23 @@ export default function App() {
     () => createPosterSummary(filteredCards, progress),
     [filteredCards, progress]
   );
+  const selectedStudyChapter = useMemo(
+    () => (chapterFilter === 'all' ? null : findStudyChapter(studyContent, chapterFilter)),
+    [chapterFilter, studyContent]
+  );
+  const visualKeyTerms = selectedStudyChapter?.keyTerms ?? keyTerms;
+  const examQuizQuestions = useMemo(
+    () =>
+      selectedStudyChapter?.examQuestions.filter(
+        (question) =>
+          (question.type === 'multipleChoice' && question.options?.length && question.correctAnswer) ||
+          (question.type === 'trueFalse' && question.correctAnswer) ||
+          (question.type === 'matching' && question.pairs?.length)
+      ) ?? [],
+    [selectedStudyChapter]
+  );
+  const currentExamQuestion =
+    examQuizQuestions.length > 0 ? examQuizQuestions[currentIndex % examQuizQuestions.length] : null;
 
   const learnedCount = Object.keys(progress).length;
   const dueCount = cards.filter((card) => isDue(progress[card.id])).length;
@@ -511,8 +542,8 @@ export default function App() {
                   PsychoLogisch
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {keyTerms.length > 0 ? (
-                    keyTerms.map((term) => (
+                  {visualKeyTerms.length > 0 ? (
+                    visualKeyTerms.map((term) => (
                       <button
                         key={term.term}
                         onClick={() => {
@@ -567,7 +598,11 @@ export default function App() {
             <div className="mb-5 flex items-center justify-between gap-3">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">Lernposter</h2>
-                <p className="text-sm text-slate-500">Kompakte Übersicht zur aktuellen Filterauswahl.</p>
+                <p className="text-sm text-slate-500">
+                  {selectedStudyChapter
+                    ? `${selectedStudyChapter.title}: ${selectedStudyChapter.summary}`
+                    : 'Kompakte Übersicht zur aktuellen Filterauswahl.'}
+                </p>
               </div>
               <Newspaper className="h-5 w-5 text-teal-600" />
             </div>
@@ -591,8 +626,8 @@ export default function App() {
               <div>
                 <h3 className="mb-2 font-semibold text-slate-800">Schlüsselbegriffe</h3>
                 <div className="flex flex-wrap gap-2">
-                  {posterSummary.keyTerms.length > 0 ? (
-                    posterSummary.keyTerms.map((term) => (
+                  {(selectedStudyChapter?.keyTerms ?? posterSummary.keyTerms).length > 0 ? (
+                    (selectedStudyChapter?.keyTerms ?? posterSummary.keyTerms).map((term) => (
                       <button
                         key={term.term}
                         onClick={() => {
@@ -613,19 +648,23 @@ export default function App() {
               <div>
                 <h3 className="mb-2 font-semibold text-slate-800">Kernaussagen</h3>
                 <div className="grid gap-3">
-                  {posterSummary.highlights.length > 0 ? (
-                    posterSummary.highlights.map((card) => (
+                  {(selectedStudyChapter?.highlights ?? posterSummary.highlights).length > 0 ? (
+                    (selectedStudyChapter?.highlights ?? posterSummary.highlights).map((item) => (
                       <button
-                        key={card.id}
+                        key={item.id}
                         onClick={() => {
-                          const nextIndex = filteredCards.findIndex((item) => item.id === card.id);
+                          const nextIndex = filteredCards.findIndex((card) => card.id === item.id);
                           setCurrentIndex(Math.max(0, nextIndex));
                           setViewMode('cards');
                         }}
                         className="rounded-lg border border-slate-200 p-3 text-left hover:border-teal-200 hover:bg-teal-50"
                       >
-                        <span className="block text-sm font-semibold text-slate-800">{card.front}</span>
-                        <span className="mt-1 line-clamp-2 block text-sm text-slate-500">{card.back}</span>
+                        <span className="block text-sm font-semibold text-slate-800">
+                          {'front' in item ? item.front : item.prompt}
+                        </span>
+                        <span className="mt-1 line-clamp-2 block text-sm text-slate-500">
+                          {'back' in item ? item.back : item.answer}
+                        </span>
                       </button>
                     ))
                   ) : (
@@ -634,6 +673,20 @@ export default function App() {
                 </div>
               </div>
             </div>
+            {selectedStudyChapter && (
+              <div className="mt-5 grid gap-3 md:grid-cols-3">
+                {[
+                  ['Definitionen', selectedStudyChapter.definitions.length],
+                  ['Theorien/Modelle', selectedStudyChapter.theories.length],
+                  ['Prüfungsfragen', selectedStudyChapter.examQuestions.length]
+                ].map(([label, value]) => (
+                  <div key={label as string} className="rounded-lg border border-slate-200 p-3">
+                    <p className="text-xs font-medium uppercase text-slate-400">{label as string}</p>
+                    <p className="mt-1 text-xl font-semibold text-slate-900">{value as number}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
         )}
 
@@ -700,6 +753,7 @@ export default function App() {
                   {key === 'multipleChoice' && <HelpCircle className="h-4 w-4" />}
                   {key === 'cloze' && <TextCursorInput className="h-4 w-4" />}
                   {key === 'matching' && <ListChecks className="h-4 w-4" />}
+                  {key === 'exam' && <Target className="h-4 w-4" />}
                   {label}
                 </button>
               ))}
@@ -843,6 +897,88 @@ export default function App() {
                     </button>
                   )}
                 </div>
+              </div>
+            )}
+
+            {quizMode === 'exam' && (
+              <div>
+                {currentExamQuestion ? (
+                  <>
+                    <div className="rounded-lg bg-slate-50 p-4">
+                      <p className="text-xs font-medium uppercase text-slate-400">
+                        {selectedStudyChapter?.title}
+                        {currentExamQuestion.sourcePage ? ` · Seite ${currentExamQuestion.sourcePage}` : ''}
+                      </p>
+                      <p className="mt-2 font-medium leading-relaxed text-slate-800">{currentExamQuestion.prompt}</p>
+                    </div>
+
+                    {(currentExamQuestion.type === 'multipleChoice' || currentExamQuestion.type === 'trueFalse') && (
+                      <>
+                        <div className="mt-4 grid gap-3">
+                          {(currentExamQuestion.type === 'trueFalse'
+                            ? ['Richtig', 'Falsch']
+                            : currentExamQuestion.options ?? []
+                          ).map((option) => {
+                            const isSelected = selectedAnswer === option;
+                            const isCorrect = currentExamQuestion.correctAnswer === option;
+                            return (
+                              <button
+                                key={option}
+                                onClick={() => setSelectedAnswer(option)}
+                                className={`rounded-lg border p-3 text-left text-sm transition-colors ${
+                                  !selectedAnswer
+                                    ? 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
+                                    : isCorrect
+                                      ? 'border-green-200 bg-green-50 text-green-800'
+                                      : isSelected
+                                        ? 'border-red-200 bg-red-50 text-red-800'
+                                        : 'border-slate-200 bg-slate-50 text-slate-500'
+                                }`}
+                              >
+                                {option}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        {selectedAnswer && (
+                          <div className="mt-4 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
+                            Lösung: <span className="font-semibold text-slate-800">{currentExamQuestion.correctAnswer}</span>
+                            {currentExamQuestion.explanation ? (
+                              <span className="mt-1 block">{currentExamQuestion.explanation}</span>
+                            ) : null}
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {currentExamQuestion.type === 'matching' && (
+                      <div className="mt-4 grid gap-2">
+                        {currentExamQuestion.pairs?.map((pair) => (
+                          <div key={`${pair.left}-${pair.right}`} className="grid gap-2 rounded-lg border border-slate-200 p-3 sm:grid-cols-[1fr_1.4fr]">
+                            <span className="font-medium text-slate-800">{pair.left}</span>
+                            <span className="text-sm text-slate-600">{pair.right}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <button
+                        onClick={() => {
+                          setSelectedAnswer(null);
+                          goToNextCard();
+                        }}
+                        className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+                      >
+                        Nächste Prüfungsfrage
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="rounded-lg bg-slate-50 p-4 text-sm text-slate-500">
+                    Wähle oben ein einzelnes Kapitel, um kuratierte Prüfungsfragen aus dem PDF-Material zu trainieren.
+                  </div>
+                )}
               </div>
             )}
           </section>

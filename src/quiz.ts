@@ -1,6 +1,6 @@
 import type { FlashcardData } from './components/Flashcard';
 
-export type QuizMode = 'multipleChoice' | 'cloze' | 'matching';
+export type QuizMode = 'multipleChoice' | 'cloze' | 'matching' | 'exam';
 
 export interface ClozeTask {
   prompt: string;
