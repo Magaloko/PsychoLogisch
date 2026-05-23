@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+src/data/psyskript_text_pages.json
 .env
 .env.local
 .env.development.local

@@ -33,6 +33,8 @@ export interface FlashcardData {
   exam_relevant: boolean;
   difficulty: number;
   tags: string[];
+  source?: string;
+  source_page?: number;
 }
 
 interface FlashcardProps {
@@ -223,6 +225,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
         </div>
         <span className="text-xs text-slate-400">
           Schwierigkeit: {'⭐'.repeat(card.difficulty)}
+          {card.source_page ? ` · S. ${card.source_page}` : ''}
         </span>
       </div>
       <div className="mt-4 flex justify-center">

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { BookOpen, Filter, RotateCcw } from 'lucide-react';
+import { BookOpen, FileUp, Filter, RotateCcw } from 'lucide-react';
 import { Flashcard, type FlashcardData } from './components/Flashcard';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
@@ -12,6 +12,7 @@ import {
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
 
 const STORAGE_KEY = 'psychologisch-progress-v1';
+const IMPORTED_CARDS_KEY = 'psychologisch-imported-cards-v1';
 
 const cardTypeLabels: Record<CardTypeFilter, string> = {
   all: 'Alle Typen',
@@ -32,8 +33,19 @@ const loadProgress = (): Record<string, UserProgress> => {
   }
 };
 
+const loadImportedCards = (): FlashcardData[] => {
+  try {
+    const saved = window.localStorage.getItem(IMPORTED_CARDS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
+
 export default function App() {
-  const cards = useMemo(() => cardsData as FlashcardData[], []);
+  const baseCards = useMemo(() => cardsData as FlashcardData[], []);
+  const [importedCards, setImportedCards] = useState<FlashcardData[]>(loadImportedCards);
+  const cards = useMemo(() => [...baseCards, ...importedCards], [baseCards, importedCards]);
   const chapters = useMemo(
     () => Array.from(new Set(cards.map((card) => `${card.chapter_id} ${card.chapter_title}`))),
     [cards]
@@ -52,6 +64,26 @@ export default function App() {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }, [progress]);
+
+  useEffect(() => {
+    window.localStorage.setItem(IMPORTED_CARDS_KEY, JSON.stringify(importedCards));
+  }, [importedCards]);
+
+  useEffect(() => {
+    fetch('/psyskript_cards.json')
+      .then((response) => (response.ok ? response.json() : []))
+      .then((cardsFromFile: FlashcardData[]) => {
+        if (!Array.isArray(cardsFromFile) || cardsFromFile.length === 0) {
+          return;
+        }
+        setImportedCards((current) => {
+          const existingIds = new Set(current.map((card) => card.id));
+          const freshCards = cardsFromFile.filter((card) => card.id && !existingIds.has(card.id));
+          return freshCards.length === 0 ? current : [...current, ...freshCards];
+        });
+      })
+      .catch(() => undefined);
+  }, []);
 
   const filteredCards = useMemo(
     () =>
@@ -102,6 +134,21 @@ export default function App() {
     setProgress({});
   };
 
+  const importCardsFromFile = async (file: File | undefined) => {
+    if (!file) {
+      return;
+    }
+    const parsed = JSON.parse(await file.text()) as FlashcardData[];
+    if (!Array.isArray(parsed)) {
+      return;
+    }
+    setImportedCards((current) => {
+      const existingIds = new Set([...baseCards, ...current].map((card) => card.id));
+      const freshCards = parsed.filter((card) => card.id && card.front && card.back && !existingIds.has(card.id));
+      return freshCards.length === 0 ? current : [...current, ...freshCards];
+    });
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 py-6 text-slate-900 sm:py-8">
       <div className="mx-auto max-w-5xl px-4">
@@ -119,6 +166,30 @@ export default function App() {
             Fortschritt zurücksetzen
           </button>
         </header>
+
+        <section className="mb-6 flex flex-col gap-3 rounded-lg border border-teal-100 bg-teal-50 p-4 text-sm text-teal-900 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-semibold">Skript-Lernkarten</p>
+            <p className="mt-1 text-teal-700">
+              {importedCards.length > 0
+                ? `${importedCards.length} zusätzliche Karten aus deinem Skript geladen.`
+                : 'Die Karten aus dem Skript werden automatisch geladen, sobald die Datei verfügbar ist.'}
+            </p>
+          </div>
+          <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-3 py-2 font-medium text-teal-700 shadow-sm ring-1 ring-teal-100 transition-colors hover:bg-teal-100">
+            <FileUp className="h-4 w-4" />
+            Karten importieren
+            <input
+              type="file"
+              accept="application/json,.json"
+              className="sr-only"
+              onChange={(event) => {
+                void importCardsFromFile(event.target.files?.[0]);
+                event.currentTarget.value = '';
+              }}
+            />
+          </label>
+        </section>
 
         <section className="mb-6 grid gap-3 sm:grid-cols-3">
           <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
