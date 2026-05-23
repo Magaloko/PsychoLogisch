@@ -1,0 +1,1807 @@
+[
+  {
+    "id": "k1-001",
+    "chapter_id": "1.1",
+    "chapter_title": "Definition",
+    "card_type": "definition",
+    "front": "Was bedeutet das Wort 'Psychologie' wörtlich übersetzt?",
+    "back": "Seelenkunde (von griechisch 'psyche' = Seele/Gemüt + 'logos' = Kunde/Wissenschaft)",
+    "back_extended": "Die Psychologie ist die Wissenschaft vom Erleben und Verhalten des Menschen. Kognitive Prozesse (Denken) sind ebenfalls Teil der Psychologie.",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "definition",
+      "etymologie",
+      "grundbegriff"
+    ],
+    "source_page": 10
+  },
+  {
+    "id": "k1-002",
+    "chapter_id": "1.1",
+    "chapter_title": "Definition",
+    "card_type": "definition",
+    "front": "Was versteht man unter 'Kognition'?",
+    "back": "Sammelbegriff für mentale Fähigkeiten und Prozesse zur Aufnahme, Verarbeitung und Speicherung von Informationen",
+    "back_extended": "Dazu gehören: Aufmerksamkeit, Wahrnehmung, Gedächtnis, Schlussfolgern, Denken, Problemlösen. Abgeleitet von lateinisch 'cognoscere' = (er-)kennen.",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "definition",
+      "kognition",
+      "grundbegriff"
+    ],
+    "source_page": 10
+  },
+  {
+    "id": "k1-003",
+    "chapter_id": "1.2",
+    "chapter_title": "Teildisziplinen",
+    "card_type": "list",
+    "front": "Nenne die 5 Grundlagenfächer der Psychologie",
+    "back": "1. Biologische Psychologie\n2. Allgemeine Psychologie\n3. Entwicklungspsychologie\n4. Sozialpsychologie\n5. Differentielle und Persönlichkeitspsychologie",
+    "back_extended": "Diese Aufteilung ist künstlich und es gibt Überschneidungen. Die Biologische Psychologie fragt 'Wie ist X im Körper verankert?', die Allgemeine 'Auf welchen Prozessen beruht X?', die Entwicklungspsychologie 'Wie entwickelt sich X?', die Sozialpsychologie 'Wie wird X vom sozialen Gefüge beeinflusst?', die Differentielle 'Ist X bei allen gleich?'",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "grundlagenfächer",
+      "liste",
+      "struktur"
+    ],
+    "source_page": 11
+  },
+  {
+    "id": "k1-004",
+    "chapter_id": "1.3",
+    "chapter_title": "Ansätze",
+    "card_type": "concept",
+    "front": "Welche 5 psychologischen Ansätze werden im Skript unterschieden?",
+    "back": "1. Psychodynamischer Ansatz (Freud)\n2. Behavioristischer Ansatz (Watson)\n3. Humanistischer Ansatz (Rogers, Maslow)\n4. Kognitiver Ansatz\n5. Biologisch-neurowissenschaftlicher Ansatz",
+    "back_extended": "Diese Ansätze ergänzen sich (eklektischer Ansatz) und führten zu verschiedenen Therapieformen: Verhaltenstherapie (behavioristisch), Gesprächspsychotherapie (humanistisch).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "ansätze",
+      "liste",
+      "geschichte"
+    ],
+    "source_page": 14
+  },
+  {
+    "id": "k1-005",
+    "chapter_id": "1.4",
+    "chapter_title": "Ziele",
+    "card_type": "list",
+    "front": "Nenne die 4 Ziele der wissenschaftlichen Psychologie",
+    "back": "1. BESCHREIBEN (Ist-Zustand erfassen)\n2. ERKLÄREN (Warum? Theorien entwickeln)\n3. VORHERSAGEN (Wahrscheinlichkeit zukünftigen Verhaltens)\n4. VERÄNDERN (Verhaltensänderung, ethisch verantwortungsvoll)",
+    "back_extended": "Dispositionale Faktoren (innerhalb Person: Genetik, Fähigkeiten, Persönlichkeit) vs. situative Faktoren (Umwelt: andere Personen, Wetter, Situationen).",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "ziele",
+      "liste",
+      "grundlagen"
+    ],
+    "source_page": 15
+  },
+  {
+    "id": "k1-006",
+    "chapter_id": "1.5",
+    "chapter_title": "Ethische Prinzipien",
+    "card_type": "list",
+    "front": "Nenne die 5 ethischen Grundsätze der APA (American Psychological Association)",
+    "back": "1. Wohltätigkeit und Nicht-Schaden\n2. Loyalität und Verantwortung\n3. Integrität\n4. Gerechtigkeit\n5. Respekt für Rechte und Würde",
+    "back_extended": "Das Milgram-Experiment (1963) würde heute wegen mangelnder Integrität nicht mehr in Originalform durchgeführt werden.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "ethik",
+      "apa",
+      "liste"
+    ],
+    "source_page": 18
+  },
+  {
+    "id": "k2-001",
+    "chapter_id": "2.1.1",
+    "chapter_title": "Ursprünge des Seelenbegriffs",
+    "card_type": "person",
+    "front": "Platon: Wie ist die Seele strukturiert?",
+    "back": "3 Teilseelen:\n• Begehrende/versorgende Seele (Unterleib, körperliche Begierden)\n• Zielstrebige/entschlossene Seele (Brust, Emotionen)\n• Denkende/vernünftige Seele (Kopf, Kontrolle)",
+    "back_extended": "Platon war Dualist (Leib und Seele getrennt) und Idealist. Die Seele ist unsterblich und dem Körper übergeordnet. Aristoteles (Schüler) kam später zum Monismus (Leib und Seele untrennbar).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "platon",
+      "seele",
+      "dualismus",
+      "antike"
+    ],
+    "source_page": 21
+  },
+  {
+    "id": "k2-002",
+    "chapter_id": "2.1.1",
+    "chapter_title": "Temperamentenlehre",
+    "card_type": "list",
+    "front": "Galens 4 Temperamente: Welche Körpersäfte und Eigenschaften gehören zusammen?",
+    "back": "• SANGUINIKER: Blut – freudvoll, schnell/ stark erregbar\n• PHLEGMATIKER: Schleim – langsam/schwache Reaktionen, freundlich\n• CHOLERIKER: Gelbe Galle – temperamentvoll, schnell erregbar, reizbar\n• MELANCHOLIKER: Schwarze Galle – traurig, schwermütig",
+    "back_extended": "Hippokrates (460-370 v.Chr.) entwickelte die Vier-Säfte-Lehre für Krankheiten. Galen (129-199 n.Chr.) verband sie mit der Persönlichkeit. Die Temperamentenlehre war bis ins 20. Jahrhundert bedeutsam.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "galen",
+      "hippokrates",
+      "temperament",
+      "persönlichkeit"
+    ],
+    "source_page": 23
+  },
+  {
+    "id": "k2-003",
+    "chapter_id": "2.1.3",
+    "chapter_title": "Rationalismus vs. Empirismus",
+    "card_type": "concept",
+    "front": "Descartes: 'cogito ergo sum' – was bedeutet das und welches Menschenbild vertrat er?",
+    "back": "'Ich denke, also bin ich' – Vernunft als einzige Basis für Erkenntnis. Dualismus: res extensa (stoffliche Welt) vs. res cogitans (geistige Welt).",
+    "back_extended": "Descartes vermutete die Verbindung von Leib und Seele in der Zirbeldrüse. Er war Verfechter des mechanistischen Menschenbilds (Körper als Maschine). Der Monismus (Einheit von Körper und Seele) wurde von Spinoza vertreten.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "descartes",
+      "rationalismus",
+      "dualismus",
+      "zirbeldrüse"
+    ],
+    "source_page": 25
+  },
+  {
+    "id": "k2-004",
+    "chapter_id": "2.2.3",
+    "chapter_title": "Experimentelle Psychologie",
+    "card_type": "person",
+    "front": "Wilhelm Wundt: Was war sein Hauptbeitrag? Wann? Wo?",
+    "back": "1879: Gründung des ersten psychologischen Labors in Leipzig. Begründer der experimentellen Psychologie.",
+    "back_extended": "Wundt war Verfechter der Introspektion (kontrollierte Selbstbeobachtung). Er gründete mit Edward Titchener den Strukturalismus. Wichtige Schüler: Cattell (Testpsychologie), Külp (Würzburger Schule), Münsterberg (AOW-Psychologie), Witmer (Klinische Psychologie).",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "wundt",
+      "experiment",
+      "leipzig",
+      "1879",
+      "strukturalismus"
+    ],
+    "source_page": 34
+  },
+  {
+    "id": "k2-005",
+    "chapter_id": "2.2.3",
+    "chapter_title": "Experimentelle Psychologie",
+    "card_type": "person",
+    "front": "Hermann Ebbinghaus: Was erforschte er und mit welcher Methode?",
+    "back": "Gedächtnis (Lernen und Vergessen). Methode: sinnlose Silben, um Fehlerquellen durch Vorwissen zu minimieren.",
+    "back_extended": "Formulierte logarithmische Kurven des Lernens und Vergessens. War in Berlin tätig und bekannt für präzises methodisches Vorgehen.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "ebbinghaus",
+      "gedächtnis",
+      "sinnlose-silben",
+      "lernkurve"
+    ],
+    "source_page": 36
+  },
+  {
+    "id": "k2-006",
+    "chapter_id": "2.4.2",
+    "chapter_title": "Gestaltpsychologie",
+    "card_type": "concept",
+    "front": "Gestaltgesetze: Nenne 4 Gesetze mit Beispiel",
+    "back": "• NÄHE: Nahe Linien werden als zusammengehörig wahrgenommen\n• ÄHNLICHKEIT: Ähnliche Formen werden gruppiert\n• GUTE FORTSETZUNG: Kreuzende Linien als durchgehend wahrgenommen\n• GESCHLOSSENHEIT: Überlappende Kreise als geschlossen gesehen",
+    "back_extended": "Max Wertheimer: 'Das Ganze ist etwas ANDERES als die Summe seiner Teile'. Weitere Vertreter: Köhler, Koffka, Lewin (Feldtheorie: Verhalten = Funktion von Person × Umwelt).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "gestalt",
+      "wertheimer",
+      "wahrnehmung",
+      "gesetze"
+    ],
+    "source_page": 40
+  },
+  {
+    "id": "k2-007",
+    "chapter_id": "2.4.3",
+    "chapter_title": "Behaviorismus",
+    "card_type": "person",
+    "front": "John B. Watson: Was ist Behaviorismus und was kritisiert er?",
+    "back": "Behaviorismus = Fokus auf beobachtbares Verhalten als Reaktion auf äußere Reize. Kritisiert: Introspektion als zu subjektiv.",
+    "back_extended": "Watson ging davon aus, dass Verhalten eine Reaktion auf Reize ist und Verbindungen zwischen unabhängigen Reizen gebildet werden können. Iwan Pawlow: Klassische Konditionierung (Hunde). Thorndike: Reiz-Reaktions-Verknüpfungen. Skinner: Operante Konditionierung (Verstärkung/Bestrafung).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "watson",
+      "behaviorismus",
+      "black-box",
+      "konditionierung"
+    ],
+    "source_page": 42
+  },
+  {
+    "id": "k2-008",
+    "chapter_id": "2.4.4",
+    "chapter_title": "Tiefenpsychologie",
+    "card_type": "person",
+    "front": "Sigmund Freud: Instanzenmodell der Persönlichkeit",
+    "back": "• ES: Unbewusst, triebgesteuert, Lustprinzip\n• ICH: Vermittler zwischen Es und Über-Ich, Realitätsprinzip\n• ÜBER-ICH: Soziale Normen, internalisierte Werte",
+    "back_extended": "Abwehrmechanismen des Ichs: Verdrängung (angsterregende Inhalte aus Bewusstsein verbannen). Träume sind 'königlicher Weg zum Unbewussten'. Neo-Psychoanalyse: Horney, Fromm (Fokus auf soziale Umwelt statt Triebe).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "freud",
+      "tiefenpsychologie",
+      "es-ich-über-ich",
+      "abwehr"
+    ],
+    "source_page": 44
+  },
+  {
+    "id": "k2-009",
+    "chapter_id": "2.4.5",
+    "chapter_title": "Kognitive Wende",
+    "card_type": "concept",
+    "front": "11. September 1956: Was geschah an diesem 'Geburtsdatum der Kognitionswissenschaft'?",
+    "back": "Symposium am MIT mit 3 wegweisenden Beiträgen:\n• George Miller: 7±2 (Kapazität Kurzzeitgedächtnis)\n• Noam Chomsky: Universelle Grammatik\n• Newell & Simon: Logik-Theorie-Maschine",
+    "back_extended": "Kognitiver Ansatz: Fokus auf nicht beobachtbare Prozesse (Aufmerksamkeit, Wahrnehmung, Denken, Erinnern). Mensch als informationsverarbeitendes System. Broadbent: Filtermodell. TOTE-Modell (Test-Operation-Test-Exit).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "kognitive-wende",
+      "1956",
+      "miller",
+      "chomsky",
+      "information"
+    ],
+    "source_page": 46
+  },
+  {
+    "id": "k3-001",
+    "chapter_id": "3.1.2",
+    "chapter_title": "Wissenschaftlichkeit",
+    "card_type": "list",
+    "front": "Die 4 Standards der Wissenschaftlichkeit nach Döring (2023)",
+    "back": "1. Formulierung wissenschaftlichen Forschungsproblems\n2. Realisierung wissenschaftlichen Forschungsprozesses\n3. Orientierung an Wissenschafts- und Forschungsethik\n4. Vollständige schriftliche Dokumentation",
+    "back_extended": "Kriterien guter Qualität: inhaltliche Relevanz, methodische Strenge, ethische Strenge, Präsentationsqualität.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "methoden",
+      "standards",
+      "wissenschaftlichkeit",
+      "döring"
+    ],
+    "source_page": 51
+  },
+  {
+    "id": "k3-002",
+    "chapter_id": "3.2.1",
+    "chapter_title": "Hypothesen",
+    "card_type": "list",
+    "front": "4 Anforderungen an wissenschaftliche Hypothesen",
+    "back": "1. Präzise und widerspruchsfreie Formulierung\n2. Prinzipielle Widerlegbarkeit\n3. Operationalisierbarkeit\n4. Begründbarkeit",
+    "back_extended": "Hypothese MUSS vor Datensammlung aufgestellt werden (nicht nachträglich!).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "hypothesen",
+      "anforderungen",
+      "methoden"
+    ],
+    "source_page": 56
+  },
+  {
+    "id": "k3-003",
+    "chapter_id": "3.2.2",
+    "chapter_title": "Hypothesenarten",
+    "card_type": "concept",
+    "front": "Unterschied: Unterschiedshypothese vs. Zusammenhangshypothese vs. Veränderungshypothese",
+    "back": "• UNTERSCHIEDS: Vermutung über Unterschied zwischen GRUPPEN\n• ZUSAMMENHANGS: Vermutung über Zusammenhang zwischen VARIABLEN (kovariieren)\n• VERÄNDERUNGS: Vermutung über Veränderung bei denselben Personen über ZEIT",
+    "back_extended": "Gerichtet vs. ungerichtet: Bei gerichteten wird die Richtung spezifiziert (z.B. 'Männer haben häufiger Linkshändigkeit als Frauen').",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "hypothesen",
+      "arten",
+      "unterschied",
+      "zusammenhang",
+      "veränderung"
+    ],
+    "source_page": 58
+  },
+  {
+    "id": "k3-004",
+    "chapter_id": "3.3.2",
+    "chapter_title": "Skalenniveaus",
+    "card_type": "concept",
+    "front": "4 Skalenniveaus: Merkmale und Beispiele",
+    "back": "• NOMINAL: Kategorien, Gleichheit/Verschiedenheit (Nationalität, Beruf)\n• ORDINAL: Rangordnung, Größer/Kleiner (Schulnoten, Bildungsabschluss)\n• INTERVALL: Rangordnung + Abstände, kein natürlicher Nullpunkt (Temperatur °C, Intelligenz)\n• VERHÄLTNIS: Rangordnung + Abstände + natürlicher Nullpunkt (Temperatur K, Gewicht, Reaktionszeit)",
+    "back_extended": "Nominal = diskret, Intervall/Verhältnis = kontinuierlich. Bei Ordinal KEIN sinnvoller Mittelwert (arithmetisches Mittel)!",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "skalenniveaus",
+      "messung",
+      "nominal",
+      "ordinal",
+      "intervall",
+      "verhältnis"
+    ],
+    "source_page": 63
+  },
+  {
+    "id": "k3-005",
+    "chapter_id": "3.3.2",
+    "chapter_title": "Gütekriterien",
+    "card_type": "definition",
+    "front": "3 Hauptgütekriterien des psychologischen Testens",
+    "back": "• OBJEKTIVITÄT: Messung unabhängig von Versuchsleitung\n• RELIABILITÄT: Zuverlässigkeit, Reproduzierbarkeit\n• VALIDITÄT: Misst das, was es vorgibt zu messen",
+    "back_extended": "Validität hat Unterformen: interne Validität (eindeutiger Kausalschluss) und externe Validität (Generalisierbarkeit auf andere Personen/Situationen).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "gütekriterien",
+      "objektivität",
+      "reliabilität",
+      "validität",
+      "tests"
+    ],
+    "source_page": 62
+  },
+  {
+    "id": "k3-006",
+    "chapter_id": "3.4",
+    "chapter_title": "Experimentelle Methode",
+    "card_type": "concept",
+    "front": "2 Merkmale, die ein Experiment definieren",
+    "back": "1. Mindestens eine Variable wird SYSTEMATISCH VARIIERT\n2. Wirkung anderer Variablen (Störvariablen) wird KONTROLLIERT",
+    "back_extended": "3 Voraussetzungen für Kausalschluss: Kovariation, zeitliche Abfolge (UV vor AV), Ausschluss anderer Ursachen. UV = unabhängige Variable (manipuliert), AV = abhängige Variable (gemessen).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "experiment",
+      "uv",
+      "av",
+      "kausalität",
+      "störvariablen"
+    ],
+    "source_page": 70
+  },
+  {
+    "id": "k3-007",
+    "chapter_id": "3.4.2",
+    "chapter_title": "Störvariablen",
+    "card_type": "concept",
+    "front": "Wie kontrolliert man Störvariablen? 3 Methoden",
+    "back": "1. KONSTANTHALTUNG (gleiche Bedingungen für alle)\n2. BALANCIERUNG (gleiche Ausprägung in Bedingungen)\n3. RANDOMISIERUNG (zufällige Zuweisung)",
+    "back_extended": "Randomisierung ist die wichtigste Methode – kontrolliert bekannte UND unbekannte Störvariablen. Parallelisieren nur bei kleinen Stichproben. Within-Subjects-Design = perfekte Parallelisierung.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "störvariablen",
+      "kontrolle",
+      "randomisierung",
+      "balancierung"
+    ],
+    "source_page": 72
+  },
+  {
+    "id": "k3-008",
+    "chapter_id": "3.4.3",
+    "chapter_title": "Erwartungseffekte",
+    "card_type": "concept",
+    "front": "Placebo-Effekt vs. Nocebo-Effekt: Unterschied?",
+    "back": "• PLACEBO: Positive Veränderung durch Erwartung (Schein-Medikament hilft)\n• NOCEBO: Negative Wirkung durch Erwartung (Schein-Medikament schadet)",
+    "back_extended": "Kontrolle durch Doppelblindstudie: weder Versuchsperson noch Versuchsleitung wissen, wer Placebo/Experimentalgruppe ist. Rosenthal-Effekt: Erwartungen der Versuchsleitung beeinflussen Ergebnis (selbsterfüllende Prophezeiung).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "placebo",
+      "nocebo",
+      "doppelblind",
+      "rosenthal",
+      "erwartung"
+    ],
+    "source_page": 75
+  },
+  {
+    "id": "k3-009",
+    "chapter_id": "3.5.2",
+    "chapter_title": "Zentrale Tendenz",
+    "card_type": "formula",
+    "front": "Formel: Arithmetisches Mittel",
+    "back": "M = Σxᵢ / N",
+    "formula": "M = \\frac{\\sum_{i=1}^{N} x_i}{N}",
+    "formula_explanation": "1. Alle Werte summieren\n2. Summe durch Anzahl der Werte teilen\n\nBeispiel: [200, 200, 230, 280, 290]\nΣ = 1200, N = 5 → M = 240",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "statistik",
+      "mittelwert",
+      "formel",
+      "zentrale-tendenz"
+    ],
+    "source_page": 80
+  },
+  {
+    "id": "k3-010",
+    "chapter_id": "3.5.3",
+    "chapter_title": "Streuung",
+    "card_type": "formula",
+    "front": "Formel: Varianz und Standardabweichung",
+    "back": "Var = Σ(xᵢ - M)² / N\nSD = √Var",
+    "formula": "Var = \\frac{\\sum_{i=1}^{N} (x_i - M)^2}{N} \\quad SD = \\sqrt{Var}",
+    "formula_explanation": "1. Abweichung jedes Werts vom Mittelwert berechnen\n2. Abweichungen quadrieren (negative werden positiv)\n3. Quadrierte Abweichungen summieren\n4. Durch N teilen = Varianz\n5. Wurzel ziehen = Standardabweichung\n\nBeispiel: Var = 1480, SD ≈ 38.47",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "statistik",
+      "varianz",
+      "standardabweichung",
+      "formel",
+      "streuung"
+    ],
+    "source_page": 82
+  },
+  {
+    "id": "k4-001",
+    "chapter_id": "4.1.3",
+    "chapter_title": "Historische Fälle",
+    "card_type": "concept",
+    "front": "Phineas Gage (1848): Was passierte und was zeigte der Fall?",
+    "back": "Eisenstange durchbohrte linken Frontallappen. Kognitive Fähigkeiten intakt, aber Persönlichkeit verändert: rücksichtslos, impulsiv, unzuverlässig.",
+    "back_extended": "Zeigte: Frontallappen = Handlungsplanung, Impulskontrolle, Emotionsregulation. Löste Welle von Forschung zu Gehirnregionen-Funktionen aus.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "gage",
+      "frontallappen",
+      "hirnforschung",
+      "fall"
+    ],
+    "source_page": 90
+  },
+  {
+    "id": "k4-002",
+    "chapter_id": "4.1.3",
+    "chapter_title": "Historische Fälle",
+    "card_type": "concept",
+    "front": "Patient 'Tan' (Paul Broca, 1861): Was war das Broca-Areal?",
+    "back": "Region in linker Gehirnhälfte für SPRACHPRODUKTION. Patient konnte nur 'tan' sagen, aber Sprachverständnis erhalten.",
+    "back_extended": "Broca-Aphasie = teilweiser Verlust der Sprachproduktion. Heute: Nicht eine Region, sondern komplexes Zusammenspiel vieler Areale.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "broca",
+      "aphasie",
+      "sprache",
+      "linke-hälfte"
+    ],
+    "source_page": 91
+  },
+  {
+    "id": "k4-003",
+    "chapter_id": "4.2.1",
+    "chapter_title": "Neuronen",
+    "card_type": "image",
+    "front": "[BILD] Benenne die 3 Hauptteile eines Neurons",
+    "back": "• SOMA (Zellkörper): Zellkern, Organellen\n• DENDRITEN: Empfang von Informationen\n• AXON: Weiterleitung zu anderen Zellen",
+    "back_extended": "Axon kann sich verzweigen. Ende = Axonterminale/Endknöpfchen. Axonhügel = Austrittsstelle. Myelin = isolierende Fettschicht beschleunigt Leitung.",
+    "image_url": "neuron_anatomy.png",
+    "image_labels": [
+      {
+        "label": "Soma",
+        "x": 20,
+        "y": 50
+      },
+      {
+        "label": "Dendriten",
+        "x": 10,
+        "y": 30
+      },
+      {
+        "label": "Axon",
+        "x": 60,
+        "y": 50
+      },
+      {
+        "label": "Myelin",
+        "x": 70,
+        "y": 50
+      },
+      {
+        "label": "Endknöpfchen",
+        "x": 95,
+        "y": 50
+      }
+    ],
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "neuron",
+      "anatomie",
+      "soma",
+      "dendriten",
+      "axon",
+      "bild"
+    ],
+    "source_page": 93
+  },
+  {
+    "id": "k4-004",
+    "chapter_id": "4.2.1",
+    "chapter_title": "Gliazellen",
+    "card_type": "list",
+    "front": "3 Arten von Gliazellen und ihre Funktion",
+    "back": "• ASTROZYTEN: Blut-Hirn-Schranke, Stoffwechsel\n• OLIGODENDROZYTEN: Myelin im ZNS (mehrere Segmente)\n• SCHWANN-ZELLEN: Myelin im PNS (ein Segment pro Zelle)",
+    "back_extended": "Gliazellen waren lange 'vergessene Zellen'. Neuere Erkenntnis: etwa gleich viele Gliazellen wie Neuronen (nicht 10:1 wie früher angenommen).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "gliazellen",
+      "myelin",
+      "astrozyt",
+      "oligodendrozyt",
+      "schwann"
+    ],
+    "source_page": 95
+  },
+  {
+    "id": "k4-005",
+    "chapter_id": "4.2.2",
+    "chapter_title": "Ruhepotenzial",
+    "card_type": "concept",
+    "front": "Ruhepotenzial: Wert und 4 beteiligte Prozesse",
+    "back": "Ca. -70 mV (negativ innen). Prozesse:\n1. Selektive Permeabilität\n2. Konzentrationsgradient (Diffusion)\n3. Potenzialgradient\n4. Natrium-Kalium-Pumpe",
+    "back_extended": "Natrium außen (hoch), Kalium innen (hoch). Natrium-Kalium-Pumpe: 3 Na⁺ raus, 2 K⁺ rein (energieaufwändig).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "ruhepotenzial",
+      "ionen",
+      "membran",
+      "-70mv",
+      "pumpe"
+    ],
+    "source_page": 96
+  },
+  {
+    "id": "k4-006",
+    "chapter_id": "4.2.2",
+    "chapter_title": "Aktionspotenzial",
+    "card_type": "concept",
+    "front": "Aktionspotenzial: Alles-oder-Nichts-Gesetz und Phasen",
+    "back": "Schwellenwert -55 mV überschritten → Auslösung. Phasen:\n1. Depolarisation (Na⁺-Kanäle öffnen, Aufstrich)\n2. Overshoot (+50 mV)\n3. Repolarisation (K⁺-Kanäle öffnen)\n4. Hyperpolarisation (Nachpotenzial)\n5. Ruhepotenzial wiederhergestellt",
+    "back_extended": "Absolute Refraktärphase: keine erneute Auslösung möglich. Relative Refraktärphase: erhöhte Erregungsstärke nötig. Saltatorische Leitung: springt von Ranvier-Schnürring zu Schnürring.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "aktionspotenzial",
+      "depolarisation",
+      "refraktär",
+      "alles-oder-nichts"
+    ],
+    "source_page": 98
+  },
+  {
+    "id": "k4-007",
+    "chapter_id": "4.2.3",
+    "chapter_title": "Synaptische Übertragung",
+    "card_type": "concept",
+    "front": "Chemische Synapse: Ablauf der Informationsübertragung",
+    "back": "1. Aktionspotenzial erreicht Axonterminale\n2. Ca²⁺-Kanäle öffnen, Ca²⁺ strömt ein\n3. Exocytose: Vesikel verschmelzen mit Membran\n4. Neurotransmitter in synaptischen Spalt\n5. Bindung an postsynaptische Rezeptoren\n6. Ionenkanäle öffnen → Depolarisation/Hyperpolarisation\n7. Wiederaufnahme oder Abbau der Neurotransmitter",
+    "back_extended": "Schlüssel-Schloss-Prinzip: Nur passende Neurotransmitter binden. Exzitatorisch (Na⁺-Kanäle, Depolarisation) vs. inhibitorisch (K⁺/Cl⁻-Kanäle, Hyperpolarisation).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "synapse",
+      "exocytose",
+      "neurotransmitter",
+      "rezeptor",
+      "übertragung"
+    ],
+    "source_page": 102
+  },
+  {
+    "id": "k4-008",
+    "chapter_id": "4.2.4",
+    "chapter_title": "Neurotransmitter",
+    "card_type": "list",
+    "front": "6 wichtige Neurotransmitter + Funktion",
+    "back": "• GLUTAMAT: wichtigster exzitatorischer NT, Lernen/Gedächtnis\n• GABA: wichtigster inhibitorischer NT, Beruhigung\n• DOPAMIN: Motivation, Belohnung, Parkinson bei Mangel\n• SEROTONIN: Emotionsregulation, Depression (SSRI)\n• ACETYLCHOLIN: Muskelkontrolle, Lernen, Schlaf\n• NORADRENALIN: Erregung, Wachheit",
+    "back_extended": "SSRI = selective serotonin reuptake inhibitors (hemmen Wiederaufnahme von Serotonin). Morbus Parkinson = absterbende dopaminproduzierende Neuronen.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "neurotransmitter",
+      "glutamat",
+      "gaba",
+      "dopamin",
+      "serotonin",
+      "liste"
+    ],
+    "source_page": 103
+  },
+  {
+    "id": "k4-009",
+    "chapter_id": "4.3.1",
+    "chapter_title": "Anatomische Bezugspunkte",
+    "card_type": "concept",
+    "front": "Anatomische Richtungsbegriffe: dorsal/ventral vs. anterior/posterior beim Menschen",
+    "back": "GEHIRN:\n• dorsal = oben (Kopfoberseite)\n• ventral = unten (Kopfunterseite)\n• anterior = vorne (Richtung Nase)\n• posterior = hinten (Richtung Hinterhaupt)\n\nRUMPF (wegen aufrechtem Gang):\n• dorsal = Richtung RÜCKEN\n• ventral = Richtung BRUSTKORB\n• anterior = Richtung BRUSTKORB\n• posterior = Richtung RÜCKEN",
+    "back_extended": "Zusätzlich: superior (Richtung Kopf), inferior (Richtung Füße), medial (mittig), lateral (seitlich), kontralateral (gegenüberliegende Seite), ipsilateral (gleiche Seite).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "anatomie",
+      "richtungen",
+      "dorsal",
+      "ventral",
+      "kontralateral"
+    ],
+    "source_page": 105
+  },
+  {
+    "id": "k4-010",
+    "chapter_id": "4.3.3",
+    "chapter_title": "Gehirn-Teile",
+    "card_type": "image",
+    "front": "[BILD] Ordne die 6 Gehirn-Teile ihrer embryonalen Herkunft zu",
+    "back": "VORDERHIRN (Prosencephalon):\n→ Telencephalon (Endhirn/Großhirn)\n→ Diencephalon (Zwischenhirn: Thalamus, Hypothalamus)\n\nMITTELHIRN (Mesencephalon):\n→ Tectum + Tegmentum\n\nRAUTENHIRN (Rhombencephalon):\n→ Metencephalon (Hinterhirn: Cerebellum + Pons)\n→ Myelencephalon (Nachhirn: Medulla oblongata)",
+    "back_extended": "Thalamus = Schaltstelle für Sinnesinformationen (außer Geruch). Hypothalamus = Steuerzentrum für Motivation, Hormone. Corpus callosum = Verbindung beider Hemisphären.",
+    "image_url": "brain_parts.png",
+    "image_labels": [
+      {
+        "label": "Telencephalon",
+        "x": 50,
+        "y": 15
+      },
+      {
+        "label": "Diencephalon",
+        "x": 50,
+        "y": 35
+      },
+      {
+        "label": "Mesencephalon",
+        "x": 50,
+        "y": 50
+      },
+      {
+        "label": "Cerebellum",
+        "x": 75,
+        "y": 55
+      },
+      {
+        "label": "Pons",
+        "x": 50,
+        "y": 65
+      },
+      {
+        "label": "Medulla",
+        "x": 50,
+        "y": 80
+      }
+    ],
+    "exam_relevant": true,
+    "difficulty": 5,
+    "tags": [
+      "gehirn",
+      "anatomie",
+      "embryonal",
+      "telencephalon",
+      "diencephalon",
+      "bild"
+    ],
+    "source_page": 109
+  },
+  {
+    "id": "k4-011",
+    "chapter_id": "4.3.3",
+    "chapter_title": "Cortex-Lappen",
+    "card_type": "image",
+    "front": "[BILD] 4 Lappen des cerebralen Cortex + Hauptfunktionen",
+    "back": "• FRONTALLAPPEN (Stirn): Planung, Sprache, Sozialverhalten, Emotionsregulation, Bewegung\n• PARIETALLAPPEN (Scheitel): Tastsinn, sensumotorische Integration, Aufmerksamkeit, Raum\n• TEMPORALLAPPEN (Schläfen): Hören, Gesichtserkennung, Hippocampus (Gedächtnis), Amygdala (Emotion)\n• OKZIPITALLAPPEN (Hinterhaupt): Visuelle Verarbeitung, primärer visueller Cortex (V1)",
+    "back_extended": "Phineas Gage: Frontallappen-Verletzung → Persönlichkeitsänderung. Kontralateral: Rechte Körperseite → linker Parietallappen. Corpus callosum: dicker Nervenstrang zwischen Hemisphären.",
+    "image_url": "cortex_lobes.png",
+    "image_labels": [
+      {
+        "label": "Frontallappen",
+        "x": 25,
+        "y": 25
+      },
+      {
+        "label": "Parietallappen",
+        "x": 60,
+        "y": 25
+      },
+      {
+        "label": "Temporallappen",
+        "x": 35,
+        "y": 65
+      },
+      {
+        "label": "Okzipitallappen",
+        "x": 85,
+        "y": 45
+      }
+    ],
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "cortex",
+      "lappen",
+      "frontal",
+      "parietal",
+      "temporal",
+      "okzipital",
+      "bild"
+    ],
+    "source_page": 111
+  },
+  {
+    "id": "k4-012",
+    "chapter_id": "4.3.4",
+    "chapter_title": "Autonomes Nervensystem",
+    "card_type": "concept",
+    "front": "Sympathisches vs. parasympathisches Nervensystem: Funktion und Situation",
+    "back": "SYMPATHISCH ('Fight or Flight'):\n• Aktiv bei: Sport, Stress, Gefahr\n• Wirkung: Adrenalin, Puls↑, Blut zu Muskeln, Verdauung↓\n\nPARASYMPATHISCH ('Rest and Digest'):\n• Aktiv bei: Entspannung, Normalbetrieb\n• Wirkung: Puls↓, Atmung ruhig, Verdauung↑, Beruhigung",
+    "back_extended": "Beide Teile des autonomen NS wirken gegensätzlich (antagonistisch). Das autonome NS reguliert innere Organe unbewusst.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "autonom",
+      "sympathisch",
+      "parasympathisch",
+      "stress",
+      "regulation"
+    ],
+    "source_page": 114
+  },
+  {
+    "id": "k4-013",
+    "chapter_id": "4.4.1",
+    "chapter_title": "Auge",
+    "card_type": "image",
+    "front": "[BILD] Benenne 5 Strukturen des Auges und ihre Funktion",
+    "back": "• CORNEA (Hornhaut): Lichtdurchlässig, Lichtbrechung\n• IRIS/PUPILLE: Blende, steuert Lichteinfall\n• LINSE: Akkommodation (Formänderung für Nah/Fern)\n• GLASKÖRPER: Füllmasse, hält Form\n• RETINA (Netzhaut): Photorezeptoren, Licht → Signal",
+    "back_extended": "Akkommodation: Ziliarmuskel verändert Linsenwölbung. Blinder Fleck: Sehnerv-Austritt, keine Photorezeptoren. 3 Augenhäute: äußere (Lederhaut/Cornea), mittlere (Aderhaut/Iris/Ziliarkörper), innere (Retina).",
+    "image_url": "eye_anatomy.png",
+    "image_labels": [
+      {
+        "label": "Cornea",
+        "x": 35,
+        "y": 20
+      },
+      {
+        "label": "Iris",
+        "x": 42,
+        "y": 25
+      },
+      {
+        "label": "Linse",
+        "x": 45,
+        "y": 30
+      },
+      {
+        "label": "Glaskörper",
+        "x": 50,
+        "y": 50
+      },
+      {
+        "label": "Retina",
+        "x": 85,
+        "y": 45
+      },
+      {
+        "label": "Sehnerv",
+        "x": 90,
+        "y": 50
+      }
+    ],
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "auge",
+      "anatomie",
+      "cornea",
+      "retina",
+      "akkmodation",
+      "bild"
+    ],
+    "source_page": 115
+  },
+  {
+    "id": "k4-014",
+    "chapter_id": "4.4.2",
+    "chapter_title": "Photorezeptoren",
+    "card_type": "concept",
+    "front": "Stäbchen vs. Zapfen: Unterschiede in Funktion, Anzahl, Verteilung",
+    "back": "STÄBCHEN:\n• Lichtempfindlicher (Dämmerung)\n• Keine Farbe\n• ~120 Millionen\n• Außerhalb Fovea\n\nZAPFEN:\n• Farbsehen (3 Typen: blau, grün, rot)\n• Scharfes Sehen\n• ~6 Millionen\n• Konzentriert in Fovea (schärfster Punkt)",
+    "back_extended": "20-mal mehr Stäbchen als Zapfen. Rot-Grün-Schwäche: X-chromosomal, bei Männern häufiger. Ishihara-Tafeln zum Testen.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "stäbchen",
+      "zapfen",
+      "fovea",
+      "photorezeptoren",
+      "farben"
+    ],
+    "source_page": 117
+  },
+  {
+    "id": "k4-015",
+    "chapter_id": "4.4.3",
+    "chapter_title": "Visuelles System",
+    "card_type": "image",
+    "front": "[BILD] Beschreibe den Weg vom Auge zum Gehirn (Sehbahn)",
+    "back": "1. RETINA → Sehnerv\n2. CHIASMA OPTICUM (Kreuzung): Nasale Fasern wechseln Seite\n3. CORPUS GENICULATUM LATERALE (CGL) im Thalamus\n4. PRIMÄRER VISUELLER CORTEX (V1) im Okzipitallappen",
+    "back_extended": "Kontralaterale Verarbeitung: Linkes Gesichtsfeld → rechte Gehirnhälfte. Retinotope Organisation: benachbarte Retinazellen → benachbarte CGL/V1-Areale. Fovea überproportional repräsentiert.",
+    "image_url": "visual_pathway.png",
+    "image_labels": [
+      {
+        "label": "Retina",
+        "x": 15,
+        "y": 40
+      },
+      {
+        "label": "Sehnerv",
+        "x": 30,
+        "y": 40
+      },
+      {
+        "label": "Chiasma",
+        "x": 45,
+        "y": 50
+      },
+      {
+        "label": "CGL",
+        "x": 60,
+        "y": 40
+      },
+      {
+        "label": "V1 Cortex",
+        "x": 85,
+        "y": 40
+      }
+    ],
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "sehbahn",
+      "chiasma",
+      "cgl",
+      "v1",
+      "okzipital",
+      "kontralateral",
+      "bild"
+    ],
+    "source_page": 119
+  },
+  {
+    "id": "k5-001",
+    "chapter_id": "5.1",
+    "chapter_title": "Was ist Allgemeine Psychologie?",
+    "card_type": "definition",
+    "front": "Was ist der universalistische Ansatz der Allgemeinen Psychologie?",
+    "back": "Annahme, dass alle Menschen universell über die gleichen psychischen Funktionen verfügen. Es werden Gemeinsamkeiten (nicht Unterschiede) untersucht.",
+    "back_extended": "Abgrenzung: Differentielle Psychologie = Unterschiede; Entwicklungspsychologie = Veränderung im Lebenslauf; Sozialpsychologie = soziale Einflüsse. Allgemeine Psychologie untersucht gesunde Erwachsene.",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "allgemeine-psychologie",
+      "universalistisch",
+      "definition"
+    ],
+    "source_page": 121
+  },
+  {
+    "id": "k5-002",
+    "chapter_id": "5.2.1",
+    "chapter_title": "Wahrnehmung",
+    "card_type": "definition",
+    "front": "Was versteht man unter Wahrnehmung?",
+    "back": "Organisation und Interpretation sensorischer Eindrücke, um eine sinnvolle Darstellung der Umwelt zu ermöglichen.",
+    "back_extended": "Wahrnehmung geht über reine Sinnesrezeption hinaus: Es werden Muster erkannt, mit Vorwissen verknüpft und Bedeutung zugewiesen. Beispiel: Müller-Lyer-Illusion (gleich lange Linien werden unterschiedlich wahrgenommen).",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "wahrnehmung",
+      "definition",
+      "sinne"
+    ],
+    "source_page": 123
+  },
+  {
+    "id": "k5-003",
+    "chapter_id": "5.2.2",
+    "chapter_title": "Theorien der Wahrnehmung",
+    "card_type": "concept",
+    "front": "Bottom-up vs. Top-down-Verarbeitung: Unterschied?",
+    "back": "BOTTOM-UP: Datengetrieben, von Sinnesreiz ausgehend (z.B. Buchstaben erkennen → Wort lesen)\nTOP-DOWN: Erwartungsgetrieben, von Vorwissen ausgehend (z.B. Kontext hilft bei unklarer Aussprache)",
+    "back_extended": "Beide Prozesse laufen parallel ab. Beispiel Top-down: 'Context is King' (Abb. 2.11 im Skript) – gleicher Reiz wird in verschiedenem Kontext anders wahrgenommen (13 vs. B).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "wahrnehmung",
+      "bottom-up",
+      "top-down",
+      "verarbeitung"
+    ],
+    "source_page": 124
+  },
+  {
+    "id": "k5-004",
+    "chapter_id": "5.2.3",
+    "chapter_title": "Aufmerksamkeit",
+    "card_type": "concept",
+    "front": "Was beschreibt Broadbents Filtermodell (1958)?",
+    "back": "Das menschliche Nervensystem hat begrenzte Verarbeitungskapazität. Ein Filter selektiert, welche Informationen weiterverarbeitet werden (auf Basis physikalischer Eigenschaften).",
+    "back_extended": "Cocktail-Party-Effekt: Trotz Filter kann eigener Name aus Hintergrund wahrgenommen werden → Kritik am reinen Filtermodell. Treiseman: Attenuation Model (abgeschwächt, nicht vollständig gefiltert).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "aufmerksamkeit",
+      "broadbent",
+      "filter",
+      "cocktail-party"
+    ],
+    "source_page": 127
+  },
+  {
+    "id": "k5-005",
+    "chapter_id": "5.2.3",
+    "chapter_title": "Aufmerksamkeit",
+    "card_type": "concept",
+    "front": "Unterschied: Fokussierte vs. geteilte Aufmerksamkeit",
+    "back": "FOKUSSIERT: Konzentration auf einen Reiz, andere werden ignoriert\nGETEILT: Gleichzeitige Verarbeitung mehrerer Reize (nur bei Automatisierung möglich, z.B. Autofahren + Radio hören)",
+    "back_extended": "Geteilte Aufmerksamkeit funktioniert nur, wenn mindestens eine Aufgabe automatisiert ist. Bei zwei komplexen Aufgaben kommt es zu Interferenz (Leistungsabfall).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "aufmerksamkeit",
+      "fokussiert",
+      "geteilt",
+      "automatisierung"
+    ],
+    "source_page": 127
+  },
+  {
+    "id": "k5-006",
+    "chapter_id": "5.2.4",
+    "chapter_title": "Visuelle Wahrnehmung",
+    "card_type": "concept",
+    "front": "Was sind die 3 Ebenen der visuellen Verarbeitung nach Marr?",
+    "back": "1. PRIMAL SKETCH: Kanten, Konturen, Texturen\n2. 2½-D-SKETCH: Oberflächen, Tiefen, Schattierungen\n3. 3-D-MODELL: Vollständige Objektrepräsentation",
+    "back_extended": "David Marr (1982): Computer Vision als Analogie zur menschlichen Wahrnehmung. Die 3 Ebenen zeigen zunehmende Abstraktion vom reinen Reiz zur semantischen Bedeutung.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "visuelle-wahrnehmung",
+      "marr",
+      "3-ebenen",
+      "objekterkennung"
+    ],
+    "source_page": 131
+  },
+  {
+    "id": "k5-007",
+    "chapter_id": "5.3.1",
+    "chapter_title": "Wie lernen wir?",
+    "card_type": "definition",
+    "front": "Was ist Lernen in der Psychologie?",
+    "back": "Relativ dauerhafte Verhaltensänderung durch Erfahrung oder Übung.",
+    "back_extended": "Nicht jede Verhaltensänderung ist Lernen: Reifung (biologisch programmiert) und vorübergehende Zustände (Müdigkeit, Drogen) zählen nicht. Lernen impliziert Gedächtnisspeicherung.",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "lernen",
+      "definition",
+      "verhaltensänderung"
+    ],
+    "source_page": 137
+  },
+  {
+    "id": "k5-008",
+    "chapter_id": "5.3.2",
+    "chapter_title": "Habituation und Sensitivierung",
+    "card_type": "concept",
+    "front": "Habituation vs. Sensitivierung: Unterschied und Beispiel",
+    "back": "HABITUATION: Abnahme der Reaktion auf wiederholten, harmlosen Reiz (z.B. Straßenlärm wird ignoriert)\nSENSITIVIERUNG: Zunahme der Reaktion auf wiederholten, bedrohlichen Reiz (z.B. lauter Knall wird immer erschreckender)",
+    "back_extended": "Beides sind nicht-assoziative Lernformen (keine Verknüpfung zwischen Reizen nötig). Habituation = einfachste Lernform. Dishabituation: Wiederauftreten der ursprünglichen Reaktion nach Pause oder neuer Reiz.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "lernen",
+      "habituation",
+      "sensitivierung",
+      "nicht-assoziativ"
+    ],
+    "source_page": 139
+  },
+  {
+    "id": "k5-009",
+    "chapter_id": "5.3.3",
+    "chapter_title": "Klassische Konditionierung",
+    "card_type": "concept",
+    "front": "Klassische Konditionierung (Pawlow): Elemente und Ablauf",
+    "back": "• UNBEDIINGTER REIZ (UR): natürlich auslösend (Fleisch → Speichel)\n• BEDINGTER REIZ (BR): zunächst neutral (Glocke)\n• BEDINGTE REAKTION (BRak): gelernte Reaktion (Glocke → Speichel)\n\nAblauf: BR + UR gemeinsam → nach Wiederholung alleiniger BR ausreichend",
+    "back_extended": "Pawlow (Hunde): Ursprünglich Glocke irrelevant, nach Paarung mit Fleisch wird Glocke zum BR. Extinktion: Wiederholter BR ohne UR führt zum Erlöschen der bedingten Reaktion. Spontane Erholung: BRak tritt nach Pause wieder auf (nicht vergessen, nur unterdrückt).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "lernen",
+      "klassische-konditionierung",
+      "pawlow",
+      "br-ur"
+    ],
+    "source_page": 140
+  },
+  {
+    "id": "k5-010",
+    "chapter_id": "5.3.4",
+    "chapter_title": "Operante Konditionierung",
+    "card_type": "concept",
+    "front": "Operante Konditionierung (Skinner): 4 Konsequenzen des Verhaltens",
+    "back": "• POSITIVE VERSTÄRKUNG: Verhalten → angenehme Konsequenz (Verhalten ↑)\n• NEGATIVE VERSTÄRKUNG: Verhalten → unangenehmer Reiz entfernt (Verhalten ↑)\n• POSITIVE BESTRAFUNG: Verhalten → unangenehme Konsequenz (Verhalten ↓)\n• NEGATIVE BESTRAFUNG (Strafe): Verhalten → angenehmer Reiz entfernt (Verhalten ↓)",
+    "back_extended": "Verstärkung = Verhalten wird häufiger; Bestrafung = Verhalten wird seltener. Zeitplan: kontinuierlich (jedes Mal) vs. partiell/intermittierend (manchmal). Partielle Verstärkung ist resistenter gegen Extinktion (z.B. Glücksspiel).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "lernen",
+      "operante-konditionierung",
+      "skinner",
+      "verstärkung",
+      "bestrafung"
+    ],
+    "source_page": 143
+  },
+  {
+    "id": "k5-011",
+    "chapter_id": "5.3.5",
+    "chapter_title": "Beobachtungslernen",
+    "card_type": "concept",
+    "front": "Beobachtungslernen nach Bandura: 4 Prozesse",
+    "back": "1. AUFMERKSAMKEIT: Modell beachten\n2. BEHALTEN: In Gedächtnis speichern\n3. REPRODUKTION: Nachahmen können\n4. MOTIVATION: Willen zum Nachahmen (erwartete Konsequenzen)",
+    "back_extended": "Banduras Bobo-Doll-Experiment (1961): Kinder imitierten aggressive Verhaltensweisen gegen Puppe, die sie bei Erwachsenen beobachtet hatten. Selbst ohne direkte Verstärkung kann Lernen durch Beobachtung stattfinden.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "lernen",
+      "beobachtungslernen",
+      "bandura",
+      "modell",
+      "bobo-doll"
+    ],
+    "source_page": 146
+  },
+  {
+    "id": "k5-012",
+    "chapter_id": "5.4.1",
+    "chapter_title": "Gedächtnis: Enkodierung, Speicherung, Abruf",
+    "card_type": "concept",
+    "front": "3 Prozesse des Gedächtnisses",
+    "back": "1. ENKODIERUNG: Information aufnehmen und verarbeiten\n2. SPEICHERUNG: Information über Zeit behalten\n3. ABRUF: Gespeicherte Information zugänglich machen",
+    "back_extended": "Jeder Prozess kann unabhängig gestört sein. Enkodierungsfehler = nicht richtig gelernt; Speicherungsfehler = vergessen; Abruffehler = 'auf der Zunge' (TOT-Effekt).",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "gedächtnis",
+      "enkodierung",
+      "speicherung",
+      "abruf",
+      "prozesse"
+    ],
+    "source_page": 148
+  },
+  {
+    "id": "k5-013",
+    "chapter_id": "5.4.2",
+    "chapter_title": "Drei-Speicher-Modell",
+    "card_type": "concept",
+    "front": "Atkinson-Shiffrin: 3 Speicher und ihre Merkmale",
+    "back": "• ULTRAKURZZEITGEDÄCHTNIS (UKG): 0,5-2 Sek., Sinnesspeicher, unbegrenzte Kapazität\n• KURZZEITGEDÄCHTNIS (KZG): ca. 20-30 Sek., 7±2 Chunks (Miller), aktive Verarbeitung\n• LANGZEITGEDÄCHTNIS (LZG): potenziell unbegrenzt, dauerhaft",
+    "back_extended": "KZG = Arbeitsgedächtnis (Baddeley): phonologische Schleife, visuell-räumlicher Notizblock, episodischer Puffer, zentrale Exekutive. Informationen aus KZG können durch Rehearsal (Wiederholung) oder Elaboration (Verknüpfung) ins LZG transferiert werden.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "gedächtnis",
+      "3-speicher-modell",
+      "atkinson-shiffrin",
+      "kzg",
+      "lzg"
+    ],
+    "source_page": 150
+  },
+  {
+    "id": "k5-014",
+    "chapter_id": "5.4.4",
+    "chapter_title": "Langzeitgedächtnis",
+    "card_type": "concept",
+    "front": "Deklaratives vs. prozedurales Gedächtnis: Unterschied und Beispiele",
+    "back": "DEKLARATIV (explizit, bewusst):\n• Episodisch: persönliche Erfahrungen (Urlaub 2023)\n• Semantisch: Fakten, Begriffe (Hauptstadt von Frankreich)\n\nPROZEDURAL (implizit, unbewusst):\n• Fertigkeiten, Gewohnheiten (Fahrrad fahren, Tippen)",
+    "back_extended": "Deklaratives Gedächtnis ist verbalisierbar, prozedurales nicht. Patient H.M. (Hippocampus entfernt): kein neues deklaratives Lernen möglich, aber prozedurales Lernen (Mirror-Drawing-Task) intakt.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "gedächtnis",
+      "langzeit",
+      "deklarativ",
+      "prozedural",
+      "episodisch",
+      "semantisch"
+    ],
+    "source_page": 154
+  },
+  {
+    "id": "k5-015",
+    "chapter_id": "5.4.5",
+    "chapter_title": "Gedächtniseffekte",
+    "card_type": "concept",
+    "front": "Primacy- und Recency-Effekt: Was bedeuten sie?",
+    "back": "PRIMACY: Bessere Erinnerung an den ANFANG einer Liste (wahrscheinlich ins LZG transferiert)\nRECENCY: Bessere Erinnerung an das ENDE einer Liste (noch im KZG vorhanden)",
+    "back_extended": "Serielle Positionseffekt = Primacy + Recency. U-förmige Erinnerungskurve bei Listenlernen. Mittlere Elemente am schlechtesten erinnert. Bei sofortigem Abruf: beide Effekte stark. Bei verzögertem Abruf: nur Primacy-Effekt (KZG-Inhalte vergessen).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "gedächtnis",
+      "primacy",
+      "recency",
+      "serielle-position",
+      "effekte"
+    ],
+    "source_page": 156
+  },
+  {
+    "id": "k6-001",
+    "chapter_id": "6.1",
+    "chapter_title": "Was ist Entwicklungspsychologie?",
+    "card_type": "definition",
+    "front": "Was untersucht die Entwicklungspsychologie?",
+    "back": "Veränderungen psychischer Prozesse im gesamten Lebenslauf – von der pränatalen Entwicklung bis ins hohe Alter.",
+    "back_extended": "3 Entwicklungsbereiche: biologisch (Körper), kognitiv (Denken), sozial-emotional (Beziehungen). Kontinuität vs. Diskontinuität: Entwicklung als stetiger Prozess oder abrupte Stufen?",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "entwicklungspsychologie",
+      "definition",
+      "lebenslauf"
+    ],
+    "source_page": 162
+  },
+  {
+    "id": "k6-002",
+    "chapter_id": "6.2.1",
+    "chapter_title": "Pränatale Entwicklung",
+    "card_type": "concept",
+    "front": "3 Phasen der pränatalen Entwicklung",
+    "back": "1. ZYGOTE (0-2 Wochen): Befruchtung, Zellteilung, Einnistung\n2. EMBRYO (3-8 Wochen): Organbildung, äußere Strukturen\n3. FETUS (9. Woche bis Geburt): Wachstum, Reifung der Organe",
+    "back_extended": "Teratogene: Substanzen, die pränatale Entwicklung schädigen (Alkohol, Nikotin, Drogen, bestimmte Medikamente). Kritische Perioden: bestimmte Organe besonders anfällig zu bestimmten Zeiten (z.B. Thalidomid in Woche 3-5 → Gliedmaßenfehlbildungen).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "entwicklung",
+      "pränatal",
+      "zygote",
+      "embryo",
+      "fetus",
+      "teratogene"
+    ],
+    "source_page": 163
+  },
+  {
+    "id": "k6-003",
+    "chapter_id": "6.2.2",
+    "chapter_title": "Entwicklung in der frühen Kindheit",
+    "card_type": "concept",
+    "front": "Piagets Sensorimotorische Stufe (0-2 Jahre): Was wird entwickelt?",
+    "back": "Koordination von Sinneseindrücken und motorischen Aktionen. Zentrale Leistung: OBJEKTPERMANENZ (Objekte existieren auch wenn nicht sichtbar).",
+    "back_extended": "A-not-B-Fehler: Kind sucht Objekt an Stelle A, wo es zuerst versteckt wurde, auch wenn es danach zu Stelle B versteckt wurde. Zeigt Unreife des Arbeitsgedächtnisses. Substadien: 6 Substadien von Reflexen bis symbolischem Denken.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "piaget",
+      "sensorimotorisch",
+      "objektpermanenz",
+      "kindheit"
+    ],
+    "source_page": 166
+  },
+  {
+    "id": "k6-004",
+    "chapter_id": "6.3.1",
+    "chapter_title": "Piagets kognitive Entwicklungstheorie",
+    "card_type": "concept",
+    "front": "Piaget: 4 Stufen der kognitiven Entwicklung + Altersbereiche",
+    "back": "1. SENSORIMOTORISCH (0-2 J.): Sinneseindrücke + Motorik\n2. PRÄOPERATIONAL (2-7 J.): Symbolisches Denken, Egozentrismus\n3. KONKRET-OPERATIONAL (7-12 J.): Logik, Konservation\n4. FORMAL-OPERATIONAL (ab 12 J.): Abstraktes Denken, Hypothesen",
+    "back_extended": "Zentrale Konzepte: Assimilation (neue Info in bestehendes Schema einordnen) vs. Akkommodation (Schema anpassen). Egozentrismus = Unfähigkeit, andere Perspektive einzunehmen. Konservation = Erkennen, dass Menge gleich bleibt trotz Formänderung.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "piaget",
+      "kognitive-entwicklung",
+      "4-stufen",
+      "assimilation",
+      "akkommodation"
+    ],
+    "source_page": 171
+  },
+  {
+    "id": "k6-005",
+    "chapter_id": "6.3.2",
+    "chapter_title": "Theory of Mind",
+    "card_type": "concept",
+    "front": "Was ist die Theory of Mind (ToM)? Ab wann entwickelt?",
+    "back": "Fähigkeit, eigene und andere mentalen Zustände (Gedanken, Gefühle, Überzeugungen) zu verstehen. Entwickelt sich ca. ab 3-4 Jahren.",
+    "back_extended": "Sally-Anne-Test (Wimmer & Perner, 1983): Kind muss verstehen, dass Sally eine falsche Überzeugung hat (Marble wurde verschoben, ohne dass Sally es sah). Kinder < 4 Jahre sagen, Sally sucht am neuen Ort (können falsche Überzeugung nicht attribuieren). Autismus: oft verzögerte oder fehlende ToM-Entwicklung.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "theory-of-mind",
+      "tom",
+      "sally-anne",
+      "falsche-überzeugung",
+      "sozial"
+    ],
+    "source_page": 177
+  },
+  {
+    "id": "k6-006",
+    "chapter_id": "6.3.3",
+    "chapter_title": "Moralentwicklung",
+    "card_type": "concept",
+    "front": "Kohlberg: 3 Stufen der Moralentwicklung",
+    "back": "1. PRÄ-KONVENTIONELL (bis ca. 9 J.): Konkrete Konsequenzen, Belohnung/Strafe\n2. KONVENTIONELL (9-20 J.): Soziale Normen, Konformität, Gesetze\n3. POST-KONVENTIONELL (ab ca. 20 J.): Abstrakte Prinzipien, Menschenrechte, Gerechtigkeit",
+    "back_extended": "Heinz-Dilemma: Mann soll Medikament stehlen, um Frau zu retten. Prä-konventionell = nein (Stehlen ist falsch). Konventionell = ja (Eheversprechen). Post-konventionell = ja (Leben höherwertig als Eigentum). Kritik: westlich geprägt, Geschlechterunterschiede (Gilligan).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "kohlberg",
+      "moral",
+      "3-stufen",
+      "heinz-dilemma",
+      "prä-konventionell"
+    ],
+    "source_page": 178
+  },
+  {
+    "id": "k6-007",
+    "chapter_id": "6.4.1",
+    "chapter_title": "Bindung",
+    "card_type": "concept",
+    "front": "Bowlby/Ainsworth: 4 Bindungstypen beim Kleinkind",
+    "back": "1. SICHER: traurig bei Trennung, froh bei Wiedervereinigung, beruhigt durch Bezugsperson\n2. UNSICHER-VERMEIDEND: ignoriert Bezugsperson, wenig Emotion\n3. UNSICHER-AMBivalent: sehr traurig, schwer zu beruhigen, widersprüchliches Verhalten\n4. DESORGANISIERT: verwirrt, keine klare Strategie",
+    "back_extended": "Fremde-Situation-Test (Ainsworth): Mutter und Kind in Raum, Fremde tritt ein, Mutter geht, kommt zurück. Bindungstyp beeinflusst spätere Beziehungen (Internal Working Model). Sichere Bindung = bester Prädiktor für positive Entwicklung.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "bindung",
+      "ainsworth",
+      "bowlby",
+      "4-typen",
+      "fremde-situation"
+    ],
+    "source_page": 185
+  },
+  {
+    "id": "k6-008",
+    "chapter_id": "6.4.2",
+    "chapter_title": "Eriksons Stufenmodell",
+    "card_type": "concept",
+    "front": "Erikson: 8 Stufen der psychosozialen Entwicklung (erste 4)",
+    "back": "1. GRUNDSICHERHEIT (0-1 J.): Vertrauen vs. Misstrauen\n2. AUTONOMIE (1-3 J.): Autonomie vs. Scham/Zweifel\n3. INITIATIVE (3-6 J.): Initiative vs. Schuld\n4. FLEISS (6-12 J.): Fleiß vs. Minderwertigkeit",
+    "back_extended": "Weitere Stufen: 5. Identität vs. Rollenverwirrung (Adoleszenz), 6. Intimität vs. Isolation (junge Erwachsene), 7. Generativität vs. Stagnation (Erwachsene), 8. Integrität vs. Verzweiflung (Alter). Jede Stufe hat zentrale Konflikt/Krise. Erfolgreiche Bewältigung = Tugend (z.B. Hoffnung, Wille, Zweck).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "erikson",
+      "psychosozial",
+      "8-stufen",
+      "grund sicherheit",
+      "autonomie",
+      "identität"
+    ],
+    "source_page": 187
+  },
+  {
+    "id": "k6-009",
+    "chapter_id": "6.4.3",
+    "chapter_title": "Identitätssuche",
+    "card_type": "concept",
+    "front": "Marcia: 4 Identitätsstatus in der Adoleszenz",
+    "back": "• IDENTITÄTSACHIEVEMENT: Krisis durchgemacht, Entscheidung getroffen\n• MORATORIUM: aktive Krisis, Suche läuft\n• FORECLOSURE: keine Krisis, Entscheidung übernommen (z.B. von Eltern)\n• DIFFUSION: keine Krisis, keine Entscheidung",
+    "back_extended": "Basierend auf Eriksons Identitäts vs. Rollenverwirrung. Krisis = aktive Auseinandersetzung mit Alternativen. Commitment = Entscheidung für bestimmte Werte/Beruf/Weltanschauung.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "marcia",
+      "identität",
+      "adoleszenz",
+      "4-status",
+      "achievement",
+      "moratorium"
+    ],
+    "source_page": 188
+  },
+  {
+    "id": "k7-001",
+    "chapter_id": "7.1",
+    "chapter_title": "Was ist Sozialpsychologie?",
+    "card_type": "definition",
+    "front": "Was untersucht die Sozialpsychologie?",
+    "back": "Wie das soziale Umfeld (andere Personen, Gruppen, Normen) das Erleben, Fühlen und Verhalten von Individuen beeinflusst.",
+    "back_extended": "Kernfrage: Wie wird die subjektive Realität konstruiert? Soziale Kognition = Prozesse, durch die wir soziale Information verarbeiten.",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "sozialpsychologie",
+      "definition",
+      "soziale-kognition"
+    ],
+    "source_page": 189
+  },
+  {
+    "id": "k7-002",
+    "chapter_id": "7.2.1",
+    "chapter_title": "Schemata",
+    "card_type": "definition",
+    "front": "Was sind Schemata in der Sozialpsychologie?",
+    "back": "Mentale Strukturen, die Wissen über Konzepte, Personen, Ereignisse oder Situationen organisieren und die Informationsverarbeitung steuern.",
+    "back_extended": "Funktionen: Schnelle Informationsverarbeitung, Erwartungen generieren, Lücken schließen. Risiko: Bestätigungsfehler (Confirmation Bias), Selbsterfüllende Prophezeiung. Beispiel: Geschlechtsschemata (Vorstellungen über 'typisch männlich/weiblich').",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "sozial",
+      "schemata",
+      "kognition",
+      "bestätigungsfehler"
+    ],
+    "source_page": 192
+  },
+  {
+    "id": "k7-003",
+    "chapter_id": "7.2.2",
+    "chapter_title": "Priming",
+    "card_type": "concept",
+    "front": "Was ist Priming? Beispiel",
+    "back": "Unbewusste Aktivierung bestimmter Assoziationen durch vorherige Reize, die spätere Wahrnehmung/Verhalten beeinflusst.",
+    "back_extended": "Beispiel: Bargh et al. (1996): Teilnehmer, die mit Alters-Wörtern geprimed wurden, gingen langsamer zum Aufzug. Subliminales Priming: Reize unter Wahrnehmungsschwelle wirken dennoch. Impliziter Assoziationstest (IAT): misst unbewusste Assoziationen durch Reaktionszeiten.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "sozial",
+      "priming",
+      "unbewusst",
+      "bargh",
+      "iat"
+    ],
+    "source_page": 194
+  },
+  {
+    "id": "k7-004",
+    "chapter_id": "7.2.3",
+    "chapter_title": "Kontrolliertes vs. automatisches Denken",
+    "card_type": "concept",
+    "front": "Kahneman: System 1 vs. System 2",
+    "back": "SYSTEM 1 (automatisch):\n• Schnell, mühelos, emotional\n• Heuristiken, Intuition\n• Meist im Hintergrund\n\nSYSTEM 2 (kontrolliert):\n• Langsam, anstrengend, logisch\n• Analytisch, bewusst\n• Bei komplexen Entscheidungen",
+    "back_extended": "Beide Systeme arbeiten zusammen, aber System 2 ist 'faul' und akzeptiert oft System-1-Vorschläge. Verfügbarkeitsheuristik: Ereignisse, die leicht abrufbar sind, werden als wahrscheinlicher eingeschätzt (z.B. Flugangst nach Medienberichten).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "kahneman",
+      "system-1",
+      "system-2",
+      "heuristik",
+      "schnelles-denken"
+    ],
+    "source_page": 195
+  },
+  {
+    "id": "k7-005",
+    "chapter_id": "7.3.1",
+    "chapter_title": "Soziale Erleichterung vs. Hemmung",
+    "card_type": "concept",
+    "front": "Soziale Erleichterung vs. soziale Hemmung: Wann tritt was auf?",
+    "back": "SOZIALE ERLEICHTERUNG: Anwesenheit anderer verbessert Leistung bei EINFACHEN/wellpräparierten Aufgaben\nSOZIALE HEMMUNG: Anwesenheit anderer verschlechtert Leistung bei KOMPLEXEN/neuen Aufgaben",
+    "back_extended": "Zajonc (1965): Anwesenheit anderer erhöht physiologische Erregung → dominiertes/wahrscheinlichstes Verhalten wird verstärkt. Einfache Aufgaben = dominante Reaktion = richtig. Komplexe Aufgaben = dominante Reaktion = oft falsch. Evaluation Apprehension: Angst vor Bewertung durch andere.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "sozial",
+      "erleichterung",
+      "hemmung",
+      "zajonc",
+      "anwesenheit"
+    ],
+    "source_page": 200
+  },
+  {
+    "id": "k7-006",
+    "chapter_id": "7.3.2",
+    "chapter_title": "Einfluss von Mehrheiten",
+    "card_type": "concept",
+    "front": "Asch (1951): Konformitätsversuch – Ergebnisse",
+    "back": "Teilnehmer gaben in ca. 37% der Fälle offensichtlich falsche Antworten, um der Gruppenmeinung zu entsprechen. 75% konformierten mindestens einmal.",
+    "back_extended": "Faktoren, die Konformität erhöhen: Gruppengröße (bis ca. 4 Personen, dann Sättigung), Unanimity (Einstimmigkeit wichtig!), Anonymität verringert Konformität. Dissenter: Ein abweichender Gruppenmitglied reduziert Konformität stark.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "asch",
+      "konformität",
+      "mehrheit",
+      "gruppenzwang",
+      "linienversuch"
+    ],
+    "source_page": 203
+  },
+  {
+    "id": "k7-007",
+    "chapter_id": "7.3.3",
+    "chapter_title": "Einfluss von Minderheiten",
+    "card_type": "concept",
+    "front": "Moscovici: Wann sind Minderheiten einflussreich?",
+    "back": "Minderheiten beeinflussen Mehrheiten, wenn sie:\n• KONSISTENT sind (nicht wankelmütig)\n• FLEXIBEL in der Argumentation\n• Selbstbewusst auftreten\n• Nicht als extrem wahrgenommen werden",
+    "back_extended": "Moscovicis blaue/grüne Slides-Experiment (1969): Minderheit, die konsequent blau als grün bezeichnete, beeinflusste Mehrheit. Konformität = öffentliche Zustimmung; Konversion = private Überzeugungsänderung (tiefere Wirkung der Minderheit).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "moscovici",
+      "minderheit",
+      "konversion",
+      "konsistenz",
+      "einfluss"
+    ],
+    "source_page": 205
+  },
+  {
+    "id": "k7-008",
+    "chapter_id": "7.3.4",
+    "chapter_title": "Gehorsam gegenüber Autoritäten",
+    "card_type": "concept",
+    "front": "Milgram (1963): Was zeigte das Obedience-Experiment?",
+    "back": "65% der Teilnehmer verabreichten scheinbar tödliche Elektroschocks (450V), wenn Autoritätsperson dazu aufforderte. Obedience = Befolgen von Anordnungen.",
+    "back_extended": "Faktoren, die Gehorsam erhöhen: Autorität als legitimiert wahrgenommen, Experte, langsame Eskalation, Person in der Nähe (nicht remote), geringe persönliche Verantwortung. Heute ethisch nicht reproduzierbar. Variationen: geringer Gehorsam, wenn Opfer in Raum oder Autorität widersprüchlich.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "milgram",
+      "gehorsam",
+      "obedience",
+      "autorität",
+      "elektroschock"
+    ],
+    "source_page": 207
+  },
+  {
+    "id": "k7-009",
+    "chapter_id": "7.3.6",
+    "chapter_title": "Soziale Rollen und Normen",
+    "card_type": "concept",
+    "front": "Zimbardo (1971): Stanford Prison Experiment – Kernbefund",
+    "back": "Teilnehmer übernahmen zugewiesene Rollen (Gefangene/Wärter) extrem schnell und intensiv. Wärter zeigten grausames Verhalten, Gefangene psychische Zusammenbrüche.",
+    "back_extended": "Zeigt die Macht der Situation über Persönlichkeit. Rollenkonflikt: Widersprüchliche Erwartungen an eine Rolle. Rollenübernahme: Verhalten wird durch Rollenerwartungen bestimmt. Kritik: ethisch problematisch, methodische Mängel (Selection Bias, Demand Characteristics).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "zimbardo",
+      "stanford",
+      "rollen",
+      "gefängnis",
+      "situationsmacht"
+    ],
+    "source_page": 213
+  },
+  {
+    "id": "k7-010",
+    "chapter_id": "7.4.1",
+    "chapter_title": "Ferienlagerexperiment der Sherifs",
+    "card_type": "concept",
+    "front": "Sherif (1954/1961): Realistic Conflict Theory – 3 Phasen",
+    "back": "1. INGROUP-FORMATION: Gruppen bilden eigene Normen/Kultur\n2. INTERGROUP-KONFLIKT: Wettbewerb um knappe Ressourcen → Feindseligkeit\n3. REDUKTION: Übergeordnete Ziele (superordinate goals) reduzieren Konflikt",
+    "back_extended": "Robbers Cave Experiment: 2 Gruppen von Jungen im Ferienlager. Wettbewerb um Trophäen → Stereotype, Diskriminierung. Gemeinsame Probleme (Wasserleitung kaputt) → Kooperation. Realistic Conflict Theory: Konflikt entsteht durch Konkurrenz um Ressourcen, nicht nur durch Gruppenzugehörigkeit.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "sherif",
+      "robbers-cave",
+      "intergruppen",
+      "konflikt",
+      "superordinate-goals"
+    ],
+    "source_page": 219
+  },
+  {
+    "id": "k7-011",
+    "chapter_id": "7.4.2",
+    "chapter_title": "Minimalgruppenparadigma",
+    "card_type": "concept",
+    "front": "Tajfel (1970): Minimalgruppenparadigma – Was zeigte es?",
+    "back": "Bereits willkürliche, minimale Gruppenzugehörigkeit (z.B. Punkteschätzer vs. Linienschätzer) führt zu Ingroup-Favoritismus und Diskriminierung der Outgroup.",
+    "back_extended": "Social Identity Theory (Tajfel & Turner): Selbstwert wird durch Gruppenzugehörigkeit bestimmt. Ingroup-Favoritismus = eigene Gruppe bevorzugen, auch wenn keine reale Konkurrenz besteht. Selbstkategorisierungstheorie (Turner): Personen internalisieren Gruppenmerkmale.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "tajfel",
+      "minimalgruppen",
+      "social-identity",
+      "ingroup",
+      "outgroup"
+    ],
+    "source_page": 222
+  },
+  {
+    "id": "k7-012",
+    "chapter_id": "7.4.3",
+    "chapter_title": "Stereotype, Vorurteile, Diskriminierung",
+    "card_type": "concept",
+    "front": "Unterschied: Stereotyp vs. Vorurteil vs. Diskriminierung",
+    "back": "• STEREOTYP: Kognitive Komponente – verallgemeinernde Überzeugung über Gruppe\n• VORURTEIL: Affektive Komponente – negative Einstellung gegenüber Gruppe\n• DISKRIMINIERUNG: Verhaltenskomponente – ungerechte Behandlung aufgrund Gruppenzugehörigkeit",
+    "back_extended": "Stereotype können automatisch (implizit) oder kontrolliert (explizit) aktiviert werden. Selbsterfüllende Prophezeiung: Stereotyp führt zu Verhalten, das es bestätigt. Kontakt-Hypothese (Allport): Gleichberechtigter Kontakt zwischen Gruppen reduziert Vorurteile.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "stereotyp",
+      "vorurteil",
+      "diskriminierung",
+      "abc-modell",
+      "kontakt-hypothese"
+    ],
+    "source_page": 225
+  },
+  {
+    "id": "k7-013",
+    "chapter_id": "7.5.2",
+    "chapter_title": "Empathie-Altruismus-Hypothese",
+    "card_type": "concept",
+    "front": "Batson: Empathie-Altruismus-Hypothese – Kernbehauptung",
+    "back": "Empathie (Mitgefühl für andere) führt zu ALTRUISTISCHEM Verhalten – Motivation ist Sorge um das Wohlergehen des anderen, nicht eigener Nutzen.",
+    "back_extended": "Gegenposition: Soziale-Austausch-Theorie (Homans) – altruistisches Verhalten ist letztlich egoistisch (Kosten-Nutzen-Kalkül, zukünftige Gegenleistung erwarten). Batsons Experimente: Hohe Empathie → helfen, auch wenn Flucht ohne Kosten möglich. Niedrige Empathie → helfen nur wenn Flucht teuer.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "batson",
+      "altruismus",
+      "empathie",
+      "egoismus",
+      "prosozial"
+    ],
+    "source_page": 229
+  },
+  {
+    "id": "k7-014",
+    "chapter_id": "7.5.4",
+    "chapter_title": "Situative Determinanten prosozialen Handelns",
+    "card_type": "concept",
+    "front": "Kitty-Genovese-Fall und der Bystander-Effekt: Was ist der Bystander-Effekt?",
+    "back": "Je mehr Zeugen einer Notsituation, desto geringer die Wahrscheinlichkeit, dass jemand hilft. Diffusion der Verantwortung: Verantwortung wird auf viele verteilt → keiner fühlt sich zuständig.",
+    "back_extended": "Latane & Darley (1968): 5 Entscheidungsstufen: 1. Notiz nehmen, 2. als Notfall interpretieren, 3. Verantwortung fühlen, 4. Wissen wie helfen, 5. Entscheidung zu helfen. Pluralistische Ignoranz: Alle schauen andere ab, um Situation zu interpretieren → niemand reagiert.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "bystander",
+      "kitty-genovese",
+      "latane",
+      "darley",
+      "diffusion-verantwortung"
+    ],
+    "source_page": 231
+  },
+  {
+    "id": "k8-001",
+    "chapter_id": "8.1",
+    "chapter_title": "Was ist Differentielle/Persönlichkeitspsychologie?",
+    "card_type": "definition",
+    "front": "Unterschied: Allgemeine vs. Differentielle vs. Persönlichkeitspsychologie",
+    "back": "• ALLGEMEINE: Gemeinsamkeiten aller Menschen\n• DIFFERENTIELLE: Unterschiede ZWISCHEN Personen\n• PERSÖNLICHKEITSPSYCHOLOGIE: individuelle, relativ stabile Muster von Erleben und Verhalten",
+    "back_extended": "Differentielle Psychologie = 'Differential Psychology' (Vergleich). Persönlichkeitspsychologie = 'Personality Psychology' (individuelles Muster). Beide untersuchen Variabilität, aber Persönlichkeitspsychologie fokussiert auf kohärente, zeitstabile Muster.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "differentiell",
+      "persönlichkeit",
+      "unterschied",
+      "allgemein",
+      "definition"
+    ],
+    "source_page": 233
+  },
+  {
+    "id": "k8-002",
+    "chapter_id": "8.1.1",
+    "chapter_title": "Was ist Persönlichkeit?",
+    "card_type": "definition",
+    "front": "Definition Persönlichkeit",
+    "back": "Individuelle, relativ stabile und über Situationen hinweg konsistente Muster von Erleben, Fühlen und Verhalten, die eine Person charakterisieren.",
+    "back_extended": "3 Aspekte: 1. Einzigartigkeit (jede Person ist anders), 2. Stabilität (über Zeit konsistent), 3. Konsistenz (über Situationen hinweg). Aber: Situationismus-Kritik (Mischel): Verhalten ist situationsabhängiger als angenommen → Interaktionismus (Person × Situation).",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "persönlichkeit",
+      "definition",
+      "stabilität",
+      "konsistenz",
+      "einzigartigkeit"
+    ],
+    "source_page": 235
+  },
+  {
+    "id": "k8-003",
+    "chapter_id": "8.2.1",
+    "chapter_title": "Trait-Theorien",
+    "card_type": "concept",
+    "front": "Big Five / Fünf-Faktoren-Modell (OCEAN): 5 Persönlichkeitsdimensionen",
+    "back": "O = OFFENHEIT (Openness): Fantasie, Ästhetik, Ideen\nC = GEWISSENHAFTIGKEIT (Conscientiousness): Kompetenz, Ordnung, Disziplin\nE = EXTRAVERSION (Extraversion): Geselligkeit, Durchsetzungsvermögen\nA = VERTRÄGLICHKEIT (Agreeableness): Vertrauen, Altruismus, Bescheidenheit\nN = NEUROTIZISMUS (Neuroticism): Ängstlichkeit, Feindseligkeit, Depressivität",
+    "back_extended": "Costa & McCrae (NEO-PI-R). Traits = relativ stabile Dispositionen. Each dimension is continuous (not either/or). Heritability: ca. 40-60% genetisch bedingt. Cross-cultural validity: Big Five replicate across cultures.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "big-five",
+      "ocean",
+      "traits",
+      "persönlichkeit",
+      "neo-pi-r"
+    ],
+    "source_page": 238
+  },
+  {
+    "id": "k8-004",
+    "chapter_id": "8.2.1",
+    "chapter_title": "Trait-Theorien",
+    "card_type": "concept",
+    "front": "Eysenck: 3 Grunddimensionen der Persönlichkeit",
+    "back": "1. EXTRAVERSION vs. INTROVERSION\n2. NEUROTIZISMUS (emotionale Stabilität vs. Instabilität)\n3. PSYCHOTIZISMUS (Aggressivität, Impulsivität, Kälte)",
+    "back_extended": "Eysenck verband Traits mit biologischen Grundlagen: Extraversion = cortical arousal (Extraverts seek stimulation). Neuroticism = limbic system reactivity. Psychoticism added later. PEN-Modell (Psychoticism-Extraversion-Neuroticism).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "eysenck",
+      "pen",
+      "extraversion",
+      "neurotizismus",
+      "psychotizismus"
+    ],
+    "source_page": 238
+  },
+  {
+    "id": "k8-005",
+    "chapter_id": "8.2.2",
+    "chapter_title": "Psychodynamische Theorie",
+    "card_type": "concept",
+    "front": "Freuds Strukturmodell: Es, Ich, Über-Ich + Prinzipien",
+    "back": "• ES (Id): Unbewusst, Triebe, LUSTPRINZIP\n• ICH (Ego): Bewusst/Vorbewusst, Realität, REALITÄTSPRINZIP\n• ÜBER-ICH (Superego): Ideal, Moral, PERFEKTIONSPRINZIP",
+    "back_extended": "Freud: Strukturmodell (spät) vs. topographisches Modell (früh: Bewusst, Vorbewusst, Unbewusst). Abwehrmechanismen des Ichs: Verdrängung, Projektion, Rationalisierung, Sublimation, Reaktionsbildung, Verleugnung. Psychosexuelle Entwicklung: Oral, Anal, Phallisch, Latenz, Genital (Fixierung = Stagnation in einer Phase).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "freud",
+      "strukturmodell",
+      "es-ich-über-ich",
+      "lustprinzip",
+      "abwehr"
+    ],
+    "source_page": 243
+  },
+  {
+    "id": "k8-006",
+    "chapter_id": "8.2.3",
+    "chapter_title": "Humanistische Theorien",
+    "card_type": "concept",
+    "front": "Maslow: Bedürfnishierarchie (5 Stufen)",
+    "back": "1. PHYSIOLOGISCHE BEDÜRFNISSE (Hunger, Durst)\n2. SICHERHEIT (Schutz, Stabilität)\n3. SOZIALE BEDÜRFNISSE (Zugehörigkeit, Liebe)\n4. WERTSCHÄTZUNG (Anerkennung, Selbstwert)\n5. SELBSTVERWIRKLICHUNG (Potenziale entfalten)",
+    "back_extended": "Maslow: Nur wenn untere Stufe befriedigt, wird nächste aktiviert (nicht empirisch gut bestätigt). Selbstverwirklichung = selten erreicht. Kritik: zu optimistisch, kulturell geprägt (westlich-individuell). Rogers: Selbstkonzept, Kongruenz (Ideal-Selbst = Real-Selbst), bedingungslose positive Wertschätzung.",
+    "exam_relevant": true,
+    "difficulty": 2,
+    "tags": [
+      "maslow",
+      "bedürfnishierarchie",
+      "humanistisch",
+      "selbstverwirklichung",
+      "rogers"
+    ],
+    "source_page": 246
+  },
+  {
+    "id": "k8-007",
+    "chapter_id": "8.2.4",
+    "chapter_title": "Soziale Lerntheorie und kognitive Theorien",
+    "card_type": "concept",
+    "front": "Bandura: Selbstwirksamkeitserwartung (Self-Efficacy) – Definition",
+    "back": "Überzeugung einer Person, dass sie selbst in der Lage ist, bestimmte Handlungen erfolgreich auszuführen.",
+    "back_extended": "4 Informationsquellen für Self-Efficacy: 1. Enactive mastery (eigene Erfahrung), 2. Vicarious experience (Modellbeobachtung), 3. Verbal persuasion (Überzeugungsversuche), 4. Physiological arousal (Körperzustände). Hohe Self-Efficacy → höhere Anstrengung, Beharrlichkeit, besseres Coping.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "bandura",
+      "self-efficacy",
+      "selbstwirksamkeit",
+      "soziales-lernen"
+    ],
+    "source_page": 249
+  },
+  {
+    "id": "k8-008",
+    "chapter_id": "8.2.4",
+    "chapter_title": "Soziale Lerntheorie und kognitive Theorien",
+    "card_type": "concept",
+    "front": "Rotter: Locus of Control – intern vs. extern",
+    "back": "INTERNER LoC: Erfolge/Misserfolge werden eigenen Fähigkeiten/Bemühungen zugeschrieben\nEXTERNER LoC: Erfolge/Misserfolge werden äußeren Faktoren (Glück, andere, Schicksal) zugeschrieben",
+    "back_extended": "Rotters I-E-Skala (Internal-External). Interner LoC korreliert mit: höherer Leistungsmotivation, besserer Gesundheit, aktiverem Coping. Aber: zu internal kann zu Selbstbeschuldigung führen. Interaktion mit Situation: Interner LoC hilft bei kontrollierbaren Situationen, externer bei unkontrollierbaren.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "rotter",
+      "locus-of-control",
+      "intern",
+      "extern",
+      "attribution"
+    ],
+    "source_page": 249
+  },
+  {
+    "id": "k8-009",
+    "chapter_id": "8.3.1",
+    "chapter_title": "Persönlichkeitsfragebögen",
+    "card_type": "concept",
+    "front": "NEO-PI-R: Was wird gemessen? Wie?",
+    "back": "Messung der Big Five (OCEAN) mit je 6 Facetten pro Dimension. 240 Items, Selbstbeurteilung auf 5-stufiger Likert-Skala.",
+    "back_extended": "Reliabilität: hohe interne Konsistenz (Cronbachs α > .80). Validität: konvergiert mit anderen Big-Five-Messungen. NEO-FFI = Kurzversion (60 Items). Kritik: Social Desirability Bias (sozial erwünschte Antworten).",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "neo-pi-r",
+      "big-five",
+      "fragebogen",
+      "ocean",
+      "messung"
+    ],
+    "source_page": 255
+  },
+  {
+    "id": "k8-010",
+    "chapter_id": "8.3.4",
+    "chapter_title": "Objektive Persönlichkeitstests (OPT)",
+    "card_type": "concept",
+    "front": "MMPI: Minnesota Multiphasic Personality Inventory – Zweck und Struktur",
+    "back": "Ursprünglich zur Diagnose psychischer Störungen. 10 klinische Skalen (z.B. Depression, Hysterie, Paranoia, Schizophrenie) + 4 Validitätsskalen.",
+    "back_extended": "MMPI-2: 567 Items, Ja/Nein/Unsicher. Validitätsskalen erkennen Faking (z.B. L-Skala = seltene Tugenden angeben, F-Skala = viele Symptome angeben). Kritik: pathologisierend, kulturell geprägt. Nicht für normale Persönlichkeitsbeschreibung gedacht.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": [
+      "mmpi",
+      "objektiver-test",
+      "persönlichkeit",
+      "klinisch",
+      "validität"
+    ],
+    "source_page": 262
+  },
+  {
+    "id": "k8-011",
+    "chapter_id": "8.3.5",
+    "chapter_title": "Projektive Tests",
+    "card_type": "concept",
+    "front": "Rorschach-Tintenklecks-Test: Prinzip und Kritik",
+    "back": "Prinzip: Unstrukturierte Reize (Tintenkleckse) projizieren unbewusste Inhalte. Auswertung: Inhalt, Form, Farbe, Bewegung, Details.\nKritik: geringe Reliabilität und Validität, interpreterabhängig, empirische Basis schwach.",
+    "back_extended": "Andere projektive Tests: TAT (Thematic Apperception Test) von Murray – Bilder erzählen Geschichten; Draw-A-Person-Test; Wortassoziationstest (Jung). Projektive Hypothese: Bei ambigen Reizen werden persönliche Bedürfnisse, Konflikte, Motive 'projiziert'.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": [
+      "rorschach",
+      "projektiv",
+      "tintenklecks",
+      "tat",
+      "unbewusst"
+    ],
+    "source_page": 264
+  }
+]
