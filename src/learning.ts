@@ -6,6 +6,8 @@ export interface UserProgress {
   ease_factor: number;
   repetitions: number;
   next_review: string;
+  last_rating?: Rating;
+  lapses?: number;
 }
 
 export const createInitialProgress = (cardId: string, now = new Date()): UserProgress => ({
@@ -50,6 +52,8 @@ export const calculateNextReview = (
     interval: nextInterval,
     ease_factor: nextEase,
     repetitions: current.repetitions + 1,
-    next_review: nextDate.toISOString()
+    next_review: nextDate.toISOString(),
+    last_rating: rating,
+    lapses: (current.lapses ?? 0) + (rating === 'again' ? 1 : 0)
   };
 };

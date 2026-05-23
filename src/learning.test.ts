@@ -9,6 +9,7 @@ describe('calculateNextReview', () => {
     expect(result.card_id).toBe('card-1');
     expect(result.interval).toBe(2);
     expect(result.repetitions).toBe(1);
+    expect(result.last_rating).toBe('good');
     expect(result.next_review).toBe('2026-05-25T10:00:00.000Z');
   });
 
@@ -28,5 +29,6 @@ describe('calculateNextReview', () => {
 
     expect(result.ease_factor).toBe(1.3);
     expect(result.interval).toBe(1);
+    expect(result.lapses).toBe(1);
   });
 });
