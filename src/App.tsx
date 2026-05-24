@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import {
   BarChart3,
   BookOpen,
@@ -68,6 +70,25 @@ type ViewItem = {
 
 const STORAGE_KEY = 'psychologisch-progress-v1';
 const IMPORTED_CARDS_KEY = 'psychologisch-imported-cards-v1';
+const STREAK_KEY = 'psychologisch-streak-v1';
+const TODAY = new Date().toISOString().slice(0, 10);
+
+interface StreakData { date: string; todayCount: number; days: number; }
+
+const loadStreak = (): StreakData => {
+  try {
+    const saved = window.localStorage.getItem(STREAK_KEY);
+    if (!saved) return { date: TODAY, todayCount: 0, days: 0 };
+    const data = JSON.parse(saved) as StreakData;
+    if (data.date === TODAY) return data;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const isYesterday = data.date === yesterday.toISOString().slice(0, 10);
+    return { date: TODAY, todayCount: 0, days: isYesterday ? data.days : 0 };
+  } catch {
+    return { date: TODAY, todayCount: 0, days: 0 };
+  }
+};
 
 const cardTypeLabels: Record<CardTypeFilter, string> = {
   all: 'Alle Typen',
@@ -158,6 +179,8 @@ export default function App() {
   const [showDatenschutz, setShowDatenschutz] = useState(false);
   const [flipTrigger, setFlipTrigger] = useState(0);
   const [wrongMatch, setWrongMatch] = useState<{ prompt: string; answer: string } | null>(null);
+  const [cardDirection, setCardDirection] = useState(0);
+  const [streak, setStreak] = useState<StreakData>(loadStreak);
   const importProgressRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -343,6 +366,7 @@ export default function App() {
   const matchingAnswers = useMemo(() => [...matchingCards].sort((a, b) => b.id.localeCompare(a.id)), [matchingCards]);
 
   const goToNextCard = () => {
+    setCardDirection(1);
     setSelectedAnswer(null);
     setClozeAnswer('');
     setSelectedMatchPrompt(null);
@@ -352,6 +376,7 @@ export default function App() {
   };
 
   const goToPreviousCard = () => {
+    setCardDirection(-1);
     setSelectedAnswer(null);
     setClozeAnswer('');
     setSelectedMatchPrompt(null);
@@ -364,10 +389,24 @@ export default function App() {
 
   const handleRate = (cardId: string, rating: Rating) => {
     const current = progress[cardId] ?? createInitialProgress(cardId);
-    setProgress((previous) => ({
-      ...previous,
-      [cardId]: calculateNextReview(rating, current)
-    }));
+    const newProgress = { ...progress, [cardId]: calculateNextReview(rating, current) };
+    setProgress(newProgress);
+
+    const newStreak: StreakData = {
+      date: TODAY,
+      todayCount: streak.todayCount + 1,
+      days: streak.todayCount === 0 ? streak.days + 1 : streak.days,
+    };
+    setStreak(newStreak);
+    window.localStorage.setItem(STREAK_KEY, JSON.stringify(newStreak));
+
+    const wasLastDue =
+      studyMode === 'due' &&
+      cards.filter((c) => isDue(newProgress[c.id])).length === 0;
+    if (wasLastDue) {
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 }, colors: ['#0d9488', '#14b8a6', '#6366f1', '#f59e0b', '#ec4899'] });
+    }
+
     goToNextCard();
   };
 
@@ -419,7 +458,21 @@ export default function App() {
         <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-normal text-slate-900">PsychoLogisch</h1>
-            <p className="mt-2 text-slate-500">Aufnahmeprüfungs-Trainer Psychologie</p>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <p className="text-slate-500">Aufnahmeprüfungs-Trainer Psychologie</p>
+              <AnimatePresence>
+                {streak.todayCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700"
+                  >
+                    🔥 {streak.todayCount} heute
+                    {streak.days > 1 && <span className="opacity-70">· {streak.days} Tage</span>}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <button
@@ -609,6 +662,15 @@ export default function App() {
             </button>
           ))}
         </nav>
+
+        <AnimatePresence mode="wait">
+        <motion.div
+          key={viewMode}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
+        >
 
         {viewMode === 'mindmap' && (
           <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
@@ -1077,25 +1139,53 @@ export default function App() {
         {viewMode === 'cards' && (
           currentCard ? (
             <>
+              {/* Progress bar */}
+              <div className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                <motion.div
+                  className="h-full rounded-full bg-teal-500"
+                  animate={{ width: `${filteredCards.length > 0 ? ((currentIndex + 1) / filteredCards.length) * 100 : 0}%` }}
+                  transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+                />
+              </div>
+
               <div className="mb-5 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500">
-                <button
+                <motion.button
                   onClick={goToPreviousCard}
+                  whileTap={{ scale: 0.95 }}
                   className="rounded-lg px-3 py-2 font-medium transition-colors hover:bg-slate-100 hover:text-slate-700"
                 >
                   Zurück
-                </button>
+                </motion.button>
                 <span>
                   Karte {currentIndex + 1} von {filteredCards.length}
                 </span>
-                <button
+                <motion.button
                   onClick={goToNextCard}
+                  whileTap={{ scale: 0.95 }}
                   className="rounded-lg px-3 py-2 font-medium transition-colors hover:bg-slate-100 hover:text-slate-700"
                 >
                   Weiter
-                </button>
+                </motion.button>
               </div>
 
-              <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} flipTrigger={flipTrigger} />
+              <AnimatePresence mode="wait" custom={cardDirection}>
+                <motion.div
+                  key={currentCard.id}
+                  custom={cardDirection}
+                  variants={{
+                    enter: (dir: number) => ({ x: dir * 80, opacity: 0 }),
+                    center: { x: 0, opacity: 1 },
+                    exit: (dir: number) => ({ x: dir * -80, opacity: 0 }),
+                  }}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+                >
+                  <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} flipTrigger={flipTrigger} />
+                </motion.div>
+              </AnimatePresence>
+
               <p className="mt-2 text-center text-xs text-slate-400">
                 <kbd className="rounded border border-slate-200 bg-slate-100 px-1">Space</kbd> umdrehen ·{' '}
                 <kbd className="rounded border border-slate-200 bg-slate-100 px-1">←</kbd>{' '}
@@ -1109,6 +1199,9 @@ export default function App() {
             </div>
           )
         )}
+
+        </motion.div>
+        </AnimatePresence>
       </div>
     </main>
 
