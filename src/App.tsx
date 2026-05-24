@@ -16,6 +16,7 @@ import {
   MoreHorizontal,
   Network,
   Newspaper,
+  PenLine,
   Plus,
   RotateCcw,
   Search,
@@ -30,6 +31,7 @@ import FinancePlanner from './components/FinancePlanner';
 import { LegalModal } from './components/LegalModal';
 import { Logo } from './components/Logo';
 import Stats from './components/Stats';
+import StudyPlan from './components/StudyPlan';
 import CardCreator from './components/CardCreator';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
@@ -50,7 +52,7 @@ import { createPosterSummary, getKeyTerms } from './studyVisuals';
 
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
 type StudyMode = 'all' | 'due' | 'weak' | 'unseen';
-type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster' | 'stats';
+type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster' | 'stats' | 'plan';
 type SourceFilter = 'all' | 'starter' | 'script';
 
 interface ChapterStat {
@@ -80,12 +82,20 @@ const IMPORTED_CARDS_KEY = 'psychologisch-imported-cards-v1';
 const STREAK_KEY = 'psychologisch-streak-v1';
 const BOOKMARKS_KEY = 'psychologisch-bookmarks-v1';
 const GOAL_KEY = 'psychologisch-goal-v1';
+const NOTES_KEY = 'psychologisch-notes-v1';
 
 const loadBookmarks = (): Set<string> => {
   try {
     const saved = window.localStorage.getItem(BOOKMARKS_KEY);
     return saved ? new Set(JSON.parse(saved) as string[]) : new Set();
   } catch { return new Set(); }
+};
+
+const loadNotes = (): Record<string, string> => {
+  try {
+    const saved = window.localStorage.getItem(NOTES_KEY);
+    return saved ? (JSON.parse(saved) as Record<string, string>) : {};
+  } catch { return {}; }
 };
 
 const loadGoal = (): number => {
@@ -229,6 +239,9 @@ export default function App() {
   const [goalInput, setGoalInput] = useState('');
   const [showCardCreator, setShowCardCreator] = useState(false);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
+  const [quizScore, setQuizScore] = useState({ correct: 0, total: 0 });
+  const [notes, setNotes] = useState<Record<string, string>>(loadNotes);
+  const [showNote, setShowNote] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -237,6 +250,14 @@ export default function App() {
   useEffect(() => {
     window.localStorage.setItem(IMPORTED_CARDS_KEY, JSON.stringify(importedCards));
   }, [importedCards]);
+
+  useEffect(() => {
+    window.localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    setQuizScore({ correct: 0, total: 0 });
+  }, [viewMode, quizMode]);
 
   useEffect(() => {
     fetch('/psyskript_cards.json')
@@ -308,6 +329,7 @@ export default function App() {
     setClozeAnswer('');
     setSelectedMatchPrompt(null);
     setMatchedIds([]);
+    setShowNote(false);
   }, [chapterFilter, examOnly, searchQuery, sourceFilter, studyMode, typeFilter, viewMode]);
 
   const chapterStats = useMemo(() => {
@@ -410,6 +432,7 @@ export default function App() {
     { label: 'Neu', value: unseenCount, icon: Clock3, mode: 'unseen' }
   ];
   const viewItems: ViewItem[] = [
+    { key: 'plan', label: 'Lernplan', icon: CalendarDays },
     { key: 'cards', label: 'Karten', icon: BookOpen },
     { key: 'mindmap', label: 'Mindmap', icon: Network },
     { key: 'poster', label: 'Lernposter', icon: Newspaper },
@@ -1112,7 +1135,25 @@ export default function App() {
                 <h2 className="text-lg font-semibold text-slate-900">Interaktives Quiz</h2>
                 <p className="text-sm text-slate-500">Trainiere dieselbe Karte mit verschiedenen Aufgabenformen.</p>
               </div>
-              <HelpCircle className="h-5 w-5 text-teal-600" />
+              <div className="flex items-center gap-3">
+                <AnimatePresence>
+                  {quizScore.total > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="flex items-center gap-1.5 rounded-lg bg-slate-50 px-3 py-1.5 text-sm font-semibold ring-1 ring-slate-200"
+                    >
+                      <span className="text-emerald-600">{quizScore.correct}✓</span>
+                      <span className="text-slate-300">·</span>
+                      <span className="text-red-500">{quizScore.total - quizScore.correct}✗</span>
+                      <span className="ml-1 text-xs font-normal text-slate-400">
+                        {Math.round((quizScore.correct / quizScore.total) * 100)}%
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <HelpCircle className="h-5 w-5 text-teal-600" />
+              </div>
             </div>
 
             <div className="mb-4 flex flex-wrap gap-2">
@@ -1168,7 +1209,11 @@ export default function App() {
                 {selectedAnswer && (
                   <div className="mt-4 flex flex-wrap gap-2">
                     <button
-                      onClick={() => handleRate(currentCard.id, selectedAnswer === currentCard.id ? 'good' : 'again')}
+                      onClick={() => {
+                        const isCorrect = selectedAnswer === currentCard.id;
+                        setQuizScore((s) => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }));
+                        handleRate(currentCard.id, isCorrect ? 'good' : 'again');
+                      }}
                       className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
                     >
                       Bewerten und weiter
@@ -1209,7 +1254,11 @@ export default function App() {
                 )}
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleRate(currentCard.id, isCloseAnswer(clozeAnswer, clozeTask.answer) ? 'good' : 'again')}
+                    onClick={() => {
+                      const isCorrect = isCloseAnswer(clozeAnswer, clozeTask.answer);
+                      setQuizScore((s) => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }));
+                      handleRate(currentCard.id, isCorrect ? 'good' : 'again');
+                    }}
                     className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
                   >
                     Bewerten und weiter
@@ -1371,6 +1420,24 @@ export default function App() {
           </section>
         )}
 
+        {viewMode === 'plan' && (
+          <StudyPlan
+            cards={cards}
+            progress={progress}
+            chapterStats={chapterStats}
+            dueCount={dueCount}
+            weakCount={weakCount}
+            unseenCount={unseenCount}
+            bookmarksSize={bookmarks.size}
+            streakDays={streak.days}
+            streakToday={streak.todayCount}
+            dailyGoal={dailyGoal}
+            onStartMode={(mode) => { setStudyMode(mode); setViewMode('cards'); }}
+            onStartBookmarks={() => { setBookmarkOnly(true); setViewMode('cards'); }}
+            onSetChapter={(key) => { setChapterFilter(key); setViewMode('cards'); }}
+          />
+        )}
+
         {viewMode === 'stats' && (
           <Stats
             progress={progress}
@@ -1445,6 +1512,50 @@ export default function App() {
                   />
                 </motion.div>
               </AnimatePresence>
+
+              {/* ── Card notes ────────────────────────────────────────────── */}
+              <div className="mx-auto mt-4 max-w-2xl">
+                <button
+                  onClick={() => setShowNote((v) => !v)}
+                  className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                    notes[currentCard.id]
+                      ? 'bg-amber-50 text-amber-700 hover:bg-amber-100'
+                      : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                  }`}
+                >
+                  <PenLine className="h-3.5 w-3.5" />
+                  {notes[currentCard.id]
+                    ? showNote ? 'Notiz einklappen' : 'Notiz ansehen'
+                    : showNote ? 'Notiz schließen' : 'Notiz hinzufügen'}
+                </button>
+                <AnimatePresence>
+                  {showNote && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.18 }}
+                      className="overflow-hidden"
+                    >
+                      <textarea
+                        value={notes[currentCard.id] ?? ''}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setNotes((prev) => {
+                            const next = { ...prev };
+                            if (val.trim()) next[currentCard.id] = val;
+                            else delete next[currentCard.id];
+                            return next;
+                          });
+                        }}
+                        rows={3}
+                        placeholder="Deine persönliche Notiz zu dieser Karte…"
+                        className="mt-2 w-full resize-none rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-slate-700 outline-none placeholder:text-slate-400 focus:border-amber-400"
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               <p className="mt-2 text-center text-xs text-slate-400 sm:hidden">
                 Karte wischen zum Navigieren · Tippen zum Aufdecken
