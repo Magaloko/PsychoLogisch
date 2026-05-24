@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Flashcard, type FlashcardData } from './components/Flashcard';
+import { LegalModal } from './components/LegalModal';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -151,6 +152,8 @@ export default function App() {
   const [selectedMatchPrompt, setSelectedMatchPrompt] = useState<string | null>(null);
   const [matchedIds, setMatchedIds] = useState<string[]>([]);
   const [studyContent, setStudyContent] = useState<StudyContent | null>(null);
+  const [showImpressum, setShowImpressum] = useState(false);
+  const [showDatenschutz, setShowDatenschutz] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -357,6 +360,7 @@ export default function App() {
   };
 
   return (
+    <>
     <main className="min-h-screen bg-slate-50 py-6 text-slate-900 sm:py-8">
       <div className="mx-auto max-w-6xl px-4">
         <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -1015,5 +1019,60 @@ export default function App() {
         )}
       </div>
     </main>
+
+    <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+      <button
+        onClick={() => setShowImpressum(true)}
+        className="mx-3 hover:text-slate-600 underline-offset-2 hover:underline"
+      >
+        Impressum
+      </button>
+      <button
+        onClick={() => setShowDatenschutz(true)}
+        className="mx-3 hover:text-slate-600 underline-offset-2 hover:underline"
+      >
+        Datenschutz
+      </button>
+    </footer>
+
+    {showImpressum && (
+      <LegalModal title="Impressum" onClose={() => setShowImpressum(false)}>
+        <p><strong>Angaben gemäß § 5 TMG</strong></p>
+        <p className="mt-2">[Name]<br />[Straße Hausnummer]<br />[PLZ Ort]</p>
+        <p className="mt-3"><strong>Kontakt</strong></p>
+        <p>E-Mail: [deine@email.de]</p>
+        <p className="mt-4 text-xs text-slate-400">
+          Bitte ersetze die Platzhalter mit deinen vollständigen Angaben.
+        </p>
+      </LegalModal>
+    )}
+
+    {showDatenschutz && (
+      <LegalModal title="Datenschutzerklärung" onClose={() => setShowDatenschutz(false)}>
+        <p><strong>1. Verantwortlicher</strong></p>
+        <p className="mt-1">[Name, Adresse] — siehe Impressum.</p>
+        <p className="mt-3"><strong>2. Hosting</strong></p>
+        <p className="mt-1">
+          Diese Website wird gehostet bei Vercel Inc., 340 Pine Street, San Francisco, CA 94104, USA.
+          Beim Aufruf der Seite werden Server-Logs mit IP-Adresse, Browser-Typ und Zugriffszeit
+          verarbeitet (Art. 6 Abs. 1 lit. f DSGVO).
+        </p>
+        <p className="mt-3"><strong>3. Lokale Speicherung</strong></p>
+        <p className="mt-1">
+          Die App speichert deinen Lernfortschritt ausschließlich im localStorage deines Browsers.
+          Keine Daten werden an Server übertragen.
+        </p>
+        <p className="mt-3"><strong>4. Keine Tracking-Cookies</strong></p>
+        <p className="mt-1">
+          Diese Website verwendet keine Tracking-Cookies und keine Analyse-Dienste.
+        </p>
+        <p className="mt-3"><strong>5. Deine Rechte</strong></p>
+        <p className="mt-1">
+          Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung
+          (Art. 15–18 DSGVO). Kontakt: [deine@email.de]
+        </p>
+      </LegalModal>
+    )}
+    </>
   );
 }
