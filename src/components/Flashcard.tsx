@@ -3,7 +3,7 @@
 // Flashcard.tsx - Kernkomponente der Lern-App
 // ============================================================
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
@@ -16,7 +16,8 @@ import {
   User,
   X
 } from 'lucide-react';
-import type { Rating } from '../learning';
+import { calculateNextReview, formatInterval } from '../learning';
+import type { Rating, UserProgress } from '../learning';
 
 export interface FlashcardData {
   id: string;
@@ -42,6 +43,7 @@ interface FlashcardProps {
   onRate: (cardId: string, rating: Rating) => void;
   onSkip: () => void;
   flipTrigger?: number;
+  userProgress?: UserProgress;
 }
 
 const ratingConfig: Record<Rating, { label: string; bg: string; text: string; hover: string; icon?: React.ReactNode }> = {
@@ -73,9 +75,19 @@ const ratingConfig: Record<Rating, { label: string; bg: string; text: string; ho
   },
 };
 
-export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger, userProgress }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showExtended, setShowExtended] = useState(false);
+
+  const intervalPreviews = useMemo<Record<Rating, string>>(() => {
+    const base = userProgress ?? { card_id: card.id, interval: 0, ease_factor: 2.5, repetitions: 0, next_review: new Date().toISOString() };
+    return {
+      again: formatInterval(calculateNextReview('again', base).interval),
+      hard: formatInterval(calculateNextReview('hard', base).interval),
+      good: formatInterval(calculateNextReview('good', base).interval),
+      easy: formatInterval(calculateNextReview('easy', base).interval),
+    };
+  }, [card.id, userProgress]);
 
   useEffect(() => {
     setIsFlipped(false);
@@ -239,10 +251,13 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                       whileTap={{ scale: 0.92 }}
                       whileHover={{ scale: 1.04, y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                      className={`rounded-xl ${cfg.bg} py-2 sm:py-3 text-xs sm:text-sm font-medium ${cfg.text} transition-colors ${cfg.hover}`}
+                      className={`rounded-xl ${cfg.bg} py-2 sm:py-3 text-xs sm:text-sm font-medium ${cfg.text} transition-colors ${cfg.hover} flex flex-col items-center`}
                     >
                       {cfg.icon}
-                      {cfg.label}
+                      <span>{cfg.label}</span>
+                      <span className="mt-0.5 text-[10px] opacity-60 font-normal leading-none">
+                        {intervalPreviews[rating]}
+                      </span>
                     </motion.button>
                   );
                 })}

@@ -1,5 +1,15 @@
 export type Rating = 'again' | 'hard' | 'good' | 'easy';
 
+export const formatInterval = (days: number): string => {
+  if (days === 0) return 'heute';
+  if (days === 1) return 'morgen';
+  if (days < 7) return `in ${days} Tagen`;
+  if (days === 7) return 'in 1 Woche';
+  if (days < 30) return `in ${Math.round(days / 7)} Wochen`;
+  if (days < 60) return 'in 1 Monat';
+  return `in ${Math.round(days / 30)} Monaten`;
+};
+
 export interface UserProgress {
   card_id: string;
   interval: number;

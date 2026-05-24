@@ -26,6 +26,7 @@ import { Flashcard, type FlashcardData } from './components/Flashcard';
 import FinancePlanner from './components/FinancePlanner';
 import { LegalModal } from './components/LegalModal';
 import { Logo } from './components/Logo';
+import Stats from './components/Stats';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -45,7 +46,7 @@ import { createPosterSummary, getKeyTerms } from './studyVisuals';
 
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
 type StudyMode = 'all' | 'due' | 'weak' | 'unseen';
-type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster';
+type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster' | 'stats';
 type SourceFilter = 'all' | 'starter' | 'script';
 
 interface ChapterStat {
@@ -75,20 +76,32 @@ const IMPORTED_CARDS_KEY = 'psychologisch-imported-cards-v1';
 const STREAK_KEY = 'psychologisch-streak-v1';
 const TODAY = new Date().toISOString().slice(0, 10);
 
-interface StreakData { date: string; todayCount: number; days: number; }
+interface StreakData {
+  date: string;
+  todayCount: number;
+  days: number;
+  history?: Record<string, number>; // YYYY-MM-DD → cards reviewed
+}
+
+const pruneHistory = (h: Record<string, number>): Record<string, number> => {
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 90);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+  return Object.fromEntries(Object.entries(h).filter(([k]) => k >= cutoffStr));
+};
 
 const loadStreak = (): StreakData => {
   try {
     const saved = window.localStorage.getItem(STREAK_KEY);
-    if (!saved) return { date: TODAY, todayCount: 0, days: 0 };
+    if (!saved) return { date: TODAY, todayCount: 0, days: 0, history: {} };
     const data = JSON.parse(saved) as StreakData;
-    if (data.date === TODAY) return data;
+    if (data.date === TODAY) return { history: {}, ...data };
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const isYesterday = data.date === yesterday.toISOString().slice(0, 10);
-    return { date: TODAY, todayCount: 0, days: isYesterday ? data.days : 0 };
+    return { date: TODAY, todayCount: 0, days: isYesterday ? data.days : 0, history: data.history ?? {} };
   } catch {
-    return { date: TODAY, todayCount: 0, days: 0 };
+    return { date: TODAY, todayCount: 0, days: 0, history: {} };
   }
 };
 
@@ -186,6 +199,8 @@ export default function App() {
   const importProgressRef = useRef<HTMLInputElement>(null);
   const [appModule, setAppModule] = useState<'lernen' | 'finanzen'>('lernen');
   const [showFilters, setShowFilters] = useState(false);
+  const [sessionRatings, setSessionRatings] = useState<Record<Rating, number>>({ again: 0, hard: 0, good: 0, easy: 0 });
+  const [showSessionSummary, setShowSessionSummary] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -369,7 +384,8 @@ export default function App() {
     { key: 'mindmap', label: 'Mindmap', icon: Network },
     { key: 'poster', label: 'Lernposter', icon: Newspaper },
     { key: 'timeline', label: 'Timeline', icon: Clock3 },
-    { key: 'quiz', label: 'Quiz', icon: HelpCircle }
+    { key: 'quiz', label: 'Quiz', icon: HelpCircle },
+    { key: 'stats', label: 'Statistik', icon: BarChart3 },
   ];
 
   const quizOptions = useMemo(() => (currentCard ? getMultipleChoiceOptions(currentCard, cards) : []), [cards, currentCard]);
@@ -404,10 +420,15 @@ export default function App() {
     const newProgress = { ...progress, [cardId]: calculateNextReview(rating, current) };
     setProgress(newProgress);
 
+    const newSessionRatings = { ...sessionRatings, [rating]: sessionRatings[rating] + 1 };
+    setSessionRatings(newSessionRatings);
+
+    const newHistory = pruneHistory({ ...(streak.history ?? {}), [TODAY]: (streak.history?.[TODAY] ?? 0) + 1 });
     const newStreak: StreakData = {
       date: TODAY,
       todayCount: streak.todayCount + 1,
       days: streak.todayCount === 0 ? streak.days + 1 : streak.days,
+      history: newHistory,
     };
     setStreak(newStreak);
     window.localStorage.setItem(STREAK_KEY, JSON.stringify(newStreak));
@@ -417,6 +438,7 @@ export default function App() {
       cards.filter((c) => isDue(newProgress[c.id])).length === 0;
     if (wasLastDue) {
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 }, colors: ['#0d9488', '#14b8a6', '#6366f1', '#f59e0b', '#ec4899'] });
+      setShowSessionSummary(true);
     }
 
     goToNextCard();
@@ -1194,6 +1216,15 @@ export default function App() {
           </section>
         )}
 
+        {viewMode === 'stats' && (
+          <Stats
+            progress={progress}
+            cards={cards}
+            chapterStats={chapterStats}
+            streak={streak}
+          />
+        )}
+
         {viewMode === 'cards' && (
           currentCard ? (
             <>
@@ -1248,7 +1279,7 @@ export default function App() {
                     else if (info.offset.x > 60) goToPreviousCard();
                   }}
                 >
-                  <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} flipTrigger={flipTrigger} />
+                  <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} flipTrigger={flipTrigger} userProgress={progress[currentCard.id]} />
                 </motion.div>
               </AnimatePresence>
 
@@ -1314,6 +1345,65 @@ export default function App() {
         Datenschutz
       </button>
     </footer>
+
+    {/* Session summary modal */}
+    <AnimatePresence>
+      {showSessionSummary && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          onClick={() => setShowSessionSummary(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.88, opacity: 0, y: 24 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 16 }}
+            transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl"
+          >
+            <div className="mb-4 text-center">
+              <span className="text-5xl">🎉</span>
+              <h2 className="mt-3 text-xl font-bold text-slate-900">Alle fälligen Karten erledigt!</h2>
+              <p className="mt-1 text-sm text-slate-500">
+                {streak.todayCount} Karten heute bewertet · {streak.days} Tage Streak
+              </p>
+            </div>
+
+            <div className="mb-5 grid grid-cols-4 gap-2 text-center">
+              {([
+                { key: 'again', label: 'Wieder', bg: 'bg-red-50', text: 'text-red-700' },
+                { key: 'hard', label: 'Schwer', bg: 'bg-orange-50', text: 'text-orange-700' },
+                { key: 'good', label: 'Gut', bg: 'bg-blue-50', text: 'text-blue-700' },
+                { key: 'easy', label: 'Einfach', bg: 'bg-green-50', text: 'text-green-700' },
+              ] as const).map(({ key, label, bg, text }) => (
+                <div key={key} className={`rounded-xl ${bg} p-3`}>
+                  <p className={`text-xl font-bold ${text}`}>{sessionRatings[key]}</p>
+                  <p className={`text-xs ${text} opacity-80`}>{label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => { setShowSessionSummary(false); setViewMode('stats'); }}
+                className="w-full rounded-xl bg-teal-600 py-3 text-sm font-semibold text-white hover:bg-teal-700"
+              >
+                Statistiken ansehen
+              </button>
+              <button
+                onClick={() => { setShowSessionSummary(false); setStudyMode('all'); setSessionRatings({ again: 0, hard: 0, good: 0, easy: 0 }); }}
+                className="w-full rounded-xl bg-slate-100 py-3 text-sm font-medium text-slate-600 hover:bg-slate-200"
+              >
+                Alle Karten weiterüben
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
 
     {showImpressum && (
       <LegalModal title="Impressum" onClose={() => setShowImpressum(false)}>
