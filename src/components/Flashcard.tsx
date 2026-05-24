@@ -13,6 +13,7 @@ import {
   Image as ImageIcon,
   List,
   RotateCcw,
+  Star,
   User,
   X
 } from 'lucide-react';
@@ -44,6 +45,8 @@ interface FlashcardProps {
   onSkip: () => void;
   flipTrigger?: number;
   userProgress?: UserProgress;
+  isBookmarked?: boolean;
+  onToggleBookmark?: (cardId: string) => void;
 }
 
 const ratingConfig: Record<Rating, { label: string; bg: string; text: string; hover: string; icon?: React.ReactNode }> = {
@@ -75,7 +78,7 @@ const ratingConfig: Record<Rating, { label: string; bg: string; text: string; ho
   },
 };
 
-export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger, userProgress }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger, userProgress, isBookmarked, onToggleBookmark }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showExtended, setShowExtended] = useState(false);
 
@@ -135,9 +138,20 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
             </motion.span>
           )}
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <TypeIcon className="w-4 h-4 text-slate-400" />
           <span className="text-xs text-slate-400 capitalize">{card.card_type}</span>
+          {onToggleBookmark && (
+            <motion.button
+              onClick={() => onToggleBookmark(card.id)}
+              whileTap={{ scale: 0.8 }}
+              whileHover={{ scale: 1.15 }}
+              className="ml-1"
+              title={isBookmarked ? 'Lesezeichen entfernen' : 'Als Lesezeichen markieren'}
+            >
+              <Star className={`w-4 h-4 transition-colors ${isBookmarked ? 'fill-amber-400 text-amber-400' : 'text-slate-300 hover:text-amber-400'}`} />
+            </motion.button>
+          )}
         </div>
       </div>
 
