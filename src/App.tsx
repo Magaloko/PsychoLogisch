@@ -23,7 +23,9 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Flashcard, type FlashcardData } from './components/Flashcard';
+import FinancePlanner from './components/FinancePlanner';
 import { LegalModal } from './components/LegalModal';
+import { Logo } from './components/Logo';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -182,6 +184,7 @@ export default function App() {
   const [cardDirection, setCardDirection] = useState(0);
   const [streak, setStreak] = useState<StreakData>(loadStreak);
   const importProgressRef = useRef<HTMLInputElement>(null);
+  const [appModule, setAppModule] = useState<'lernen' | 'finanzen'>('lernen');
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -455,13 +458,13 @@ export default function App() {
     <>
     <main className="min-h-screen bg-slate-50 py-6 text-slate-900 sm:py-8">
       <div className="mx-auto max-w-6xl px-4">
-        <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h1 className="text-3xl font-bold tracking-normal text-slate-900">PsychoLogisch</h1>
-            <div className="mt-2 flex flex-wrap items-center gap-3">
-              <p className="text-slate-500">Aufnahmeprüfungs-Trainer Psychologie</p>
+        <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
+            <Logo size="lg" />
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="text-sm text-slate-500">Aufnahmeprüfungs-Trainer Psychologie</p>
               <AnimatePresence>
-                {streak.todayCount > 0 && (
+                {appModule === 'lernen' && streak.todayCount > 0 && (
                   <motion.span
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -474,42 +477,69 @@ export default function App() {
               </AnimatePresence>
             </div>
           </div>
+
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={exportProgress}
-              disabled={learnedCount === 0}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-              title="Lernfortschritt als JSON herunterladen"
-            >
-              <Download className="h-4 w-4" />
-              Exportieren
-            </button>
-            <button
-              onClick={() => importProgressRef.current?.click()}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100"
-              title="Lernfortschritt aus JSON-Datei wiederherstellen"
-            >
-              <Upload className="h-4 w-4" />
-              Importieren
-            </button>
-            <button
-              onClick={resetProgress}
-              disabled={learnedCount === 0}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <RotateCcw className="h-4 w-4" />
-              Zurücksetzen
-            </button>
-            <input
-              ref={importProgressRef}
-              type="file"
-              accept=".json"
-              className="hidden"
-              onChange={(e) => importProgressFromFile(e.target.files?.[0])}
-            />
+            {/* Module switcher */}
+            <div className="flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+              {([
+                { key: 'lernen', label: '🎓 Lernen' },
+                { key: 'finanzen', label: '💰 Finanzen' },
+              ] as const).map(({ key, label }) => (
+                <button
+                  key={key}
+                  onClick={() => setAppModule(key)}
+                  className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                    appModule === key ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {/* Progress tools — only in lernen mode */}
+            {appModule === 'lernen' && (
+              <>
+                <button
+                  onClick={exportProgress}
+                  disabled={learnedCount === 0}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  title="Lernfortschritt als JSON herunterladen"
+                >
+                  <Download className="h-4 w-4" />
+                  Exportieren
+                </button>
+                <button
+                  onClick={() => importProgressRef.current?.click()}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100"
+                  title="Lernfortschritt aus JSON-Datei wiederherstellen"
+                >
+                  <Upload className="h-4 w-4" />
+                  Importieren
+                </button>
+                <button
+                  onClick={resetProgress}
+                  disabled={learnedCount === 0}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  Zurücksetzen
+                </button>
+                <input
+                  ref={importProgressRef}
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  onChange={(e) => importProgressFromFile(e.target.files?.[0])}
+                />
+              </>
+            )}
           </div>
         </header>
 
+        {appModule === 'finanzen' && <FinancePlanner />}
+
+        {appModule === 'lernen' && <>
         <section className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {dashboardItems.map(({ label, value, icon: Icon, mode }) => (
             <button
@@ -1202,6 +1232,7 @@ export default function App() {
 
         </motion.div>
         </AnimatePresence>
+        </>}
       </div>
     </main>
 
