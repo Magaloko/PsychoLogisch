@@ -41,9 +41,10 @@ interface FlashcardProps {
   card: FlashcardData;
   onRate: (cardId: string, rating: Rating) => void;
   onSkip: () => void;
+  flipTrigger?: number;
 }
 
-export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showExtended, setShowExtended] = useState(false);
 
@@ -51,6 +52,10 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip }) =>
     setIsFlipped(false);
     setShowExtended(false);
   }, [card.id]);
+
+  useEffect(() => {
+    if (flipTrigger) setIsFlipped((f) => !f);
+  }, [flipTrigger]);
 
   const handleFlip = useCallback(() => {
     setIsFlipped((current) => !current);

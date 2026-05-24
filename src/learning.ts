@@ -36,7 +36,7 @@ export const calculateNextReview = (
     easy: 3
   };
 
-  const nextEase = Math.max(1.3, current.ease_factor + easeMap[rating]);
+  const nextEase = Math.min(2.5, Math.max(1.3, current.ease_factor + easeMap[rating]));
   const nextInterval =
     rating === 'again'
       ? 1

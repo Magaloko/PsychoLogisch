@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   BarChart3,
   BookOpen,
   Brain,
   CalendarDays,
   Clock3,
+  Download,
   FileUp,
   Filter,
   GitBranch,
@@ -15,7 +16,8 @@ import {
   RotateCcw,
   Search,
   Target,
-  TextCursorInput
+  TextCursorInput,
+  Upload
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Flashcard, type FlashcardData } from './components/Flashcard';
@@ -154,6 +156,9 @@ export default function App() {
   const [studyContent, setStudyContent] = useState<StudyContent | null>(null);
   const [showImpressum, setShowImpressum] = useState(false);
   const [showDatenschutz, setShowDatenschutz] = useState(false);
+  const [flipTrigger, setFlipTrigger] = useState(0);
+  const [wrongMatch, setWrongMatch] = useState<{ prompt: string; answer: string } | null>(null);
+  const importProgressRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -266,6 +271,30 @@ export default function App() {
     [filteredCards]
   );
   const keyTerms = useMemo(() => getKeyTerms(filteredCards, 16), [filteredCards]);
+
+  useEffect(() => {
+    if (viewMode !== 'cards') return;
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setFlipTrigger((t) => t + 1);
+      } else if (e.code === 'ArrowRight') {
+        goToNextCard();
+      } else if (e.code === 'ArrowLeft') {
+        goToPreviousCard();
+      } else if (['1', '2', '3', '4'].includes(e.key)) {
+        const cardId = filteredCards[currentIndex]?.id;
+        if (!cardId) return;
+        const ratings: Rating[] = ['again', 'hard', 'good', 'easy'];
+        handleRate(cardId, ratings[Number(e.key) - 1]);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewMode, filteredCards, currentIndex]);
   const posterSummary = useMemo(
     () => createPosterSummary(filteredCards, progress),
     [filteredCards, progress]
@@ -318,6 +347,7 @@ export default function App() {
     setClozeAnswer('');
     setSelectedMatchPrompt(null);
     setMatchedIds([]);
+    setWrongMatch(null);
     setCurrentIndex((previous) => (filteredCards.length === 0 ? 0 : (previous + 1) % filteredCards.length));
   };
 
@@ -326,6 +356,7 @@ export default function App() {
     setClozeAnswer('');
     setSelectedMatchPrompt(null);
     setMatchedIds([]);
+    setWrongMatch(null);
     setCurrentIndex((previous) =>
       filteredCards.length === 0 ? 0 : (previous - 1 + filteredCards.length) % filteredCards.length
     );
@@ -342,6 +373,28 @@ export default function App() {
 
   const resetProgress = () => {
     setProgress({});
+  };
+
+  const exportProgress = () => {
+    const blob = new Blob([JSON.stringify(progress, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `psychologisch-fortschritt-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const importProgressFromFile = async (file: File | undefined) => {
+    if (!file) return;
+    try {
+      const parsed = JSON.parse(await file.text());
+      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+        setProgress(parsed as Record<string, UserProgress>);
+      }
+    } catch {
+      // ungültiges JSON — ignorieren
+    }
   };
 
   const importCardsFromFile = async (file: File | undefined) => {
@@ -368,14 +421,40 @@ export default function App() {
             <h1 className="text-3xl font-bold tracking-normal text-slate-900">PsychoLogisch</h1>
             <p className="mt-2 text-slate-500">Aufnahmeprüfungs-Trainer Psychologie</p>
           </div>
-          <button
-            onClick={resetProgress}
-            disabled={learnedCount === 0}
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <RotateCcw className="h-4 w-4" />
-            Fortschritt zurücksetzen
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={exportProgress}
+              disabled={learnedCount === 0}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+              title="Lernfortschritt als JSON herunterladen"
+            >
+              <Download className="h-4 w-4" />
+              Exportieren
+            </button>
+            <button
+              onClick={() => importProgressRef.current?.click()}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100"
+              title="Lernfortschritt aus JSON-Datei wiederherstellen"
+            >
+              <Upload className="h-4 w-4" />
+              Importieren
+            </button>
+            <button
+              onClick={resetProgress}
+              disabled={learnedCount === 0}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Zurücksetzen
+            </button>
+            <input
+              ref={importProgressRef}
+              type="file"
+              accept=".json"
+              className="hidden"
+              onChange={(e) => importProgressFromFile(e.target.files?.[0])}
+            />
+          </div>
         </header>
 
         <section className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -850,14 +929,16 @@ export default function App() {
                     {matchingCards.map((card) => (
                       <button
                         key={card.id}
-                        onClick={() => setSelectedMatchPrompt(card.id)}
+                        onClick={() => !matchedIds.includes(card.id) && setSelectedMatchPrompt(card.id)}
                         disabled={matchedIds.includes(card.id)}
                         className={`rounded-lg border p-3 text-left text-sm transition-colors ${
                           matchedIds.includes(card.id)
                             ? 'border-green-200 bg-green-50 text-green-800'
-                            : selectedMatchPrompt === card.id
-                              ? 'border-teal-300 bg-teal-50 text-teal-800'
-                              : 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
+                            : wrongMatch?.prompt === card.id
+                              ? 'border-red-300 bg-red-50 text-red-800'
+                              : selectedMatchPrompt === card.id
+                                ? 'border-teal-300 bg-teal-50 text-teal-800'
+                                : 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
                         }`}
                       >
                         {card.front}
@@ -875,6 +956,9 @@ export default function App() {
                           if (!selectedMatchPrompt) return;
                           if (selectedMatchPrompt === card.id) {
                             setMatchedIds((current) => [...current, card.id]);
+                          } else {
+                            setWrongMatch({ prompt: selectedMatchPrompt, answer: card.id });
+                            setTimeout(() => setWrongMatch(null), 700);
                           }
                           setSelectedMatchPrompt(null);
                         }}
@@ -882,7 +966,9 @@ export default function App() {
                         className={`rounded-lg border p-3 text-left text-sm transition-colors ${
                           matchedIds.includes(card.id)
                             ? 'border-green-200 bg-green-50 text-green-800'
-                            : 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
+                            : wrongMatch?.answer === card.id
+                              ? 'border-red-300 bg-red-50 text-red-800'
+                              : 'border-slate-200 hover:border-teal-200 hover:bg-teal-50'
                         }`}
                       >
                         {card.back}
@@ -1009,7 +1095,13 @@ export default function App() {
                 </button>
               </div>
 
-              <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} />
+              <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} flipTrigger={flipTrigger} />
+              <p className="mt-2 text-center text-xs text-slate-400">
+                <kbd className="rounded border border-slate-200 bg-slate-100 px-1">Space</kbd> umdrehen ·{' '}
+                <kbd className="rounded border border-slate-200 bg-slate-100 px-1">←</kbd>{' '}
+                <kbd className="rounded border border-slate-200 bg-slate-100 px-1">→</kbd> navigieren ·{' '}
+                <kbd className="rounded border border-slate-200 bg-slate-100 px-1">1</kbd>–<kbd className="rounded border border-slate-200 bg-slate-100 px-1">4</kbd> bewerten
+              </p>
             </>
           ) : (
             <div className="rounded-lg border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
