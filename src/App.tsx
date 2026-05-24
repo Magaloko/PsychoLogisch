@@ -13,6 +13,7 @@ import {
   GitBranch,
   HelpCircle,
   ListChecks,
+  MoreHorizontal,
   Network,
   Newspaper,
   Plus,
@@ -227,6 +228,7 @@ export default function App() {
   const [editingGoal, setEditingGoal] = useState(false);
   const [goalInput, setGoalInput] = useState('');
   const [showCardCreator, setShowCardCreator] = useState(false);
+  const [showActionsMenu, setShowActionsMenu] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -533,128 +535,195 @@ export default function App() {
 
   return (
     <>
-    <main className="min-h-screen bg-slate-50 py-6 pb-24 text-slate-900 sm:py-8 sm:pb-8">
+    {/* ══ Sticky top navigation ══════════════════════════════════════════ */}
+    <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
       <div className="mx-auto max-w-6xl px-4">
-        <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
-            <Logo size="lg" />
-            <div className="flex flex-wrap items-center gap-3">
-              <p className="text-sm text-slate-500">Aufnahmeprüfungs-Trainer Psychologie</p>
+
+        {/* Primary row ─────────────────────────────────────────────────── */}
+        <div className="flex h-14 items-center gap-2">
+          <Logo size="sm" />
+
+          {/* Module tabs (desktop) */}
+          <div className="ml-2 hidden sm:flex">
+            {([
+              { key: 'lernen',   emoji: '🎓', label: 'Lernen'   },
+              { key: 'finanzen', emoji: '💰', label: 'Finanzen' },
+            ] as const).map(({ key, emoji, label }) => (
+              <button
+                key={key}
+                onClick={() => setAppModule(key)}
+                className={`relative flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                  appModule === key ? 'text-slate-900' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                {appModule === key && (
+                  <motion.div
+                    layoutId="nav-active-module"
+                    className="absolute inset-0 -z-10 rounded-lg bg-slate-100"
+                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <span>{emoji}</span>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex-1" />
+
+          {/* ── Right-side tools (lernen mode) ─────────────────────────── */}
+          {appModule === 'lernen' && (
+            <>
+              {/* Streak pill */}
               <AnimatePresence>
-                {appModule === 'lernen' && streak.todayCount > 0 && (
+                {streak.todayCount > 0 && (
                   <motion.span
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700"
+                    className="hidden items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700 sm:inline-flex"
                   >
-                    🔥 {streak.todayCount} heute
-                    {streak.days > 1 && <span className="opacity-70">· {streak.days} Tage</span>}
+                    🔥 {streak.todayCount}
+                    {streak.days > 1 && <span className="opacity-70">· {streak.days}d</span>}
                   </motion.span>
                 )}
               </AnimatePresence>
 
               {/* Daily goal ring */}
-              {appModule === 'lernen' && (
-                <button
-                  onClick={() => { setGoalInput(String(dailyGoal)); setEditingGoal(true); }}
-                  title="Tagesziel anpassen"
-                  className="flex items-center gap-1.5 rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-slate-200 hover:ring-teal-300 transition-all"
-                >
-                  {(() => {
-                    const r = 11;
-                    const circ = 2 * Math.PI * r;
-                    const pct = Math.min(1, streak.todayCount / dailyGoal);
-                    return (
-                      <svg width="28" height="28" viewBox="0 0 28 28">
-                        <circle cx="14" cy="14" r={r} fill="none" stroke="#e2e8f0" strokeWidth="2.5" />
-                        <motion.circle
-                          cx="14" cy="14" r={r} fill="none"
-                          stroke={pct >= 1 ? '#10b981' : '#0d9488'} strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeDasharray={`${pct * circ} ${circ}`}
-                          transform="rotate(-90 14 14)"
-                          animate={{ strokeDasharray: `${pct * circ} ${circ}` }}
-                          transition={{ type: 'spring', stiffness: 80, damping: 16 }}
-                        />
-                        <text x="14" y="18" textAnchor="middle" fontSize="7" fill="#0f172a" fontWeight="700">
-                          {pct >= 1 ? '✓' : `${streak.todayCount}`}
-                        </text>
-                      </svg>
-                    );
-                  })()}
-                  <span className="text-xs font-medium text-slate-600">/ {dailyGoal}</span>
-                </button>
-              )}
+              <button
+                onClick={() => { setGoalInput(String(dailyGoal)); setEditingGoal(true); }}
+                title="Tagesziel anpassen"
+                className="flex items-center gap-1 rounded-full bg-slate-50 px-2 py-1 ring-1 ring-slate-200 transition-all hover:ring-teal-400"
+              >
+                {(() => {
+                  const r = 11;
+                  const circ = 2 * Math.PI * r;
+                  const pct = Math.min(1, streak.todayCount / dailyGoal);
+                  return (
+                    <svg width="28" height="28" viewBox="0 0 28 28">
+                      <circle cx="14" cy="14" r={r} fill="none" stroke="#e2e8f0" strokeWidth="2.5" />
+                      <motion.circle
+                        cx="14" cy="14" r={r} fill="none"
+                        stroke={pct >= 1 ? '#10b981' : '#0d9488'} strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeDasharray={`${pct * circ} ${circ}`}
+                        transform="rotate(-90 14 14)"
+                        animate={{ strokeDasharray: `${pct * circ} ${circ}` }}
+                        transition={{ type: 'spring', stiffness: 80, damping: 16 }}
+                      />
+                      <text x="14" y="18" textAnchor="middle" fontSize="7" fill="#0f172a" fontWeight="700">
+                        {pct >= 1 ? '✓' : `${streak.todayCount}`}
+                      </text>
+                    </svg>
+                  );
+                })()}
+                <span className="hidden text-xs font-medium text-slate-600 sm:inline">/ {dailyGoal}</span>
+              </button>
+
+              {/* Create card */}
+              <button
+                onClick={() => setShowCardCreator(true)}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-teal-700"
+                title="Eigene Karte erstellen"
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden sm:inline">Neue Karte</span>
+              </button>
+            </>
+          )}
+
+          {/* Actions overflow ⋮ */}
+          {appModule === 'lernen' && (
+            <div className="relative">
+              <button
+                onClick={() => setShowActionsMenu(m => !m)}
+                className={`flex h-8 w-8 items-center justify-center rounded-lg border text-slate-600 transition-colors ${
+                  showActionsMenu ? 'border-teal-300 bg-teal-50' : 'border-slate-200 bg-white shadow-sm hover:bg-slate-50'
+                }`}
+                title="Weitere Aktionen"
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+              <AnimatePresence>
+                {showActionsMenu && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                      transition={{ duration: 0.12 }}
+                      className="absolute right-0 top-full z-50 mt-2 w-52 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl"
+                    >
+                      <button
+                        onClick={() => { exportProgress(); setShowActionsMenu(false); }}
+                        disabled={learnedCount === 0}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 disabled:opacity-40"
+                      >
+                        <Download className="h-4 w-4 text-slate-400" />
+                        Fortschritt exportieren
+                      </button>
+                      <button
+                        onClick={() => { importProgressRef.current?.click(); setShowActionsMenu(false); }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                      >
+                        <Upload className="h-4 w-4 text-slate-400" />
+                        Fortschritt importieren
+                      </button>
+                      <div className="my-1 h-px bg-slate-100" />
+                      <button
+                        onClick={() => { resetProgress(); setShowActionsMenu(false); }}
+                        disabled={learnedCount === 0}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 disabled:opacity-40"
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                        Zurücksetzen
+                      </button>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+              <input
+                ref={importProgressRef}
+                type="file"
+                accept=".json"
+                className="hidden"
+                onChange={(e) => importProgressFromFile(e.target.files?.[0])}
+              />
             </div>
+          )}
+        </div>
+
+        {/* View-mode tab row (lernen only) ─────────────────────────────── */}
+        {appModule === 'lernen' && (
+          <div className="flex overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {viewItems.map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                onClick={() => setViewMode(key)}
+                className={`relative flex shrink-0 items-center gap-1.5 whitespace-nowrap border-b-2 px-4 py-2.5 text-sm font-medium transition-colors ${
+                  viewMode === key
+                    ? 'border-teal-600 text-teal-700'
+                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+                {viewMode === key && (
+                  <motion.div
+                    layoutId="nav-view-indicator"
+                    className="absolute inset-x-0 bottom-0 h-0.5 rounded-t-full bg-teal-600"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+              </button>
+            ))}
           </div>
+        )}
+      </div>
+    </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Module switcher — hidden on mobile (bottom tab bar handles it) */}
-            <div className="hidden sm:flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
-              {([
-                { key: 'lernen', label: '🎓 Lernen' },
-                { key: 'finanzen', label: '💰 Finanzen' },
-              ] as const).map(({ key, label }) => (
-                <button
-                  key={key}
-                  onClick={() => setAppModule(key)}
-                  className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                    appModule === key ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            {/* Progress tools — only in lernen mode */}
-            {appModule === 'lernen' && (
-              <>
-                <button
-                  onClick={() => setShowCardCreator(true)}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-700"
-                  title="Eigene Karteikarte erstellen"
-                >
-                  <Plus className="h-4 w-4" />
-                  <span className="hidden sm:inline">Karte erstellen</span>
-                </button>
-                <button
-                  onClick={exportProgress}
-                  disabled={learnedCount === 0}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-                  title="Lernfortschritt als JSON herunterladen"
-                >
-                  <Download className="h-4 w-4" />
-                  Exportieren
-                </button>
-                <button
-                  onClick={() => importProgressRef.current?.click()}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100"
-                  title="Lernfortschritt aus JSON-Datei wiederherstellen"
-                >
-                  <Upload className="h-4 w-4" />
-                  Importieren
-                </button>
-                <button
-                  onClick={resetProgress}
-                  disabled={learnedCount === 0}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <RotateCcw className="h-4 w-4" />
-                  Zurücksetzen
-                </button>
-                <input
-                  ref={importProgressRef}
-                  type="file"
-                  accept=".json"
-                  className="hidden"
-                  onChange={(e) => importProgressFromFile(e.target.files?.[0])}
-                />
-              </>
-            )}
-          </div>
-        </header>
-
+    <main className="min-h-screen bg-slate-50 pb-24 pt-4 text-slate-900 sm:pb-8 sm:pt-6">
+      <div className="mx-auto max-w-6xl px-4">
         {appModule === 'finanzen' && <FinancePlanner />}
 
         {appModule === 'lernen' && <>
@@ -828,21 +897,6 @@ export default function App() {
           </div>
           </div>{/* end collapsible */}
         </section>
-
-        <nav className="mb-6 flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {viewItems.map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              onClick={() => setViewMode(key)}
-              className={`inline-flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                viewMode === key ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 shadow-sm ring-1 ring-slate-200 hover:bg-slate-100'
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              {label}
-            </button>
-          ))}
-        </nav>
 
         <AnimatePresence mode="wait">
         <motion.div
@@ -1416,25 +1470,26 @@ export default function App() {
     </main>
 
     {/* ── Mobile bottom tab bar ──────────────────────────────────────── */}
-    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-slate-100 bg-white/95 backdrop-blur-sm sm:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-slate-200 bg-white/95 backdrop-blur-md sm:hidden">
       {([
-        { key: 'lernen', label: 'Lernen', emoji: '🎓' },
+        { key: 'lernen',   label: 'Lernen',   emoji: '🎓' },
         { key: 'finanzen', label: 'Finanzen', emoji: '💰' },
       ] as const).map(({ key, label, emoji }) => (
         <button
           key={key}
           onClick={() => setAppModule(key)}
-          className={`relative flex flex-1 flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition-colors ${
-            appModule === key ? 'text-teal-700' : 'text-slate-400'
+          className={`relative flex flex-1 flex-col items-center gap-0.5 py-3 text-xs font-medium transition-colors ${
+            appModule === key ? 'text-teal-700' : 'text-slate-400 hover:text-slate-600'
           }`}
         >
           {appModule === key && (
             <motion.div
               layoutId="mobile-tab-indicator"
-              className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-teal-600"
+              className="absolute inset-x-5 top-0 h-0.5 rounded-full bg-teal-600"
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             />
           )}
-          <span className="text-xl leading-none">{emoji}</span>
+          <span className={`text-xl leading-none transition-transform ${appModule === key ? 'scale-110' : 'scale-100'}`}>{emoji}</span>
           <span>{label}</span>
         </button>
       ))}
