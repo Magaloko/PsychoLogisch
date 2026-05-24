@@ -130,7 +130,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
       </div>
 
       {/* Card body */}
-      <div className="relative min-h-[30rem] [perspective:1200px]">
+      <div className="relative min-h-[22rem] sm:min-h-[30rem] [perspective:1200px]">
         <AnimatePresence mode="wait">
           {!isFlipped ? (
             <motion.div
@@ -140,12 +140,12 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
               exit={{ rotateY: 90, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
               style={{ transformOrigin: 'center' }}
-              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-lg sm:p-8"
+              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-lg sm:p-6 lg:p-8"
             >
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                   <p className="mb-3 text-sm font-medium text-slate-400">{card.chapter_title}</p>
-                  <h3 className="text-xl font-semibold leading-relaxed text-slate-800">
+                  <h3 className="text-lg sm:text-xl font-semibold leading-relaxed text-slate-800">
                     {card.front}
                   </h3>
                   {card.image_url && (
@@ -172,16 +172,16 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
               exit={{ rotateY: -90, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
               style={{ transformOrigin: 'center' }}
-              className="absolute inset-0 flex flex-col overflow-y-auto rounded-2xl border border-teal-200 bg-white p-6 shadow-lg sm:p-8"
+              className="absolute inset-0 flex flex-col overflow-y-auto rounded-2xl border border-teal-200 bg-white p-4 shadow-lg sm:p-6 lg:p-8"
             >
               <div className="flex-1">
-                <div className="whitespace-pre-line text-lg leading-relaxed text-slate-700">
+                <div className="whitespace-pre-line text-base sm:text-lg leading-relaxed text-slate-700">
                   {card.back}
                 </div>
 
                 {card.formula && (
                   <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
-                    <div className="font-mono text-lg text-slate-800">{card.formula}</div>
+                    <div className="font-mono text-sm sm:text-base text-slate-800 break-all">{card.formula}</div>
                     {card.formula_explanation && (
                       <p className="mt-2 text-sm text-slate-600">{card.formula_explanation}</p>
                     )}
@@ -239,7 +239,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                       whileTap={{ scale: 0.92 }}
                       whileHover={{ scale: 1.04, y: -2 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                      className={`rounded-xl ${cfg.bg} py-3 text-sm font-medium ${cfg.text} transition-colors ${cfg.hover}`}
+                      className={`rounded-xl ${cfg.bg} py-2 sm:py-3 text-xs sm:text-sm font-medium ${cfg.text} transition-colors ${cfg.hover}`}
                     >
                       {cfg.icon}
                       {cfg.label}

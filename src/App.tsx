@@ -185,6 +185,7 @@ export default function App() {
   const [streak, setStreak] = useState<StreakData>(loadStreak);
   const importProgressRef = useRef<HTMLInputElement>(null);
   const [appModule, setAppModule] = useState<'lernen' | 'finanzen'>('lernen');
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -348,6 +349,14 @@ export default function App() {
   const weakCount = cards.filter((card) => isWeak(progress[card.id])).length;
   const unseenCount = cards.length - learnedCount;
   const currentCard = filteredCards[currentIndex];
+  const activeFilterCount = [
+    chapterFilter !== 'all',
+    typeFilter !== 'all',
+    sourceFilter !== 'all',
+    studyMode !== 'all',
+    examOnly,
+    searchQuery.trim() !== '',
+  ].filter(Boolean).length;
   const dashboardItems: DashboardItem[] = [
     { label: 'Karten', value: cards.length, icon: Brain },
     { label: 'Bewertet', value: learnedCount, icon: BarChart3 },
@@ -456,7 +465,7 @@ export default function App() {
 
   return (
     <>
-    <main className="min-h-screen bg-slate-50 py-6 text-slate-900 sm:py-8">
+    <main className="min-h-screen bg-slate-50 py-6 pb-24 text-slate-900 sm:py-8 sm:pb-8">
       <div className="mx-auto max-w-6xl px-4">
         <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
@@ -479,8 +488,8 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {/* Module switcher */}
-            <div className="flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+            {/* Module switcher — hidden on mobile (bottom tab bar handles it) */}
+            <div className="hidden sm:flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
               {([
                 { key: 'lernen', label: '🎓 Lernen' },
                 { key: 'finanzen', label: '💰 Finanzen' },
@@ -540,7 +549,7 @@ export default function App() {
         {appModule === 'finanzen' && <FinancePlanner />}
 
         {appModule === 'lernen' && <>
-        <section className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <section className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
           {dashboardItems.map(({ label, value, icon: Icon, mode }) => (
             <button
               key={label}
@@ -583,7 +592,25 @@ export default function App() {
         </section>
 
         <section className="mb-6 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <div className="grid gap-3 lg:grid-cols-[1fr_9rem_9rem_10rem]">
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setShowFilters(f => !f)}
+            className="mb-3 flex w-full items-center justify-between sm:hidden"
+          >
+            <span className="flex items-center gap-2 text-sm font-medium text-slate-700">
+              <Filter className="h-4 w-4 text-teal-600" />
+              Filter &amp; Lernmodus
+              {activeFilterCount > 0 && (
+                <span className="rounded-full bg-teal-600 px-2 py-0.5 text-xs font-semibold text-white">
+                  {activeFilterCount}
+                </span>
+              )}
+            </span>
+            <span className="text-xs text-teal-600">{showFilters ? 'Einklappen ▲' : 'Anzeigen ▼'}</span>
+          </button>
+
+          <div className={showFilters ? '' : 'hidden sm:block'}>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_9rem_9rem_10rem]">
             <label className="block">
               <span className="mb-1 flex items-center gap-2 text-sm font-medium text-slate-600">
                 <Search className="h-4 w-4" />
@@ -673,17 +700,18 @@ export default function App() {
                 onChange={(event) => setExamOnly(event.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
               />
-              Nur prüfungsrelevant
+              <span className="text-xs sm:text-sm">Nur prüfungsrelevant</span>
             </label>
           </div>
+          </div>{/* end collapsible */}
         </section>
 
-        <nav className="mb-6 flex flex-wrap gap-2">
+        <nav className="mb-6 flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {viewItems.map(({ key, label, icon: Icon }) => (
             <button
               key={key}
               onClick={() => setViewMode(key)}
-              className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              className={`inline-flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                 viewMode === key ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 shadow-sm ring-1 ring-slate-200 hover:bg-slate-100'
               }`}
             >
@@ -1211,12 +1239,23 @@ export default function App() {
                   animate="center"
                   exit="exit"
                   transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.12}
+                  whileDrag={{ cursor: 'grabbing', scale: 0.98 }}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -60) goToNextCard();
+                    else if (info.offset.x > 60) goToPreviousCard();
+                  }}
                 >
                   <Flashcard card={currentCard} onRate={handleRate} onSkip={goToNextCard} flipTrigger={flipTrigger} />
                 </motion.div>
               </AnimatePresence>
 
-              <p className="mt-2 text-center text-xs text-slate-400">
+              <p className="mt-2 text-center text-xs text-slate-400 sm:hidden">
+                Karte wischen zum Navigieren · Tippen zum Aufdecken
+              </p>
+              <p className="mt-2 hidden text-center text-xs text-slate-400 sm:block">
                 <kbd className="rounded border border-slate-200 bg-slate-100 px-1">Space</kbd> umdrehen ·{' '}
                 <kbd className="rounded border border-slate-200 bg-slate-100 px-1">←</kbd>{' '}
                 <kbd className="rounded border border-slate-200 bg-slate-100 px-1">→</kbd> navigieren ·{' '}
@@ -1235,6 +1274,31 @@ export default function App() {
         </>}
       </div>
     </main>
+
+    {/* ── Mobile bottom tab bar ──────────────────────────────────────── */}
+    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-slate-100 bg-white/95 backdrop-blur-sm sm:hidden">
+      {([
+        { key: 'lernen', label: 'Lernen', emoji: '🎓' },
+        { key: 'finanzen', label: 'Finanzen', emoji: '💰' },
+      ] as const).map(({ key, label, emoji }) => (
+        <button
+          key={key}
+          onClick={() => setAppModule(key)}
+          className={`relative flex flex-1 flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition-colors ${
+            appModule === key ? 'text-teal-700' : 'text-slate-400'
+          }`}
+        >
+          {appModule === key && (
+            <motion.div
+              layoutId="mobile-tab-indicator"
+              className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-teal-600"
+            />
+          )}
+          <span className="text-xl leading-none">{emoji}</span>
+          <span>{label}</span>
+        </button>
+      ))}
+    </nav>
 
     <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-400">
       <button

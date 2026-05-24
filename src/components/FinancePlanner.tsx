@@ -248,7 +248,7 @@ export default function FinancePlanner() {
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
-          <span className="min-w-[11rem] text-center text-sm font-semibold text-slate-700">
+          <span className="min-w-[9rem] sm:min-w-[11rem] text-center text-sm font-semibold text-slate-700">
             {monthLabel(year, month)}
           </span>
           <button
@@ -262,7 +262,7 @@ export default function FinancePlanner() {
       </div>
 
       {/* ── Summary cards ──────────────────────────────────────────────────── */}
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
           { label: 'Einnahmen', value: totalIncome, icon: TrendingUp, color: 'text-teal-700', bg: 'bg-teal-50', border: 'border-teal-100' },
           { label: 'Ausgaben', value: totalExpense, icon: TrendingDown, color: 'text-red-700', bg: 'bg-red-50', border: 'border-red-100' },
@@ -273,7 +273,7 @@ export default function FinancePlanner() {
               <p className="text-xs font-medium uppercase text-slate-400">{label}</p>
               <Icon className={`h-4 w-4 ${color}`} />
             </div>
-            <p className={`mt-2 text-2xl font-bold ${color}`}>{fmt(value)}</p>
+            <p className={`mt-2 text-xl sm:text-2xl font-bold ${color}`}>{fmt(value)}</p>
           </div>
         ))}
       </div>
