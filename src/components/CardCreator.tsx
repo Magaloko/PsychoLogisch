@@ -10,10 +10,10 @@ interface CardCreatorProps {
   onSave: (card: FlashcardData) => void;
 }
 
-const CARD_TYPES: FlashcardData['card_type'][] = ['definition', 'concept', 'person', 'formula', 'image', 'list'];
+const CARD_TYPES: FlashcardData['card_type'][] = ['definition', 'concept', 'person', 'formula', 'image', 'list', 'comparison'];
 const TYPE_LABELS: Record<FlashcardData['card_type'], string> = {
   definition: 'Definition', concept: 'Konzept', person: 'Person',
-  formula: 'Formel', image: 'Bild', list: 'Liste',
+  formula: 'Formel', image: 'Bild', list: 'Liste', comparison: 'Vergleich',
 };
 
 export default function CardCreator({ chapters, existingIds, onClose, onSave }: CardCreatorProps) {

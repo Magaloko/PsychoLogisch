@@ -145,7 +145,8 @@ const cardTypeLabels: Record<CardTypeFilter, string> = {
   person: 'Person',
   formula: 'Formel',
   image: 'Bild',
-  list: 'Liste'
+  list: 'Liste',
+  comparison: 'Vergleich'
 };
 
 const studyModeLabels: Record<StudyMode, string> = {

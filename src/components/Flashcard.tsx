@@ -10,6 +10,7 @@ import {
   Check,
   Brain,
   Calculator,
+  Columns2,
   Image as ImageIcon,
   Lightbulb,
   List,
@@ -25,7 +26,7 @@ export interface FlashcardData {
   id: string;
   chapter_id: string;
   chapter_title: string;
-  card_type: 'definition' | 'concept' | 'person' | 'formula' | 'image' | 'list';
+  card_type: 'definition' | 'concept' | 'person' | 'formula' | 'image' | 'list' | 'comparison';
   front: string;
   back: string;
   back_extended?: string;
@@ -35,6 +36,11 @@ export interface FlashcardData {
   image_labels?: Array<{ label: string; x: number; y: number }>;
   formula?: string;
   formula_explanation?: string;
+  comparison?: {
+    left_title: string;
+    right_title: string;
+    rows: Array<{ label: string; left: string; right: string }>;
+  };
   exam_relevant: boolean;
   difficulty: number;
   tags: string[];
@@ -121,6 +127,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
     formula: Calculator,
     image: ImageIcon,
     list: List,
+    comparison: Columns2,
   }[card.card_type];
 
   return (
@@ -250,6 +257,28 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                       </figcaption>
                     )}
                   </figure>
+                )}
+
+                {card.comparison && (
+                  <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
+                    <div className="grid grid-cols-[8rem_1fr_1fr] sm:grid-cols-[10rem_1fr_1fr] divide-x divide-slate-200 bg-slate-50 text-xs font-bold uppercase tracking-wide">
+                      <div className="px-2 py-2 text-slate-400" />
+                      <div className="px-3 py-2 text-teal-700 break-words">{card.comparison.left_title}</div>
+                      <div className="px-3 py-2 text-indigo-700 break-words">{card.comparison.right_title}</div>
+                    </div>
+                    <div className="divide-y divide-slate-100">
+                      {card.comparison.rows.map((row, i) => (
+                        <div
+                          key={i}
+                          className="grid grid-cols-[8rem_1fr_1fr] sm:grid-cols-[10rem_1fr_1fr] divide-x divide-slate-100"
+                        >
+                          <div className="bg-slate-50 px-2 py-2 text-xs font-semibold text-slate-600 break-words">{row.label}</div>
+                          <div className="px-3 py-2 text-sm text-slate-700 break-words whitespace-pre-line">{row.left}</div>
+                          <div className="px-3 py-2 text-sm text-slate-700 break-words whitespace-pre-line">{row.right}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )}
 
                 {card.back_extended && (

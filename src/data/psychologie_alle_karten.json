@@ -2240,5 +2240,204 @@
     "difficulty": 5,
     "tags": ["big-five", "stabilität", "erblichkeit", "zwillingsstudie", "maturity"],
     "source_page": 252
+  },
+  {
+    "id": "kc-001",
+    "chapter_id": "5.3",
+    "chapter_title": "Vergleich · Konditionierung",
+    "card_type": "comparison",
+    "front": "Klassische vs. Operante Konditionierung – die Klausurtabelle",
+    "back": "Beides sind Formen assoziativen Lernens, unterscheiden sich aber fundamental in dem, was assoziiert wird und wer aktiv ist.",
+    "comparison": {
+      "left_title": "Klassisch (Pawlow)",
+      "right_title": "Operant (Skinner)",
+      "rows": [
+        { "label": "Was wird gelernt?", "left": "Reiz–Reiz-Verknüpfung (BR + UR)", "right": "Reiz–Verhalten–Konsequenz" },
+        { "label": "Rolle des Lerners", "left": "passiv (Reaktion auf Reiz)", "right": "aktiv (Verhalten zeigen)" },
+        { "label": "Verhaltensart", "left": "respondent / unwillkürlich (Reflex)", "right": "operant / willkürlich" },
+        { "label": "Reihenfolge", "left": "Reiz → Reaktion", "right": "Verhalten → Konsequenz" },
+        { "label": "Beispiel", "left": "Hund speichelt bei Glocke", "right": "Ratte drückt Hebel für Futter" },
+        { "label": "Extinktion durch", "left": "BR ohne UR", "right": "Verhalten ohne Verstärker" },
+        { "label": "Vertreter", "left": "Pawlow, Watson", "right": "Thorndike, Skinner" }
+      ]
+    },
+    "exam_trap": "Klassiker-Klausurfrage: 'Lob/Tadel = operant, Glocke + Futter = klassisch.' Wenn Verstärkung im Spiel ist → operant. Wenn ein neutraler Reiz Bedeutung bekommt → klassisch.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "konditionierung", "pawlow", "skinner", "lernen"],
+    "source_page": 145
+  },
+  {
+    "id": "kc-002",
+    "chapter_id": "6.3",
+    "chapter_title": "Vergleich · Entwicklung",
+    "card_type": "comparison",
+    "front": "Piaget vs. Vygotsky – die zwei Schulen kognitiver Entwicklung",
+    "back": "Beide kognitive Entwicklungstheoretiker, aber mit gegensätzlichem Schwerpunkt auf individueller Reifung vs. sozialer Interaktion.",
+    "comparison": {
+      "left_title": "Piaget",
+      "right_title": "Vygotsky",
+      "rows": [
+        { "label": "Treibende Kraft", "left": "individuelle Reifung + Erfahrung", "right": "soziale Interaktion + Kultur" },
+        { "label": "Lernen vs. Entw.", "left": "Entwicklung geht Lernen voraus", "right": "Lernen geht Entwicklung voraus" },
+        { "label": "Stufen", "left": "4 universelle Stufen (0-2, 2-7, 7-12, 12+)", "right": "Keine festen Stufen, kulturabhängig" },
+        { "label": "Rolle der Sprache", "left": "Folge des Denkens (egozentrische Sprache verschwindet)", "right": "Treiber des Denkens (wird zur inneren Sprache)" },
+        { "label": "Kernkonzept", "left": "Assimilation / Akkommodation", "right": "Zone der nächsten Entwicklung (ZPD)" },
+        { "label": "Lehrerrolle", "left": "Umgebung gestalten, nicht eingreifen", "right": "Scaffolding – aktive Unterstützung" }
+      ]
+    },
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "piaget", "vygotsky", "entwicklung", "kognition"],
+    "source_page": 174
+  },
+  {
+    "id": "kc-003",
+    "chapter_id": "8.2",
+    "chapter_title": "Vergleich · Trait-Modelle",
+    "card_type": "comparison",
+    "front": "Big Five vs. Eysenck (PEN) vs. HEXACO – drei Trait-Modelle",
+    "back": "Die drei dominanten faktoranalytisch fundierten Persönlichkeitsmodelle im Vergleich.",
+    "comparison": {
+      "left_title": "Eysenck PEN",
+      "right_title": "Big Five / HEXACO",
+      "rows": [
+        { "label": "Anzahl Faktoren", "left": "3 (PEN)", "right": "Big Five: 5 (OCEAN) · HEXACO: 6" },
+        { "label": "Faktoren", "left": "Psychotizismus, Extraversion, Neurotizismus", "right": "O-C-E-A-N (+ H bei HEXACO)" },
+        { "label": "Methode", "left": "Theorie-geleitet, biologisch fundiert", "right": "Lexikalisch (Big Five) bzw. cross-cultural-lexikalisch (HEXACO)" },
+        { "label": "Biologische Basis", "left": "Stark betont (cortical arousal, limbic reactivity)", "right": "Erblichkeit ~ 40-60 %, weniger spez. Theorie" },
+        { "label": "Stärke", "left": "Parsimonisch, kausal-biologisch", "right": "Empirisch robust, replizierbar, vielfach validiert" },
+        { "label": "Neu in HEXACO", "left": "—", "right": "H-Faktor (Honesty-Humility) → sagt Dark Triad voraus" }
+      ]
+    },
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "big-five", "eysenck", "hexaco", "persönlichkeit", "traits"],
+    "source_page": 240
+  },
+  {
+    "id": "kc-004",
+    "chapter_id": "5.4",
+    "chapter_title": "Vergleich · Gedächtnismodelle",
+    "card_type": "comparison",
+    "front": "Atkinson-Shiffrin (3-Speicher) vs. Baddeley (Arbeitsgedächtnis)",
+    "back": "Beide Modelle des Kurzzeit-/Arbeitsgedächtnisses, mit fundamental anderer Konzeption.",
+    "comparison": {
+      "left_title": "Atkinson-Shiffrin (1968)",
+      "right_title": "Baddeley & Hitch (1974)",
+      "rows": [
+        { "label": "Struktur", "left": "3 sequenzielle Speicher (UKG → KZG → LZG)", "right": "Mehrkomponenten-System mit zentraler Exekutive" },
+        { "label": "KZG-Sicht", "left": "Passiver einheitlicher Speicher", "right": "Aktives, mehrteiliges Arbeitsgedächtnis" },
+        { "label": "Komponenten", "left": "UKG / KZG / LZG", "right": "Zentrale Exekutive + Phonologische Schleife + Visuell-räumlicher Notizblock + Episodischer Puffer" },
+        { "label": "Transfer ins LZG", "left": "Durch Rehearsal (Wiederholung)", "right": "Durch zentrale Exekutive + Verarbeitungstiefe" },
+        { "label": "Stärke", "left": "Klar, didaktisch", "right": "Erklärt Doppelaufgaben, Wortlängeneffekt, Patientendissoziationen" },
+        { "label": "Schwäche", "left": "Patient KF: KZG defekt, LZG intakt - widerspricht!", "right": "Komplexer, schwerer zu prüfen" }
+      ]
+    },
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "gedächtnis", "atkinson", "baddeley", "arbeitsgedächtnis"],
+    "source_page": 151
+  },
+  {
+    "id": "kc-005",
+    "chapter_id": "3.4",
+    "chapter_title": "Vergleich · Methoden",
+    "card_type": "comparison",
+    "front": "Echtes Experiment vs. Quasi-Experiment vs. Korrelative Studie",
+    "back": "Drei Forschungsdesigns mit unterschiedlicher Kausalkraft.",
+    "comparison": {
+      "left_title": "Echtes Experiment",
+      "right_title": "Quasi / Korrelativ",
+      "rows": [
+        { "label": "Manipulation UV", "left": "JA, durch Versuchsleitung", "right": "Quasi: ja, aber an bestehenden Gruppen · Korrelativ: keine" },
+        { "label": "Randomisierung", "left": "JA, Zufallszuweisung", "right": "Quasi: NEIN · Korrelativ: NEIN" },
+        { "label": "Kausalschluss", "left": "Möglich", "right": "Quasi: eingeschränkt · Korrelativ: NEIN" },
+        { "label": "Interne Validität", "left": "Hoch", "right": "Mittel bis niedrig" },
+        { "label": "Externe Validität", "left": "Oft niedriger (Labor)", "right": "Höher (echte Welt)" },
+        { "label": "Anwendung", "left": "Wenn manipulierbar (Stress-Bedingung)", "right": "Wenn nicht manipulierbar (Geschlecht, Diagnose, Schulklassen)" }
+      ]
+    },
+    "exam_trap": "Geschlecht, Alter, klinische Diagnose können NIE in einem echten Experiment untersucht werden – immer Quasi-Experiment!",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "methoden", "experiment", "quasi", "korrelation"],
+    "source_page": 77
+  },
+  {
+    "id": "kc-006",
+    "chapter_id": "5.4",
+    "chapter_title": "Vergleich · Interferenz",
+    "card_type": "comparison",
+    "front": "Proaktive vs. Retroaktive Interferenz – nie wieder verwechseln",
+    "back": "Beide stören das Erinnern, aber aus entgegengesetzten Richtungen der Zeitachse.",
+    "comparison": {
+      "left_title": "Proaktiv",
+      "right_title": "Retroaktiv",
+      "rows": [
+        { "label": "Richtung", "left": "ALT stört NEU (wirkt nach vorne)", "right": "NEU stört ALT (wirkt nach hinten)" },
+        { "label": "Was ist beeinträchtigt?", "left": "Lernen / Erinnern des NEUEN", "right": "Erinnern des ALTEN" },
+        { "label": "Beispiel", "left": "Alte Telefonnummer kommt einem in den Sinn, wenn man die neue wählen will", "right": "Neue Sprache überlagert die alte (nach Auslandsaufenthalt)" },
+        { "label": "Eselsbrücke", "left": "PRO = PRO (für) Altes", "right": "RETRO = nach hinten (Altes leidet)" },
+        { "label": "Gegenmaßnahme", "left": "Über-Lernen der neuen Info", "right": "Wiederholung der alten Info" }
+      ]
+    },
+    "exam_trap": "DIE Standardfrage in Gedächtnis-Klausuren. Merke: das Wort 'pro/retro' bezieht sich auf die Wirkungsrichtung der Interferenz, NICHT darauf welches Material gestört ist.",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "interferenz", "proaktiv", "retroaktiv", "vergessen"],
+    "source_page": 158
+  },
+  {
+    "id": "kc-007",
+    "chapter_id": "3.3",
+    "chapter_title": "Vergleich · Gütekriterien",
+    "card_type": "comparison",
+    "front": "Reliabilität vs. Validität – der ewige Klausurklassiker",
+    "back": "Beide Gütekriterien, aber sie bedeuten Unterschiedliches. Ein Test kann sehr reliabel und trotzdem ungültig sein.",
+    "comparison": {
+      "left_title": "Reliabilität",
+      "right_title": "Validität",
+      "rows": [
+        { "label": "Was wird gemessen?", "left": "Zuverlässigkeit / Konsistenz", "right": "Was es vorgibt zu messen" },
+        { "label": "Frage", "left": "Misst der Test stabil?", "right": "Misst der Test das Richtige?" },
+        { "label": "Beispiel-Analogie", "left": "Waage zeigt immer gleichen Wert (auch wenn falsch)", "right": "Waage zeigt das echte Gewicht" },
+        { "label": "Bedingung", "left": "Notwendig", "right": "Notwendig UND ausreichend" },
+        { "label": "Verhältnis", "left": "Validität setzt Reliabilität voraus", "right": "Aber: Reliabilität ohne Validität möglich" },
+        { "label": "Arten", "left": "Retest, Paralleltest, Interne Konsistenz (Cronbachs α), Interrater", "right": "Inhalt, Kriterium (gleichzeitig/prognostisch), Konstrukt (konvergent/diskriminant)" }
+      ]
+    },
+    "exam_trap": "Reliabilität OHNE Validität möglich (immer dasselbe falsch messen). Validität OHNE Reliabilität UNmöglich (was unzuverlässig misst, kann nicht valide sein).",
+    "exam_relevant": true,
+    "difficulty": 4,
+    "tags": ["vergleich", "reliabilität", "validität", "gütekriterien", "methoden"],
+    "source_page": 62
+  },
+  {
+    "id": "kc-008",
+    "chapter_id": "4.3",
+    "chapter_title": "Vergleich · Autonomes NS",
+    "card_type": "comparison",
+    "front": "Sympathikus vs. Parasympathikus – die zwei Bremsen des Körpers",
+    "back": "Zwei antagonistische Teile des autonomen Nervensystems mit gegensätzlicher Wirkung auf nahezu alle inneren Organe.",
+    "comparison": {
+      "left_title": "Sympathikus",
+      "right_title": "Parasympathikus",
+      "rows": [
+        { "label": "Funktion", "left": "Fight or Flight (Aktivierung)", "right": "Rest and Digest (Erholung)" },
+        { "label": "Herzfrequenz", "left": "↑ erhöht", "right": "↓ gesenkt" },
+        { "label": "Pupillen", "left": "geweitet", "right": "verengt" },
+        { "label": "Verdauung", "left": "gehemmt", "right": "aktiviert" },
+        { "label": "Bronchien", "left": "geweitet", "right": "verengt" },
+        { "label": "Schweißdrüsen", "left": "↑ aktiviert", "right": "—" },
+        { "label": "Neurotransmitter", "left": "Noradrenalin (postgangliönär)", "right": "Acetylcholin (postgangliönär)" },
+        { "label": "Wirbelsäulen-Ursprung", "left": "Thorakal & lumbal", "right": "Cranial (Hirnnerven) & sakral" }
+      ]
+    },
+    "mnemonic": "SympaThikus = STRESS (Th wie Threat). ParaSympathikus = Pause.",
+    "exam_relevant": true,
+    "difficulty": 3,
+    "tags": ["vergleich", "sympathikus", "parasympathikus", "autonom", "ans"],
+    "source_page": 114
   }
 ]
