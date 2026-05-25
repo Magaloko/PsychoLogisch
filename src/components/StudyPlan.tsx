@@ -241,7 +241,7 @@ export default function StudyPlan({
 
       <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
         {/* ── 7-day forecast ───────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-slate-800">Fällige Karten – nächste 7 Tage</h3>
@@ -278,7 +278,7 @@ export default function StudyPlan({
         </div>
 
         {/* ── Chapter priority ─────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-slate-800">Kapitel-Priorität</h3>
@@ -347,7 +347,7 @@ export default function StudyPlan({
       </div>
 
       {/* ── Klausur-Historie ───────────────────────────────────────────── */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-indigo-600" />

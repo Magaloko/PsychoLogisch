@@ -115,7 +115,7 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
           { label: 'Stark gelernt', value: strongCount, icon: Award, color: 'text-amber-600' },
           { label: 'Lerntage', value: streak.days, icon: Flame, color: 'text-orange-600' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+          <div key={label} className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <div className="flex items-center justify-between gap-1">
               <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">{label}</p>
               <Icon className={`h-3.5 w-3.5 shrink-0 ${color}`} />
@@ -129,7 +129,7 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
         <div className="space-y-6">
 
           {/* ── Heatmap ──────────────────────────────────────────────────────── */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-semibold text-slate-800">Lernaktivität</h3>
               <span className="text-xs text-slate-400">letzte 12 Wochen</span>
@@ -159,7 +159,7 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
           </div>
 
           {/* ── 7-day forecast ───────────────────────────────────────────────── */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-semibold text-slate-800">Fälligkeiten (nächste 7 Tage)</h3>
               <CalendarDays className="h-4 w-4 text-teal-600" />
@@ -185,7 +185,7 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
         </div>
 
         {/* ── Chapter mastery sidebar ─────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="font-semibold text-slate-800">Kapitel-Fortschritt</h3>
             <TrendingUp className="h-4 w-4 text-teal-600" />
