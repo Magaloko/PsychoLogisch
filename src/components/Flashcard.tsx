@@ -11,6 +11,7 @@ import {
   Brain,
   Calculator,
   Image as ImageIcon,
+  Lightbulb,
   List,
   RotateCcw,
   Star,
@@ -28,6 +29,8 @@ export interface FlashcardData {
   front: string;
   back: string;
   back_extended?: string;
+  mnemonic?: string;
+  exam_trap?: string;
   image_url?: string;
   image_labels?: Array<{ label: string; x: number; y: number }>;
   formula?: string;
@@ -211,6 +214,26 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                     {card.formula_explanation && (
                       <p className="mt-2 text-sm text-slate-600">{card.formula_explanation}</p>
                     )}
+                  </div>
+                )}
+
+                {card.mnemonic && (
+                  <div className="mt-4 rounded-lg border border-purple-200 bg-purple-50 p-3">
+                    <div className="flex items-center gap-2">
+                      <Lightbulb className="h-4 w-4 text-purple-600" />
+                      <span className="text-xs font-bold uppercase tracking-wide text-purple-700">Eselsbrücke</span>
+                    </div>
+                    <p className="mt-1.5 text-sm font-medium text-purple-900 leading-snug">{card.mnemonic}</p>
+                  </div>
+                )}
+
+                {card.exam_trap && (
+                  <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base">⚠️</span>
+                      <span className="text-xs font-bold uppercase tracking-wide text-amber-800">Klausurfalle</span>
+                    </div>
+                    <p className="mt-1.5 text-sm text-amber-900 leading-snug">{card.exam_trap}</p>
                   </div>
                 )}
 
