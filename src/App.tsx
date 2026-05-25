@@ -11,9 +11,9 @@ import {
   FileUp,
   Filter,
   GitBranch,
+  FlipHorizontal,
   GraduationCap,
   HelpCircle,
-  FlipHorizontal,
   ListChecks,
   Moon,
   MoreHorizontal,
@@ -27,7 +27,8 @@ import {
   Sun,
   Target,
   TextCursorInput,
-  Upload
+  Upload,
+  Users
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Flashcard, type FlashcardData } from './components/Flashcard';
@@ -38,6 +39,7 @@ import Stats from './components/Stats';
 import StudyPlan from './components/StudyPlan';
 import CardCreator from './components/CardCreator';
 import ExamSimulator, { type ExamHistoryEntry } from './components/ExamSimulator';
+import PersonGallery from './components/PersonGallery';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -57,7 +59,7 @@ import { createPosterSummary, getKeyTerms } from './studyVisuals';
 
 type CardTypeFilter = FlashcardData['card_type'] | 'all';
 type StudyMode = 'all' | 'due' | 'weak' | 'unseen';
-type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster' | 'stats' | 'plan';
+type ViewMode = 'cards' | 'mindmap' | 'timeline' | 'quiz' | 'poster' | 'stats' | 'plan' | 'persons';
 type SourceFilter = 'all' | 'starter' | 'script';
 
 interface ChapterStat {
@@ -501,6 +503,7 @@ export default function App() {
   const viewItems: ViewItem[] = [
     { key: 'plan', label: 'Lernplan', icon: CalendarDays },
     { key: 'cards', label: 'Karten', icon: BookOpen },
+    { key: 'persons', label: 'Personen', icon: Users },
     { key: 'mindmap', label: 'Mindmap', icon: Network },
     { key: 'poster', label: 'Lernposter', icon: Newspaper },
     { key: 'timeline', label: 'Timeline', icon: Clock3 },
@@ -1541,6 +1544,30 @@ export default function App() {
             examDate={examDate}
             onSetExamDate={() => { setExamDateInput(examDate ?? ''); setShowExamDateModal(true); }}
             onClearExamDate={() => setExamDate(null)}
+          />
+        )}
+
+        {viewMode === 'persons' && (
+          <PersonGallery
+            cards={cards}
+            onSelectPerson={(cardId) => {
+              const idx = cards.findIndex((c) => c.id === cardId);
+              if (idx >= 0) {
+                // Reset filters so card is reachable, then jump
+                setChapterFilter('all');
+                setTypeFilter('all');
+                setStudyMode('all');
+                setSearchQuery('');
+                setExamOnly(false);
+                setBookmarkOnly(false);
+                setCurrentIndex(0);
+                // Defer index set so filteredCards recomputes first
+                setTimeout(() => {
+                  setCurrentIndex(idx);
+                  setViewMode('cards');
+                }, 0);
+              }
+            }}
           />
         )}
 
