@@ -11,6 +11,7 @@ import {
   FileUp,
   Filter,
   GitBranch,
+  GraduationCap,
   HelpCircle,
   ListChecks,
   MoreHorizontal,
@@ -33,6 +34,7 @@ import { Logo } from './components/Logo';
 import Stats from './components/Stats';
 import StudyPlan from './components/StudyPlan';
 import CardCreator from './components/CardCreator';
+import ExamSimulator from './components/ExamSimulator';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -239,6 +241,7 @@ export default function App() {
   const [goalInput, setGoalInput] = useState('');
   const [showCardCreator, setShowCardCreator] = useState(false);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
+  const [showExamSimulator, setShowExamSimulator] = useState(false);
   const [quizScore, setQuizScore] = useState({ correct: 0, total: 0 });
   const [notes, setNotes] = useState<Record<string, string>>(loadNotes);
   const [showNote, setShowNote] = useState(false);
@@ -640,6 +643,16 @@ export default function App() {
                   );
                 })()}
                 <span className="hidden text-xs font-medium text-slate-600 sm:inline">/ {dailyGoal}</span>
+              </button>
+
+              {/* Exam simulator */}
+              <button
+                onClick={() => setShowExamSimulator(true)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-semibold text-indigo-700 shadow-sm transition-colors hover:bg-indigo-100"
+                title="Klausur-Simulator starten"
+              >
+                <GraduationCap className="h-4 w-4" />
+                <span className="hidden md:inline">Klausur</span>
               </button>
 
               {/* Create card */}
@@ -1676,6 +1689,17 @@ export default function App() {
           onSave={(card) => {
             setImportedCards(prev => [...prev, card]);
           }}
+        />
+      )}
+    </AnimatePresence>
+
+    {/* Exam simulator modal */}
+    <AnimatePresence>
+      {showExamSimulator && (
+        <ExamSimulator
+          cards={cards}
+          chapters={chapters}
+          onClose={() => setShowExamSimulator(false)}
         />
       )}
     </AnimatePresence>
