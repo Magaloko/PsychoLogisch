@@ -191,10 +191,10 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
         className="my-2 w-full max-w-2xl rounded-2xl bg-white shadow-2xl sm:my-8"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 p-4 sm:p-5">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 p-4 sm:p-5">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-teal-600" />
-            <h2 className="text-lg font-bold text-slate-900">Klausur-Simulator</h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Klausur-Simulator</h2>
             {phase === 'active' && (
               <span
                 className={`ml-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${
@@ -202,7 +202,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                     ? 'bg-red-100 text-red-700 animate-pulse'
                     : timeLeft < 180
                     ? 'bg-amber-100 text-amber-700'
-                    : 'bg-slate-100 text-slate-600'
+                    : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
                 }`}
               >
                 <Clock className="h-3 w-3" />
@@ -212,7 +212,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            className="rounded-lg p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:bg-slate-700 hover:text-slate-700 dark:text-slate-200"
             title="Schließen"
           >
             <X className="h-5 w-5" />
@@ -223,14 +223,14 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
           {/* ─────────────── SETUP ─────────────── */}
           {phase === 'setup' && (
             <div className="space-y-5">
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
                 Simuliere eine echte Klausursituation mit Zeitlimit und Multiple-Choice-Fragen. Am Ende gibt es Punkte,
                 Note und eine Auswertung deiner Fehler.
               </p>
 
               {/* Number of questions */}
               <div>
-                <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
+                <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                   Anzahl Fragen
                 </label>
                 <div className="flex gap-2">
@@ -242,19 +242,19 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                       className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-colors disabled:opacity-30 ${
                         numQuestions === n
                           ? 'bg-teal-600 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
                       }`}
                     >
                       {n}
                     </button>
                   ))}
                 </div>
-                <p className="mt-1 text-xs text-slate-400">{maxAvailable} Karten im aktuellen Filter verfügbar</p>
+                <p className="mt-1 text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">{maxAvailable} Karten im aktuellen Filter verfügbar</p>
               </div>
 
               {/* Time limit */}
               <div>
-                <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
+                <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                   Zeitlimit
                 </label>
                 <div className="flex gap-2">
@@ -265,7 +265,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                       className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-colors ${
                         timeLimit === n
                           ? 'bg-teal-600 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
                       }`}
                     >
                       {n} min
@@ -276,13 +276,13 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
 
               {/* Chapter filter */}
               <div>
-                <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
+                <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                   Kapitel
                 </label>
                 <select
                   value={chapterFilter}
                   onChange={(e) => setChapterFilter(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-teal-500"
+                  className="w-full rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm outline-none focus:border-teal-500"
                 >
                   <option value="all">Alle Kapitel</option>
                   {chapters.map(([k, title]) => (
@@ -294,7 +294,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
               </div>
 
               {/* Exam-relevant toggle */}
-              <label className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-50 p-3 ring-1 ring-amber-200">
+              <label className="flex cursor-pointer items-center gap-2 rounded-lg bg-amber-50 dark:bg-amber-500/15 p-3 ring-1 ring-amber-200">
                 <input
                   type="checkbox"
                   checked={examRelevantOnly}
@@ -307,7 +307,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
               </label>
 
               {/* Action */}
-              <div className="border-t border-slate-100 pt-4">
+              <div className="border-t border-slate-100 dark:border-slate-700 pt-4">
                 <motion.button
                   onClick={startExam}
                   disabled={eligibleCards.length < 4}
@@ -327,7 +327,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
             <div>
               {/* Progress */}
               <div className="mb-4">
-                <div className="mb-2 flex justify-between text-xs font-medium text-slate-500">
+                <div className="mb-2 flex justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
                   <span>
                     Frage {currentIdx + 1} von {questions.length}
                   </span>
@@ -335,7 +335,7 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                     {answers.filter((a) => a.correct).length} richtig
                   </span>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
                   <motion.div
                     className="h-full bg-teal-500"
                     animate={{ width: `${((currentIdx + 1) / questions.length) * 100}%` }}
@@ -353,11 +353,11 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="mb-4 rounded-xl bg-slate-50 p-4">
-                    <p className="mb-1 text-xs font-medium uppercase text-slate-400">
+                  <div className="mb-4 rounded-xl bg-slate-50 dark:bg-slate-700/50 p-4">
+                    <p className="mb-1 text-xs font-medium uppercase text-slate-400 dark:text-slate-500 dark:text-slate-400">
                       {questions[currentIdx].card.chapter_title}
                     </p>
-                    <p className="text-base font-semibold text-slate-900">
+                    <p className="text-base font-semibold text-slate-900 dark:text-slate-100">
                       {questions[currentIdx].card.front}
                     </p>
                   </div>
@@ -370,15 +370,15 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                         whileTap={{ scale: 0.99 }}
                         className={`flex items-start gap-3 rounded-lg border p-3 text-left text-sm transition-colors ${
                           selected === opt
-                            ? 'border-teal-400 bg-teal-50 text-teal-900'
-                            : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                            ? 'border-teal-400 bg-teal-50 dark:bg-teal-500/15 text-teal-900'
+                            : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:bg-slate-700/50'
                         }`}
                       >
                         <span
                           className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold ${
                             selected === opt
                               ? 'border-teal-500 bg-teal-500 text-white'
-                              : 'border-slate-300 text-slate-400'
+                              : 'border-slate-300 text-slate-400 dark:text-slate-500 dark:text-slate-400'
                           }`}
                         >
                           {String.fromCharCode(65 + i)}
@@ -424,28 +424,28 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <span className={`text-3xl font-bold ${grade.color}`}>{Math.round(pct)}%</span>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">
                       {correctCount} / {questions.length}
                     </span>
                   </div>
                 </div>
                 <p className={`mt-3 text-2xl font-bold ${grade.color}`}>Note {grade.grade}</p>
-                <p className="text-sm text-slate-500">{grade.label}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{grade.label}</p>
               </div>
 
               {pct >= 75 && (
-                <div className="mb-5 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800 ring-1 ring-emerald-200">
+                <div className="mb-5 rounded-lg bg-emerald-50 dark:bg-emerald-500/15 p-3 text-sm text-emerald-800 ring-1 ring-emerald-200">
                   🎉 <strong>Glückwunsch!</strong> Du wärst durch die Klausur gekommen. Achte aber besonders auf
                   deine Fehler unten.
                 </div>
               )}
               {pct < 75 && pct >= 50 && (
-                <div className="mb-5 rounded-lg bg-amber-50 p-3 text-sm text-amber-800 ring-1 ring-amber-200">
+                <div className="mb-5 rounded-lg bg-amber-50 dark:bg-amber-500/15 p-3 text-sm text-amber-800 ring-1 ring-amber-200">
                   💪 Knapp bestanden. Wiederhole die falschen Karten und versuche es nochmal.
                 </div>
               )}
               {pct < 50 && (
-                <div className="mb-5 rounded-lg bg-red-50 p-3 text-sm text-red-800 ring-1 ring-red-200">
+                <div className="mb-5 rounded-lg bg-red-50 dark:bg-red-500/15 p-3 text-sm text-red-800 ring-1 ring-red-200">
                   ⚠️ Noch nicht ausreichend. Lerne die markierten Themen gezielt nach.
                 </div>
               )}
@@ -453,19 +453,19 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
               {/* Wrong answers */}
               {answers.filter((a) => !a.correct).length > 0 && (
                 <div className="mb-5">
-                  <h3 className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
+                  <h3 className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-100">
                     <XCircle className="h-4 w-4 text-red-500" />
                     Falsch beantwortet ({answers.filter((a) => !a.correct).length})
                   </h3>
-                  <div className="max-h-64 space-y-2 overflow-y-auto rounded-lg bg-slate-50 p-3">
+                  <div className="max-h-64 space-y-2 overflow-y-auto rounded-lg bg-slate-50 dark:bg-slate-700/50 p-3">
                     {answers
                       .filter((a) => !a.correct)
                       .map((a, i) => (
                         <div key={i} className="rounded-lg bg-white p-3 ring-1 ring-slate-100">
-                          <p className="mb-1 text-xs font-medium text-slate-400">
+                          <p className="mb-1 text-xs font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400">
                             {a.question.card.chapter_title}
                           </p>
-                          <p className="text-sm font-semibold text-slate-800">
+                          <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                             {a.question.card.front}
                           </p>
                           <p className="mt-2 text-xs text-red-600">
@@ -483,20 +483,20 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
               )}
 
               {answers.filter((a) => !a.correct).length === 0 && (
-                <div className="mb-5 flex items-center gap-2 rounded-lg bg-emerald-50 p-4 text-sm font-medium text-emerald-800">
+                <div className="mb-5 flex items-center gap-2 rounded-lg bg-emerald-50 dark:bg-emerald-500/15 p-4 text-sm font-medium text-emerald-800">
                   <Award className="h-5 w-5" />
                   Alle Fragen richtig! Du bist klausurfit. 🏆
                 </div>
               )}
 
-              <div className="flex gap-2 border-t border-slate-100 pt-4">
+              <div className="flex gap-2 border-t border-slate-100 dark:border-slate-700 pt-4">
                 <button
                   onClick={() => {
                     setPhase('setup');
                     setAnswers([]);
                     setCurrentIdx(0);
                   }}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-slate-100 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-200"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-200"
                 >
                   <RotateCcw className="h-4 w-4" />
                   Neue Klausur

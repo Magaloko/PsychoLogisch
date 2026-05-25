@@ -135,7 +135,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
       {/* Meta row */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2 px-2">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-700">
+          <span className="rounded-full bg-teal-50 dark:bg-teal-500/15 px-3 py-1 text-sm font-medium text-teal-700">
             {card.chapter_id}
           </span>
           {card.exam_relevant && (
@@ -149,8 +149,8 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
           )}
         </div>
         <div className="flex items-center gap-2">
-          <TypeIcon className="w-4 h-4 text-slate-400" />
-          <span className="text-xs text-slate-400 capitalize">{card.card_type}</span>
+          <TypeIcon className="w-4 h-4 text-slate-400 dark:text-slate-500 dark:text-slate-400" />
+          <span className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 capitalize">{card.card_type}</span>
           {onToggleBookmark && (
             <motion.button
               onClick={() => onToggleBookmark(card.id)}
@@ -176,16 +176,16 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
               exit={{ rotateY: 90, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
               style={{ transformOrigin: 'center' }}
-              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-700 dark:bg-slate-800 sm:p-6 lg:p-8"
+              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white p-4 shadow-lg dark:border-slate-700 dark:bg-slate-800 sm:p-6 lg:p-8"
             >
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <p className="mb-3 text-sm font-medium text-slate-400">{card.chapter_title}</p>
+                  <p className="mb-3 text-sm font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400">{card.chapter_title}</p>
                   <h3 className="text-lg sm:text-xl font-semibold leading-relaxed text-slate-800 dark:text-slate-100">
                     {card.front}
                   </h3>
                   {card.image_url && (
-                    <p className="text-sm text-slate-400 mt-4">(Tippen zum Aufdecken)</p>
+                    <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-4">(Tippen zum Aufdecken)</p>
                   )}
                 </div>
               </div>
@@ -216,16 +216,16 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                 </div>
 
                 {card.formula && (
-                  <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
-                    <div className="font-mono text-sm sm:text-base text-slate-800 break-all">{card.formula}</div>
+                  <div className="mt-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/50 p-4">
+                    <div className="font-mono text-sm sm:text-base text-slate-800 dark:text-slate-100 break-all">{card.formula}</div>
                     {card.formula_explanation && (
-                      <p className="mt-2 text-sm text-slate-600">{card.formula_explanation}</p>
+                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{card.formula_explanation}</p>
                     )}
                   </div>
                 )}
 
                 {card.mnemonic && (
-                  <div className="mt-4 rounded-lg border border-purple-200 bg-purple-50 p-3">
+                  <div className="mt-4 rounded-lg border border-purple-200 bg-purple-50 dark:bg-purple-500/15 p-3">
                     <div className="flex items-center gap-2">
                       <Lightbulb className="h-4 w-4 text-purple-600" />
                       <span className="text-xs font-bold uppercase tracking-wide text-purple-700">Eselsbrücke</span>
@@ -235,7 +235,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                 )}
 
                 {card.exam_trap && (
-                  <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                  <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 dark:bg-amber-500/15 p-3">
                     <div className="flex items-center gap-2">
                       <span className="text-base">⚠️</span>
                       <span className="text-xs font-bold uppercase tracking-wide text-amber-800">Klausurfalle</span>
@@ -245,10 +245,10 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                 )}
 
                 {card.image_url && (
-                  <figure className="mt-4 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+                  <figure className="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/50">
                     <img src={card.image_url} alt={card.front} className="max-h-56 w-full object-contain" />
                     {card.image_labels && card.image_labels.length > 0 && (
-                      <figcaption className="flex flex-wrap gap-2 p-3 text-xs text-slate-500">
+                      <figcaption className="flex flex-wrap gap-2 p-3 text-xs text-slate-500 dark:text-slate-400">
                         {card.image_labels.map((label) => (
                           <span key={`${label.label}-${label.x}-${label.y}`} className="rounded bg-white px-2 py-1">
                             {label.label}
@@ -260,21 +260,21 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                 )}
 
                 {card.comparison && (
-                  <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
-                    <div className="grid grid-cols-[8rem_1fr_1fr] sm:grid-cols-[10rem_1fr_1fr] divide-x divide-slate-200 bg-slate-50 text-xs font-bold uppercase tracking-wide">
-                      <div className="px-2 py-2 text-slate-400" />
+                  <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+                    <div className="grid grid-cols-[8rem_1fr_1fr] sm:grid-cols-[10rem_1fr_1fr] divide-x divide-slate-200 bg-slate-50 dark:bg-slate-700/50 text-xs font-bold uppercase tracking-wide">
+                      <div className="px-2 py-2 text-slate-400 dark:text-slate-500 dark:text-slate-400" />
                       <div className="px-3 py-2 text-teal-700 break-words">{card.comparison.left_title}</div>
                       <div className="px-3 py-2 text-indigo-700 break-words">{card.comparison.right_title}</div>
                     </div>
-                    <div className="divide-y divide-slate-100">
+                    <div className="divide-y divide-slate-100 dark:divide-slate-700">
                       {card.comparison.rows.map((row, i) => (
                         <div
                           key={i}
-                          className="grid grid-cols-[8rem_1fr_1fr] sm:grid-cols-[10rem_1fr_1fr] divide-x divide-slate-100"
+                          className="grid grid-cols-[8rem_1fr_1fr] sm:grid-cols-[10rem_1fr_1fr] divide-x divide-slate-100 dark:divide-slate-700"
                         >
-                          <div className="bg-slate-50 px-2 py-2 text-xs font-semibold text-slate-600 break-words">{row.label}</div>
-                          <div className="px-3 py-2 text-sm text-slate-700 break-words whitespace-pre-line">{row.left}</div>
-                          <div className="px-3 py-2 text-sm text-slate-700 break-words whitespace-pre-line">{row.right}</div>
+                          <div className="bg-slate-50 dark:bg-slate-700/50 px-2 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 break-words">{row.label}</div>
+                          <div className="px-3 py-2 text-sm text-slate-700 dark:text-slate-200 break-words whitespace-pre-line">{row.left}</div>
+                          <div className="px-3 py-2 text-sm text-slate-700 dark:text-slate-200 break-words whitespace-pre-line">{row.right}</div>
                         </div>
                       ))}
                     </div>
@@ -296,7 +296,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.2 }}
-                          className="mt-3 rounded-lg bg-slate-50 p-4 text-sm text-slate-600 overflow-hidden"
+                          className="mt-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 p-4 text-sm text-slate-600 dark:text-slate-300 overflow-hidden"
                         >
                           {card.back_extended}
                         </motion.div>
@@ -337,12 +337,12 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-2">
         <div className="flex flex-wrap gap-1">
           {card.tags.map((tag) => (
-            <span key={tag} className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded">
+            <span key={tag} className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">
               #{tag}
             </span>
           ))}
         </div>
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">
           {'⭐'.repeat(card.difficulty)}
           {card.source_page ? ` · S. ${card.source_page}` : ''}
         </span>
@@ -351,7 +351,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
         <motion.button
           onClick={onSkip}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+          className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:bg-slate-700 hover:text-slate-700 dark:text-slate-200"
         >
           Überspringen
           <ArrowRight className="h-4 w-4" />

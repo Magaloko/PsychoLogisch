@@ -75,12 +75,12 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
         className="w-full max-w-xl max-h-[92dvh] overflow-y-auto rounded-t-2xl sm:rounded-2xl bg-white shadow-2xl"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 dark:border-slate-700 bg-white px-5 py-4">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-teal-600" />
-            <h2 className="font-bold text-slate-900">Eigene Karte erstellen</h2>
+            <h2 className="font-bold text-slate-900 dark:text-slate-100">Eigene Karte erstellen</h2>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+          <button onClick={onClose} className="text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:text-slate-300">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -90,16 +90,16 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
           {/* Chapter + Type */}
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
-              <span className="mb-1 block text-xs font-medium text-slate-500">Kapitel</span>
+              <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">Kapitel</span>
               <select value={chapterKey} onChange={e => setChapterKey(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500">
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm outline-none focus:border-teal-500">
                 {chapters.map(([k, t]) => <option key={k} value={k}>{t}</option>)}
               </select>
             </label>
             <label className="block">
-              <span className="mb-1 block text-xs font-medium text-slate-500">Typ</span>
+              <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">Typ</span>
               <select value={cardType} onChange={e => setCardType(e.target.value as FlashcardData['card_type'])}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500">
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm outline-none focus:border-teal-500">
                 {CARD_TYPES.map(t => <option key={t} value={t}>{TYPE_LABELS[t]}</option>)}
               </select>
             </label>
@@ -107,35 +107,35 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
 
           {/* Front */}
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-slate-500">
+            <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">
               Vorderseite <span className="text-red-400">*</span>
             </span>
             <textarea
               value={front} onChange={e => setFront(e.target.value)} rows={2}
               placeholder="Begriff, Frage oder Konzept…"
-              className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500"
+              className="w-full resize-none rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm outline-none focus:border-teal-500"
             />
           </label>
 
           {/* Back */}
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-slate-500">
+            <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">
               Rückseite <span className="text-red-400">*</span>
             </span>
             <textarea
               value={back} onChange={e => setBack(e.target.value)} rows={3}
               placeholder="Antwort, Definition oder Erklärung…"
-              className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500"
+              className="w-full resize-none rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm outline-none focus:border-teal-500"
             />
           </label>
 
           {/* Back Extended (collapsible) */}
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-slate-500">Erweiterte Erklärung (optional)</span>
+            <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">Erweiterte Erklärung (optional)</span>
             <textarea
               value={backExtended} onChange={e => setBackExtended(e.target.value)} rows={2}
               placeholder="Zusätzlicher Kontext, erscheint hinter 'Mehr erfahren'…"
-              className="w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500"
+              className="w-full resize-none rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm outline-none focus:border-teal-500"
             />
           </label>
 
@@ -148,11 +148,11 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
                 exit={{ opacity: 0, height: 0 }}
                 className="block overflow-hidden"
               >
-                <span className="mb-1 block text-xs font-medium text-slate-500">Formel</span>
+                <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">Formel</span>
                 <input
                   type="text" value={formula} onChange={e => setFormula(e.target.value)}
                   placeholder="z. B. y = mx + b"
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm outline-none focus:border-teal-500"
+                  className="w-full rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 font-mono text-sm outline-none focus:border-teal-500"
                 />
               </motion.label>
             )}
@@ -160,18 +160,18 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
 
           {/* Tags */}
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-slate-500">Tags (kommagetrennt)</span>
+            <span className="mb-1 block text-xs font-medium text-slate-500 dark:text-slate-400">Tags (kommagetrennt)</span>
             <input
               type="text" value={tagsRaw} onChange={e => setTagsRaw(e.target.value)}
               placeholder="z. B. gedächtnis, lernen, klassiker"
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal-500"
+              className="w-full rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm outline-none focus:border-teal-500"
             />
           </label>
 
           {/* Difficulty + Exam relevant */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="mb-1 text-xs font-medium text-slate-500">Schwierigkeit</p>
+              <p className="mb-1 text-xs font-medium text-slate-500 dark:text-slate-400">Schwierigkeit</p>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map(n => (
                   <button key={n} type="button" onClick={() => setDifficulty(n)}
@@ -184,7 +184,7 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
             <label className="flex cursor-pointer items-center gap-2">
               <input type="checkbox" checked={examRelevant} onChange={e => setExamRelevant(e.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500" />
-              <span className="text-sm font-medium text-slate-600">Prüfungsrelevant</span>
+              <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Prüfungsrelevant</span>
             </label>
           </div>
 
@@ -192,7 +192,7 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
           <AnimatePresence>
             {error && (
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+                className="rounded-lg bg-red-50 dark:bg-red-500/15 px-3 py-2 text-sm text-red-700">
                 {error}
               </motion.p>
             )}
@@ -212,7 +212,7 @@ export default function CardCreator({ chapters, existingIds, onClose, onSave }: 
               {saved ? '✓ Karte gespeichert!' : 'Karte speichern'}
             </motion.button>
             <button onClick={onClose}
-              className="rounded-xl bg-slate-100 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-200">
+              className="rounded-xl bg-slate-100 dark:bg-slate-700 px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-200">
               Fertig
             </button>
           </div>

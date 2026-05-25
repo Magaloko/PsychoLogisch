@@ -134,11 +134,11 @@ export default function StudyPlan({
               ) : (
                 <Flame className="h-5 w-5 text-orange-500" />
               )}
-              <h2 className="text-lg font-bold text-slate-900">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                 {goalDone ? 'Tagesziel erreicht! 🎉' : 'Dein heutiger Plan'}
               </h2>
             </div>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
               {streakToday} von {dailyGoal} Karten heute bewertet
               {streakDays > 1 && (
                 <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
@@ -170,7 +170,7 @@ export default function StudyPlan({
         </div>
 
         {/* Today's tip */}
-        <div className="mt-4 rounded-lg bg-white/70 p-3 text-sm text-slate-600 backdrop-blur-sm">
+        <div className="mt-4 rounded-lg bg-white/70 p-3 text-sm text-slate-600 dark:text-slate-300 backdrop-blur-sm">
           <span className="mr-2 text-base">💡</span>
           {getTodayTip()}
         </div>
@@ -184,7 +184,7 @@ export default function StudyPlan({
             value: dueCount,
             icon: CalendarDays,
             color: 'text-teal-700',
-            bg: 'bg-teal-50 border-teal-200 hover:bg-teal-100',
+            bg: 'bg-teal-50 dark:bg-teal-500/15 border-teal-200 hover:bg-teal-100',
             action: () => onStartMode('due'),
             cta: 'Jetzt lernen →',
             disabled: dueCount === 0,
@@ -194,7 +194,7 @@ export default function StudyPlan({
             value: weakCount,
             icon: Target,
             color: 'text-orange-700',
-            bg: 'bg-orange-50 border-orange-200 hover:bg-orange-100',
+            bg: 'bg-orange-50 dark:bg-orange-500/15 border-orange-200 hover:bg-orange-100',
             action: () => onStartMode('weak'),
             cta: 'Üben →',
             disabled: weakCount === 0,
@@ -204,7 +204,7 @@ export default function StudyPlan({
             value: unseenCount,
             icon: Zap,
             color: 'text-indigo-700',
-            bg: 'bg-indigo-50 border-indigo-200 hover:bg-indigo-100',
+            bg: 'bg-indigo-50 dark:bg-indigo-500/15 border-indigo-200 hover:bg-indigo-100',
             action: () => onStartMode('unseen'),
             cta: 'Entdecken →',
             disabled: unseenCount === 0,
@@ -214,7 +214,7 @@ export default function StudyPlan({
             value: bookmarksSize,
             icon: Star,
             color: 'text-amber-700',
-            bg: 'bg-amber-50 border-amber-200 hover:bg-amber-100',
+            bg: 'bg-amber-50 dark:bg-amber-500/15 border-amber-200 hover:bg-amber-100',
             action: onStartBookmarks,
             cta: 'Wiederholen →',
             disabled: bookmarksSize === 0,
@@ -230,7 +230,7 @@ export default function StudyPlan({
             className={`flex flex-col rounded-xl border p-4 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${bg}`}
           >
             <Icon className={`h-5 w-5 ${color} mb-2`} />
-            <p className="text-xs font-medium uppercase text-slate-400">{label}</p>
+            <p className="text-xs font-medium uppercase text-slate-400 dark:text-slate-500 dark:text-slate-400">{label}</p>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
             {!disabled && (
               <p className={`mt-1.5 text-[11px] font-semibold ${color} opacity-70`}>{cta}</p>
@@ -241,18 +241,18 @@ export default function StudyPlan({
 
       <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
         {/* ── 7-day forecast ───────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-slate-800">Fällige Karten – nächste 7 Tage</h3>
-              <p className="text-xs text-slate-400">Plane deinen Lernrhythmus voraus</p>
+              <h3 className="font-semibold text-slate-800 dark:text-slate-100">Fällige Karten – nächste 7 Tage</h3>
+              <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">Plane deinen Lernrhythmus voraus</p>
             </div>
             <CalendarDays className="h-4 w-4 text-teal-600" />
           </div>
           <div className="flex items-end gap-2" style={{ height: '8rem' }}>
             {forecast.map((day, i) => (
               <div key={day.key} className="flex flex-1 flex-col items-center gap-1">
-                <span className="text-[10px] font-bold text-slate-600">
+                <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">
                   {day.count > 0 ? day.count : ''}
                 </span>
                 <div className="flex w-full items-end" style={{ height: '6rem' }}>
@@ -263,13 +263,13 @@ export default function StudyPlan({
                     transition={{ type: 'spring', stiffness: 100, damping: 16, delay: i * 0.06 }}
                   />
                 </div>
-                <span className={`text-[10px] ${day.isToday ? 'font-bold text-teal-700' : 'text-slate-400'}`}>
+                <span className={`text-[10px] ${day.isToday ? 'font-bold text-teal-700' : 'text-slate-400 dark:text-slate-500 dark:text-slate-400'}`}>
                   {day.label}
                 </span>
               </div>
             ))}
           </div>
-          <div className="mt-4 flex items-center gap-3 rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
+          <div className="mt-4 flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 p-3 text-xs text-slate-500 dark:text-slate-400">
             <TrendingUp className="h-3.5 w-3.5 shrink-0 text-teal-600" />
             {dueCount > 0
               ? `${dueCount} Karten sind heute fällig – am besten jetzt beginnen!`
@@ -278,17 +278,17 @@ export default function StudyPlan({
         </div>
 
         {/* ── Chapter priority ─────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-slate-800">Kapitel-Priorität</h3>
-              <p className="text-xs text-slate-400">Sortiert nach Dringlichkeit</p>
+              <h3 className="font-semibold text-slate-800 dark:text-slate-100">Kapitel-Priorität</h3>
+              <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">Sortiert nach Dringlichkeit</p>
             </div>
             <AlertCircle className="h-4 w-4 text-orange-500" />
           </div>
 
           {priorityChapters.length === 0 ? (
-            <div className="flex flex-col items-center gap-2 py-6 text-center text-slate-400">
+            <div className="flex flex-col items-center gap-2 py-6 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400">
               <BookOpen className="h-8 w-8 opacity-30" />
               <p className="text-sm">Alle Kapitel auf dem neuesten Stand!</p>
             </div>
@@ -300,18 +300,18 @@ export default function StudyPlan({
                   onClick={() => onSetChapter(ch.key)}
                   whileHover={{ x: 2 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-                  className="block w-full rounded-lg p-3 text-left transition-colors hover:bg-slate-50"
+                  className="block w-full rounded-lg p-3 text-left transition-colors hover:bg-slate-50 dark:bg-slate-700/50"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-[10px] font-bold text-slate-500 dark:text-slate-400">
                       {i + 1}
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="mb-1 flex items-center justify-between gap-2">
-                        <span className="truncate text-xs font-medium text-slate-700">{ch.title}</span>
-                        <span className="shrink-0 text-[10px] text-slate-400">{ch.pct}%</span>
+                        <span className="truncate text-xs font-medium text-slate-700 dark:text-slate-200">{ch.title}</span>
+                        <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400">{ch.pct}%</span>
                       </div>
-                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
                         <motion.div
                           className={`h-full rounded-full ${ch.pct === 100 ? 'bg-emerald-500' : ch.due > 0 ? 'bg-teal-500' : 'bg-slate-400'}`}
                           initial={{ width: 0 }}
@@ -319,7 +319,7 @@ export default function StudyPlan({
                           transition={{ type: 'spring', stiffness: 80, damping: 18, delay: i * 0.05 }}
                         />
                       </div>
-                      <div className="mt-1 flex gap-3 text-[10px] text-slate-400">
+                      <div className="mt-1 flex gap-3 text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400">
                         {ch.due > 0 && <span className="text-teal-600">{ch.due} fällig</span>}
                         {ch.weak > 0 && <span className="text-orange-500">{ch.weak} schwach</span>}
                         {ch.total - ch.learned > 0 && (
@@ -333,7 +333,7 @@ export default function StudyPlan({
             </div>
           )}
 
-          <div className="mt-4 border-t border-slate-100 pt-3">
+          <div className="mt-4 border-t border-slate-100 dark:border-slate-700 pt-3">
             <button
               onClick={() => onStartMode('due')}
               disabled={dueCount === 0}
@@ -347,13 +347,13 @@ export default function StudyPlan({
       </div>
 
       {/* ── Klausur-Historie ───────────────────────────────────────────── */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-indigo-600" />
             <div>
-              <h3 className="font-semibold text-slate-800">Klausur-Verlauf</h3>
-              <p className="text-xs text-slate-400">
+              <h3 className="font-semibold text-slate-800 dark:text-slate-100">Klausur-Verlauf</h3>
+              <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">
                 {examHistory.length === 0
                   ? 'Noch keine Klausur absolviert'
                   : `${examHistory.length} Klausur${examHistory.length === 1 ? '' : 'en'} bisher`}
@@ -369,7 +369,7 @@ export default function StudyPlan({
         </div>
 
         {examHistory.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-6 text-center text-slate-400">
+          <div className="flex flex-col items-center gap-2 py-6 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400">
             <GraduationCap className="h-10 w-10 opacity-20" />
             <p className="text-sm">Starte deine erste Klausur und tracke deinen Fortschritt</p>
           </div>
@@ -378,7 +378,7 @@ export default function StudyPlan({
             {/* Trend chart: last 10 exams */}
             {examHistory.length >= 2 && (
               <div className="mb-4">
-                <div className="mb-1 flex justify-between text-[10px] text-slate-400">
+                <div className="mb-1 flex justify-between text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400">
                   <span>älter</span>
                   <span>neuer →</span>
                 </div>
@@ -414,7 +414,7 @@ export default function StudyPlan({
                   return (
                     <p
                       className={`mt-2 text-xs ${
-                        diff > 5 ? 'text-emerald-600' : diff < -5 ? 'text-red-500' : 'text-slate-400'
+                        diff > 5 ? 'text-emerald-600' : diff < -5 ? 'text-red-500' : 'text-slate-400 dark:text-slate-500 dark:text-slate-400'
                       }`}
                     >
                       {diff > 5 ? '↗' : diff < -5 ? '↘' : '→'} Trend: {recent.toFixed(0)}% (Ø letzte 3) vs.{' '}
@@ -430,17 +430,17 @@ export default function StudyPlan({
               {examHistory.slice(0, 5).map((ex, i) => {
                 const color =
                   ex.pct >= 75
-                    ? 'text-emerald-600 bg-emerald-50 ring-emerald-200'
+                    ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-500/15 ring-emerald-200'
                     : ex.pct >= 50
-                    ? 'text-amber-600 bg-amber-50 ring-amber-200'
-                    : 'text-red-600 bg-red-50 ring-red-200';
+                    ? 'text-amber-600 bg-amber-50 dark:bg-amber-500/15 ring-amber-200'
+                    : 'text-red-600 bg-red-50 dark:bg-red-500/15 ring-red-200';
                 return (
                   <div
                     key={i}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-slate-100 p-2.5 text-sm"
+                    className="flex items-center justify-between gap-3 rounded-lg border border-slate-100 dark:border-slate-700 p-2.5 text-sm"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-slate-800">
+                      <p className="font-medium text-slate-800 dark:text-slate-100">
                         {new Date(ex.date).toLocaleDateString('de-DE', {
                           day: '2-digit',
                           month: 'short',
@@ -448,7 +448,7 @@ export default function StudyPlan({
                           minute: '2-digit',
                         })}
                       </p>
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">
                         {ex.correct}/{ex.questions} · {ex.timeLimit} min
                         {ex.chapter !== 'all' && ` · Kapitel ${ex.chapter}`}
                       </p>
@@ -472,7 +472,7 @@ export default function StudyPlan({
                 .slice(0, 5);
               if (top.length === 0) return null;
               return (
-                <div className="mt-4 rounded-lg bg-red-50 p-3 ring-1 ring-red-100">
+                <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-500/15 p-3 ring-1 ring-red-100">
                   <p className="mb-1 text-xs font-bold text-red-700">⚠ Wiederkehrende Schwachstellen</p>
                   <div className="flex flex-wrap gap-1">
                     {top.map(([tag, count]) => (

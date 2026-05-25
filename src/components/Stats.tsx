@@ -93,7 +93,7 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
   }, [streak.history]);
 
   const heatColor = (count: number) => {
-    if (count === 0) return 'bg-slate-100';
+    if (count === 0) return 'bg-slate-100 dark:bg-slate-700';
     if (count < 4) return 'bg-teal-200';
     if (count < 10) return 'bg-teal-400';
     return 'bg-teal-600';
@@ -108,16 +108,16 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
       {/* ── Summary cards ──────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {[
-          { label: 'Karten gesamt', value: cards.length, icon: BookOpen, color: 'text-slate-700' },
+          { label: 'Karten gesamt', value: cards.length, icon: BookOpen, color: 'text-slate-700 dark:text-slate-200' },
           { label: 'Gelernt', value: `${learnedPct}%`, icon: TrendingUp, color: 'text-teal-700' },
           { label: 'Ø Ease-Faktor', value: avgEase, icon: BarChart3, color: 'text-indigo-700' },
           { label: 'Fehlerhafte', value: totalLapses, icon: CalendarDays, color: 'text-red-600' },
           { label: 'Stark gelernt', value: strongCount, icon: Award, color: 'text-amber-600' },
           { label: 'Lerntage', value: streak.days, icon: Flame, color: 'text-orange-600' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <div className="flex items-center justify-between gap-1">
-              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">{label}</p>
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500 dark:text-slate-400">{label}</p>
               <Icon className={`h-3.5 w-3.5 shrink-0 ${color}`} />
             </div>
             <p className={`mt-1.5 text-xl font-bold ${color}`}>{value}</p>
@@ -129,10 +129,10 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
         <div className="space-y-6">
 
           {/* ── Heatmap ──────────────────────────────────────────────────────── */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800">Lernaktivität</h3>
-              <span className="text-xs text-slate-400">letzte 12 Wochen</span>
+              <h3 className="font-semibold text-slate-800 dark:text-slate-100">Lernaktivität</h3>
+              <span className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400">letzte 12 Wochen</span>
             </div>
 
             <div className="flex gap-1 overflow-x-auto pb-1">
@@ -149,9 +149,9 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
               ))}
             </div>
 
-            <div className="mt-3 flex items-center gap-2 text-[10px] text-slate-400">
+            <div className="mt-3 flex items-center gap-2 text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400">
               <span>Weniger</span>
-              {['bg-slate-100', 'bg-teal-200', 'bg-teal-400', 'bg-teal-600'].map(c => (
+              {['bg-slate-100 dark:bg-slate-700', 'bg-teal-200', 'bg-teal-400', 'bg-teal-600'].map(c => (
                 <div key={c} className={`h-3 w-3 rounded-sm ${c}`} />
               ))}
               <span>Mehr</span>
@@ -159,15 +159,15 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
           </div>
 
           {/* ── 7-day forecast ───────────────────────────────────────────────── */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800">Fälligkeiten (nächste 7 Tage)</h3>
+              <h3 className="font-semibold text-slate-800 dark:text-slate-100">Fälligkeiten (nächste 7 Tage)</h3>
               <CalendarDays className="h-4 w-4 text-teal-600" />
             </div>
             <div className="flex items-end gap-2" style={{ height: '7rem' }}>
               {forecast.map((day, i) => (
                 <div key={day.key} className="flex flex-1 flex-col items-center gap-1">
-                  <span className="text-[10px] font-semibold text-slate-600">{day.count > 0 ? day.count : ''}</span>
+                  <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">{day.count > 0 ? day.count : ''}</span>
                   <div className="flex w-full items-end" style={{ height: '5.5rem' }}>
                     <motion.div
                       className={`w-full rounded-t-md ${i === 0 ? 'bg-teal-500' : 'bg-teal-200'}`}
@@ -176,7 +176,7 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
                       transition={{ type: 'spring', stiffness: 100, damping: 16, delay: i * 0.05 }}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400">{day.label}</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400">{day.label}</span>
                 </div>
               ))}
             </div>
@@ -185,9 +185,9 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
         </div>
 
         {/* ── Chapter mastery sidebar ─────────────────────────────────────── */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-800">Kapitel-Fortschritt</h3>
+            <h3 className="font-semibold text-slate-800 dark:text-slate-100">Kapitel-Fortschritt</h3>
             <TrendingUp className="h-4 w-4 text-teal-600" />
           </div>
           <div className="space-y-4">
@@ -196,13 +196,13 @@ export default function Stats({ progress, cards, chapterStats, streak }: StatsPr
               return (
                 <div key={ch.key}>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700">{ch.title}</span>
-                    <span className="text-slate-400">
+                    <span className="font-medium text-slate-700 dark:text-slate-200">{ch.title}</span>
+                    <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400">
                       {pct}%
                       {ch.due > 0 && <span className="ml-1.5 text-amber-600">· {ch.due} fällig</span>}
                     </span>
                   </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                  <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
                     <motion.div
                       className={`h-full rounded-full ${pct === 100 ? 'bg-emerald-500' : 'bg-teal-500'}`}
                       initial={{ width: 0 }}
