@@ -10,6 +10,17 @@ interface ExamSimulatorProps {
   onClose: () => void;
 }
 
+export interface ExamHistoryEntry {
+  date: string;
+  questions: number;
+  correct: number;
+  pct: number;
+  grade: string;
+  timeLimit: number;
+  chapter: string;
+  weakTags: string[];
+}
+
 type Phase = 'setup' | 'active' | 'results';
 
 interface Question {
@@ -127,6 +138,29 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
     setPhase('results');
     const correctCount = list.filter((a) => a.correct).length;
     const pct = (correctCount / questions.length) * 100;
+    // Persist exam result to history
+    try {
+      const HISTORY_KEY = 'psychologisch-exam-history-v1';
+      const prev: ExamHistoryEntry[] = JSON.parse(window.localStorage.getItem(HISTORY_KEY) ?? '[]');
+      const wrongTags = list
+        .filter((a) => !a.correct)
+        .flatMap((a) => a.question.card.tags ?? [])
+        .filter(Boolean);
+      const entry: ExamHistoryEntry = {
+        date: new Date().toISOString(),
+        questions: questions.length,
+        correct: correctCount,
+        pct: Math.round(pct),
+        grade: getGrade(pct).grade,
+        timeLimit,
+        chapter: chapterFilter,
+        weakTags: Array.from(new Set(wrongTags)).slice(0, 6),
+      };
+      const next = [entry, ...prev].slice(0, 50); // keep last 50
+      window.localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+    } catch {
+      // ignore persistence errors
+    }
     if (pct >= 75) {
       confetti({
         particleCount: 150,

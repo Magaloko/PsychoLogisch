@@ -6,6 +6,7 @@ import {
   CalendarDays,
   CheckCircle2,
   Flame,
+  GraduationCap,
   HelpCircle,
   Star,
   Target,
@@ -13,6 +14,7 @@ import {
   Zap,
 } from 'lucide-react';
 import type { FlashcardData } from './Flashcard';
+import type { ExamHistoryEntry } from './ExamSimulator';
 import type { UserProgress } from '../learning';
 
 interface ChapterStat {
@@ -38,6 +40,8 @@ interface StudyPlanProps {
   onStartMode: (mode: 'all' | 'due' | 'weak' | 'unseen') => void;
   onStartBookmarks: () => void;
   onSetChapter: (key: string) => void;
+  examHistory: ExamHistoryEntry[];
+  onStartExam: () => void;
 }
 
 const TIPS = [
@@ -78,6 +82,8 @@ export default function StudyPlan({
   onStartMode,
   onStartBookmarks,
   onSetChapter,
+  examHistory,
+  onStartExam,
 }: StudyPlanProps) {
   // 7-day due forecast
   const forecast = useMemo(() => {
@@ -338,6 +344,151 @@ export default function StudyPlan({
             </button>
           </div>
         </div>
+      </div>
+
+      {/* ── Klausur-Historie ───────────────────────────────────────────── */}
+      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="h-5 w-5 text-indigo-600" />
+            <div>
+              <h3 className="font-semibold text-slate-800">Klausur-Verlauf</h3>
+              <p className="text-xs text-slate-400">
+                {examHistory.length === 0
+                  ? 'Noch keine Klausur absolviert'
+                  : `${examHistory.length} Klausur${examHistory.length === 1 ? '' : 'en'} bisher`}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={onStartExam}
+            className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700"
+          >
+            + Neue Klausur
+          </button>
+        </div>
+
+        {examHistory.length === 0 ? (
+          <div className="flex flex-col items-center gap-2 py-6 text-center text-slate-400">
+            <GraduationCap className="h-10 w-10 opacity-20" />
+            <p className="text-sm">Starte deine erste Klausur und tracke deinen Fortschritt</p>
+          </div>
+        ) : (
+          <>
+            {/* Trend chart: last 10 exams */}
+            {examHistory.length >= 2 && (
+              <div className="mb-4">
+                <div className="mb-1 flex justify-between text-[10px] text-slate-400">
+                  <span>älter</span>
+                  <span>neuer →</span>
+                </div>
+                <div className="flex h-16 items-end gap-1">
+                  {examHistory
+                    .slice(0, 10)
+                    .reverse()
+                    .map((ex, i) => {
+                      const color =
+                        ex.pct >= 75
+                          ? 'bg-emerald-500'
+                          : ex.pct >= 50
+                          ? 'bg-amber-500'
+                          : 'bg-red-500';
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ height: 0 }}
+                          animate={{ height: `${ex.pct}%` }}
+                          transition={{ delay: i * 0.04, type: 'spring', stiffness: 90, damping: 18 }}
+                          className={`flex-1 rounded-t ${color}`}
+                          title={`${new Date(ex.date).toLocaleDateString('de-DE')} · ${ex.pct}% · Note ${ex.grade}`}
+                        />
+                      );
+                    })}
+                </div>
+                {/* Trend indicator */}
+                {examHistory.length >= 3 && (() => {
+                  const recent = examHistory.slice(0, 3).reduce((s, e) => s + e.pct, 0) / 3;
+                  const older = examHistory.slice(3, 6).reduce((s, e) => s + e.pct, 0) / Math.min(3, examHistory.length - 3);
+                  if (!older) return null;
+                  const diff = recent - older;
+                  return (
+                    <p
+                      className={`mt-2 text-xs ${
+                        diff > 5 ? 'text-emerald-600' : diff < -5 ? 'text-red-500' : 'text-slate-400'
+                      }`}
+                    >
+                      {diff > 5 ? '↗' : diff < -5 ? '↘' : '→'} Trend: {recent.toFixed(0)}% (Ø letzte 3) vs.{' '}
+                      {older.toFixed(0)}% (davor)
+                    </p>
+                  );
+                })()}
+              </div>
+            )}
+
+            {/* List recent exams */}
+            <div className="space-y-2">
+              {examHistory.slice(0, 5).map((ex, i) => {
+                const color =
+                  ex.pct >= 75
+                    ? 'text-emerald-600 bg-emerald-50 ring-emerald-200'
+                    : ex.pct >= 50
+                    ? 'text-amber-600 bg-amber-50 ring-amber-200'
+                    : 'text-red-600 bg-red-50 ring-red-200';
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-slate-100 p-2.5 text-sm"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-slate-800">
+                        {new Date(ex.date).toLocaleDateString('de-DE', {
+                          day: '2-digit',
+                          month: 'short',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </p>
+                      <p className="text-xs text-slate-400">
+                        {ex.correct}/{ex.questions} · {ex.timeLimit} min
+                        {ex.chapter !== 'all' && ` · Kapitel ${ex.chapter}`}
+                      </p>
+                    </div>
+                    <div className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ring-1 ${color}`}>
+                      {ex.pct}% · Note {ex.grade}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Weak themes aggregated */}
+            {(() => {
+              const tagCounts: Record<string, number> = {};
+              examHistory.slice(0, 5).forEach((ex) => {
+                ex.weakTags.forEach((t) => (tagCounts[t] = (tagCounts[t] || 0) + 1));
+              });
+              const top = Object.entries(tagCounts)
+                .sort(([, a], [, b]) => b - a)
+                .slice(0, 5);
+              if (top.length === 0) return null;
+              return (
+                <div className="mt-4 rounded-lg bg-red-50 p-3 ring-1 ring-red-100">
+                  <p className="mb-1 text-xs font-bold text-red-700">⚠ Wiederkehrende Schwachstellen</p>
+                  <div className="flex flex-wrap gap-1">
+                    {top.map(([tag, count]) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-red-700 ring-1 ring-red-200"
+                      >
+                        #{tag} <span className="opacity-60">×{count}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+          </>
+        )}
       </div>
     </div>
   );

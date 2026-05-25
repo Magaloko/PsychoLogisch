@@ -34,7 +34,7 @@ import { Logo } from './components/Logo';
 import Stats from './components/Stats';
 import StudyPlan from './components/StudyPlan';
 import CardCreator from './components/CardCreator';
-import ExamSimulator from './components/ExamSimulator';
+import ExamSimulator, { type ExamHistoryEntry } from './components/ExamSimulator';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -85,6 +85,14 @@ const STREAK_KEY = 'psychologisch-streak-v1';
 const BOOKMARKS_KEY = 'psychologisch-bookmarks-v1';
 const GOAL_KEY = 'psychologisch-goal-v1';
 const NOTES_KEY = 'psychologisch-notes-v1';
+const EXAM_HISTORY_KEY = 'psychologisch-exam-history-v1';
+
+const loadExamHistory = (): ExamHistoryEntry[] => {
+  try {
+    const saved = window.localStorage.getItem(EXAM_HISTORY_KEY);
+    return saved ? (JSON.parse(saved) as ExamHistoryEntry[]) : [];
+  } catch { return []; }
+};
 
 const loadBookmarks = (): Set<string> => {
   try {
@@ -243,6 +251,7 @@ export default function App() {
   const [showCardCreator, setShowCardCreator] = useState(false);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [showExamSimulator, setShowExamSimulator] = useState(false);
+  const [examHistory, setExamHistory] = useState<ExamHistoryEntry[]>(loadExamHistory);
   const [quizScore, setQuizScore] = useState({ correct: 0, total: 0 });
   const [notes, setNotes] = useState<Record<string, string>>(loadNotes);
   const [showNote, setShowNote] = useState(false);
@@ -1449,6 +1458,8 @@ export default function App() {
             onStartMode={(mode) => { setStudyMode(mode); setViewMode('cards'); }}
             onStartBookmarks={() => { setBookmarkOnly(true); setViewMode('cards'); }}
             onSetChapter={(key) => { setChapterFilter(key); setViewMode('cards'); }}
+            examHistory={examHistory}
+            onStartExam={() => setShowExamSimulator(true)}
           />
         )}
 
@@ -1700,7 +1711,10 @@ export default function App() {
         <ExamSimulator
           cards={cards}
           chapters={chapters}
-          onClose={() => setShowExamSimulator(false)}
+          onClose={() => {
+            setShowExamSimulator(false);
+            setExamHistory(loadExamHistory());
+          }}
         />
       )}
     </AnimatePresence>
