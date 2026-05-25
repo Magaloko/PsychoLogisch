@@ -137,7 +137,8 @@ export default function ExamSimulator({ cards, chapters, onClose }: ExamSimulato
     const list = finalAnswers ?? answers;
     setPhase('results');
     const correctCount = list.filter((a) => a.correct).length;
-    const pct = (correctCount / questions.length) * 100;
+    const total = questions.length || 1; // crash-protection bei leerem Pool
+    const pct = (correctCount / total) * 100;
     // Persist exam result to history
     try {
       const HISTORY_KEY = 'psychologisch-exam-history-v1';

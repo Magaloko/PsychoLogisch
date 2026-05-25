@@ -170,13 +170,17 @@ export default function PersonGallery({ cards, onSelectPerson }: PersonGalleryPr
       return /^[A-ZÄÖÜ][a-zäöüß'\-.]+(?:\s*[&/]\s*[A-ZÄÖÜ][a-zäöüß'\-.]+)?(?:\s+\(\d{4}\)?\)?)?\s*[:(]/.test(c.front);
     });
 
+    // Dedupe nach Name+Jahr → erlaubt Festinger 1954 + Festinger 1957 als zwei Einträge
     const seen = new Set<string>();
-    const all = [...personCards, ...conceptPersonCards].map(buildPerson).filter((p) => {
-      const k = p.name.toLowerCase();
-      if (seen.has(k)) return false;
-      seen.add(k);
-      return true;
-    });
+    const all = [...personCards, ...conceptPersonCards]
+      .filter((c) => typeof c.front === 'string' && c.front.length > 0)
+      .map(buildPerson)
+      .filter((p) => {
+        const k = `${p.name.toLowerCase()}|${p.years ?? ''}`;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      });
     return all.sort((a, b) => a.name.localeCompare(b.name, 'de'));
   }, [cards]);
 

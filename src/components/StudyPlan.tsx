@@ -131,15 +131,18 @@ export default function StudyPlan({
   // ── Klausur-Countdown ─────────────────────────────────────────────────────
   const examPlan = useMemo(() => {
     if (!examDate) return null;
+    // Timezone-safe: 'YYYY-MM-DD' direkt als lokales Datum parsen (sonst UTC → Off-by-one)
+    const parts = examDate.split('-').map(Number);
+    if (parts.length !== 3 || parts.some((n) => !Number.isFinite(n))) return null;
+    const target = new Date(parts[0], parts[1] - 1, parts[2]);
+    target.setHours(0, 0, 0, 0);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const target = new Date(examDate);
-    target.setHours(0, 0, 0, 0);
     const msPerDay = 24 * 60 * 60 * 1000;
     const daysLeft = Math.max(0, Math.round((target.getTime() - today.getTime()) / msPerDay));
     const unseen = cards.length - Object.keys(progress).length;
     const weak = chapterStats.reduce((s, ch) => s + ch.weak, 0);
-    const cardsToCover = unseen + Math.ceil(weak * 0.5); // unseen + Hälfte der schwachen
+    const cardsToCover = Math.max(0, unseen + Math.ceil(weak * 0.5)); // unseen + Hälfte der schwachen
     const perDay = daysLeft > 0 ? Math.ceil(cardsToCover / daysLeft) : cardsToCover;
     const examDateLabel = target.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: 'long', year: 'numeric' });
     return { daysLeft, unseen, weak, cardsToCover, perDay, examDateLabel };

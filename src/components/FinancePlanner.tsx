@@ -352,7 +352,8 @@ export default function FinancePlanner() {
         category: formCategory,
         amount,
         description: formDesc.trim(),
-        dayOfMonth: Math.min(day, 28),
+        // Erlaube 1-31 — pro Monat wird clamped (applyRecurring nutzt last day of month)
+        dayOfMonth: Math.max(1, Math.min(day, 31)),
         active: true,
         startDate: formDate,
         lastApplied: formDate.slice(0, 7),

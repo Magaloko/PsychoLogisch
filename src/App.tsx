@@ -98,7 +98,16 @@ const REVERSE_KEY = 'psychologisch-reverse-v1';
 const loadExamDate = (): string | null => {
   try {
     const saved = window.localStorage.getItem(EXAM_DATE_KEY);
-    return saved && /^\d{4}-\d{2}-\d{2}$/.test(saved) ? saved : null;
+    if (!saved || !/^\d{4}-\d{2}-\d{2}$/.test(saved)) return null;
+    // Auto-cleanup: vergangene Termine (> 1 Tag) entfernen
+    const parts = saved.split('-').map(Number);
+    const target = new Date(parts[0], parts[1] - 1, parts[2]);
+    target.setHours(23, 59, 59, 999); // Stichtag bis Mitternacht gültig
+    if (target.getTime() < Date.now() - 86400000) {
+      window.localStorage.removeItem(EXAM_DATE_KEY);
+      return null;
+    }
+    return saved;
   } catch { return null; }
 };
 
@@ -536,6 +545,31 @@ export default function App() {
     setCurrentIndex((previous) =>
       filteredCards.length === 0 ? 0 : (previous - 1 + filteredCards.length) % filteredCards.length
     );
+  };
+
+  // Safe navigation: jump to a specific card, resetting filters if it isn't visible
+  const navigateToCard = (cardId: string) => {
+    const visibleIdx = filteredCards.findIndex((c) => c.id === cardId);
+    if (visibleIdx >= 0) {
+      setCurrentIndex(visibleIdx);
+      setViewMode('cards');
+      return;
+    }
+    // Not in current filter — reset and jump
+    setChapterFilter('all');
+    setTypeFilter('all');
+    setSourceFilter('all');
+    setStudyMode('all');
+    setSearchQuery('');
+    setExamOnly(false);
+    setBookmarkOnly(false);
+    const fallbackIdx = cards.findIndex((c) => c.id === cardId);
+    if (fallbackIdx >= 0) {
+      setTimeout(() => {
+        setCurrentIndex(fallbackIdx);
+        setViewMode('cards');
+      }, 0);
+    }
   };
 
   const handleRate = (cardId: string, rating: Rating) => {
@@ -1159,11 +1193,7 @@ export default function App() {
                     (selectedStudyChapter?.highlights ?? posterSummary.highlights).map((item) => (
                       <button
                         key={item.id}
-                        onClick={() => {
-                          const nextIndex = filteredCards.findIndex((card) => card.id === item.id);
-                          setCurrentIndex(Math.max(0, nextIndex));
-                          setViewMode('cards');
-                        }}
+                        onClick={() => navigateToCard(item.id)}
                         className="rounded-lg border border-slate-200 p-3 text-left hover:border-teal-200 hover:bg-teal-50"
                       >
                         <span className="block text-sm font-semibold text-slate-800">
@@ -1211,11 +1241,7 @@ export default function App() {
                 timelineCards.map(({ card, year }) => (
                   <button
                     key={card.id}
-                    onClick={() => {
-                      const nextIndex = filteredCards.findIndex((item) => item.id === card.id);
-                      setCurrentIndex(Math.max(0, nextIndex));
-                      setViewMode('cards');
-                    }}
+                    onClick={() => navigateToCard(card.id)}
                     className="grid w-full gap-2 rounded-lg border border-slate-200 p-3 text-left transition-colors hover:border-teal-200 hover:bg-teal-50 sm:grid-cols-[5rem_1fr]"
                   >
                     <span className="font-semibold text-teal-700">{year}</span>
@@ -1550,24 +1576,7 @@ export default function App() {
         {viewMode === 'persons' && (
           <PersonGallery
             cards={cards}
-            onSelectPerson={(cardId) => {
-              const idx = cards.findIndex((c) => c.id === cardId);
-              if (idx >= 0) {
-                // Reset filters so card is reachable, then jump
-                setChapterFilter('all');
-                setTypeFilter('all');
-                setStudyMode('all');
-                setSearchQuery('');
-                setExamOnly(false);
-                setBookmarkOnly(false);
-                setCurrentIndex(0);
-                // Defer index set so filteredCards recomputes first
-                setTimeout(() => {
-                  setCurrentIndex(idx);
-                  setViewMode('cards');
-                }, 0);
-              }
-            }}
+            onSelectPerson={navigateToCard}
           />
         )}
 
