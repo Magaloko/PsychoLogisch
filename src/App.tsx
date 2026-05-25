@@ -40,6 +40,7 @@ import StudyPlan from './components/StudyPlan';
 import CardCreator from './components/CardCreator';
 import ExamSimulator, { type ExamHistoryEntry } from './components/ExamSimulator';
 import PersonGallery from './components/PersonGallery';
+import PWABadge from './components/PWABadge';
 import cardsData from './data/psychologie_alle_karten.json';
 import {
   calculateNextReview,
@@ -1949,6 +1950,8 @@ export default function App() {
         </motion.div>
       )}
     </AnimatePresence>
+
+    <PWABadge />
 
     {showImpressum && (
       <LegalModal title="Impressum" onClose={() => setShowImpressum(false)}>
