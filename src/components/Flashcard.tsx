@@ -56,6 +56,7 @@ interface FlashcardProps {
   userProgress?: UserProgress;
   isBookmarked?: boolean;
   onToggleBookmark?: (cardId: string) => void;
+  reverseMode?: boolean;
 }
 
 const ratingConfig: Record<Rating, { label: string; bg: string; text: string; hover: string; icon?: React.ReactNode }> = {
@@ -87,7 +88,12 @@ const ratingConfig: Record<Rating, { label: string; bg: string; text: string; ho
   },
 };
 
-export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger, userProgress, isBookmarked, onToggleBookmark }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flipTrigger, userProgress, isBookmarked, onToggleBookmark, reverseMode = false }) => {
+  // In reverse mode: swap front/back, but only for plain definition-like cards
+  // (don't swap for image, formula, comparison, list — they don't make sense reversed)
+  const canReverse = reverseMode && (card.card_type === 'definition' || card.card_type === 'concept' || card.card_type === 'person');
+  const displayFront = canReverse ? card.back : card.front;
+  const displayBack = canReverse ? card.front : card.back;
   const [isFlipped, setIsFlipped] = useState(false);
   const [showExtended, setShowExtended] = useState(false);
 
@@ -180,9 +186,12 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
             >
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <p className="mb-3 text-sm font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400">{card.chapter_title}</p>
-                  <h3 className="text-lg sm:text-xl font-semibold leading-relaxed text-slate-800 dark:text-slate-100">
-                    {card.front}
+                  <p className="mb-3 text-sm font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400">
+                    {card.chapter_title}
+                    {canReverse && <span className="ml-2 rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-700 dark:bg-purple-500/20 dark:text-purple-300">⇄ REVERSE</span>}
+                  </p>
+                  <h3 className="text-lg sm:text-xl font-semibold leading-relaxed text-slate-800 dark:text-slate-100 whitespace-pre-line">
+                    {displayFront}
                   </h3>
                   {card.image_url && (
                     <p className="text-sm text-slate-400 dark:text-slate-500 dark:text-slate-400 mt-4">(Tippen zum Aufdecken)</p>
@@ -212,7 +221,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
             >
               <div className="flex-1">
                 <div className="whitespace-pre-line text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-200">
-                  {card.back}
+                  {displayBack}
                 </div>
 
                 {card.formula && (

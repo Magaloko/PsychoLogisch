@@ -42,6 +42,9 @@ interface StudyPlanProps {
   onSetChapter: (key: string) => void;
   examHistory: ExamHistoryEntry[];
   onStartExam: () => void;
+  examDate: string | null;
+  onSetExamDate: () => void;
+  onClearExamDate: () => void;
 }
 
 const TIPS = [
@@ -84,6 +87,9 @@ export default function StudyPlan({
   onSetChapter,
   examHistory,
   onStartExam,
+  examDate,
+  onSetExamDate,
+  onClearExamDate,
 }: StudyPlanProps) {
   // 7-day due forecast
   const forecast = useMemo(() => {
@@ -122,8 +128,94 @@ export default function StudyPlan({
   const goalPct = Math.min(1, streakToday / dailyGoal);
   const goalDone = streakToday >= dailyGoal;
 
+  // ── Klausur-Countdown ─────────────────────────────────────────────────────
+  const examPlan = useMemo(() => {
+    if (!examDate) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const target = new Date(examDate);
+    target.setHours(0, 0, 0, 0);
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const daysLeft = Math.max(0, Math.round((target.getTime() - today.getTime()) / msPerDay));
+    const unseen = cards.length - Object.keys(progress).length;
+    const weak = chapterStats.reduce((s, ch) => s + ch.weak, 0);
+    const cardsToCover = unseen + Math.ceil(weak * 0.5); // unseen + Hälfte der schwachen
+    const perDay = daysLeft > 0 ? Math.ceil(cardsToCover / daysLeft) : cardsToCover;
+    const examDateLabel = target.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: 'long', year: 'numeric' });
+    return { daysLeft, unseen, weak, cardsToCover, perDay, examDateLabel };
+  }, [examDate, cards.length, progress, chapterStats]);
+
   return (
     <div className="space-y-6">
+      {/* ── Klausur-Countdown ────────────────────────────────────────────── */}
+      {examPlan ? (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`rounded-2xl border p-5 shadow-sm ${
+            examPlan.daysLeft <= 3
+              ? 'border-red-200 bg-gradient-to-br from-red-50 to-orange-50 dark:border-red-500/30 dark:from-red-500/10 dark:to-orange-500/10'
+              : examPlan.daysLeft <= 14
+              ? 'border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 dark:border-amber-500/30 dark:from-amber-500/10 dark:to-yellow-500/10'
+              : 'border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 dark:border-indigo-500/30 dark:from-indigo-500/10 dark:to-blue-500/10'
+          }`}
+        >
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              <div
+                className={`flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl text-white shadow-sm ${
+                  examPlan.daysLeft <= 3
+                    ? 'bg-red-500'
+                    : examPlan.daysLeft <= 14
+                    ? 'bg-amber-500'
+                    : 'bg-indigo-500'
+                }`}
+              >
+                <span className="text-2xl font-bold leading-none">{examPlan.daysLeft}</span>
+                <span className="mt-0.5 text-[10px] uppercase tracking-wide opacity-90">Tage</span>
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                  {examPlan.daysLeft === 0 ? '🚨 Heute ist Klausurtag' : 'Bis zur Klausur'}
+                </p>
+                <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 sm:text-lg">
+                  {examPlan.examDateLabel}
+                </h2>
+                {examPlan.daysLeft > 0 && (
+                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                    Empfehlung: <strong>{examPlan.perDay} Karten pro Tag</strong> ({examPlan.unseen} ungelernt
+                    {examPlan.weak > 0 && `, ${examPlan.weak} schwach`})
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={onSetExamDate}
+                className="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              >
+                Datum ändern
+              </button>
+              <button
+                onClick={onClearExamDate}
+                className="rounded-lg bg-white/60 px-3 py-1.5 text-xs font-medium text-slate-500 transition-colors hover:bg-white dark:bg-slate-800/60 dark:text-slate-400 dark:hover:bg-slate-800"
+                title="Klausurdatum entfernen"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <button
+          onClick={onSetExamDate}
+          className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 bg-white/50 p-4 text-sm font-medium text-slate-500 transition-colors hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:border-indigo-500/50 dark:hover:bg-indigo-500/10 dark:hover:text-indigo-300"
+        >
+          <CalendarDays className="h-4 w-4" />
+          📅 Klausurtermin setzen für persönlichen Lernplan
+        </button>
+      )}
+
       {/* ── Hero: Tagesziel ─────────────────────────────────────────────── */}
       <div className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50 to-indigo-50 p-5 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

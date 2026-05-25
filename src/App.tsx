@@ -13,6 +13,7 @@ import {
   GitBranch,
   GraduationCap,
   HelpCircle,
+  FlipHorizontal,
   ListChecks,
   Moon,
   MoreHorizontal,
@@ -89,6 +90,20 @@ const GOAL_KEY = 'psychologisch-goal-v1';
 const NOTES_KEY = 'psychologisch-notes-v1';
 const EXAM_HISTORY_KEY = 'psychologisch-exam-history-v1';
 const THEME_KEY = 'psychologisch-theme-v1';
+const EXAM_DATE_KEY = 'psychologisch-exam-date-v1';
+const REVERSE_KEY = 'psychologisch-reverse-v1';
+
+const loadExamDate = (): string | null => {
+  try {
+    const saved = window.localStorage.getItem(EXAM_DATE_KEY);
+    return saved && /^\d{4}-\d{2}-\d{2}$/.test(saved) ? saved : null;
+  } catch { return null; }
+};
+
+const loadReverse = (): boolean => {
+  try { return window.localStorage.getItem(REVERSE_KEY) === '1'; }
+  catch { return false; }
+};
 
 const loadTheme = (): 'light' | 'dark' => {
   try {
@@ -266,6 +281,10 @@ export default function App() {
   const [showExamSimulator, setShowExamSimulator] = useState(false);
   const [examHistory, setExamHistory] = useState<ExamHistoryEntry[]>(loadExamHistory);
   const [theme, setTheme] = useState<'light' | 'dark'>(loadTheme);
+  const [examDate, setExamDate] = useState<string | null>(loadExamDate);
+  const [reverseMode, setReverseMode] = useState<boolean>(loadReverse);
+  const [showExamDateModal, setShowExamDateModal] = useState(false);
+  const [examDateInput, setExamDateInput] = useState('');
 
   useEffect(() => {
     const root = document.documentElement;
@@ -276,6 +295,17 @@ export default function App() {
     }
     try { window.localStorage.setItem(THEME_KEY, theme); } catch { /* ignore */ }
   }, [theme]);
+
+  useEffect(() => {
+    try {
+      if (examDate) window.localStorage.setItem(EXAM_DATE_KEY, examDate);
+      else window.localStorage.removeItem(EXAM_DATE_KEY);
+    } catch { /* ignore */ }
+  }, [examDate]);
+
+  useEffect(() => {
+    try { window.localStorage.setItem(REVERSE_KEY, reverseMode ? '1' : '0'); } catch { /* ignore */ }
+  }, [reverseMode]);
   const [quizScore, setQuizScore] = useState({ correct: 0, total: 0 });
   const [notes, setNotes] = useState<Record<string, string>>(loadNotes);
   const [showNote, setShowNote] = useState(false);
@@ -678,6 +708,21 @@ export default function App() {
                 })()}
                 <span className="hidden text-xs font-medium text-slate-600 sm:inline">/ {dailyGoal}</span>
               </button>
+
+              {/* Reverse cards toggle */}
+              {viewMode === 'cards' && (
+                <button
+                  onClick={() => setReverseMode((r) => !r)}
+                  className={`flex h-8 w-8 items-center justify-center rounded-lg border shadow-sm transition-colors ${
+                    reverseMode
+                      ? 'border-purple-300 bg-purple-100 text-purple-700 dark:border-purple-500/30 dark:bg-purple-500/25 dark:text-purple-200'
+                      : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                  }`}
+                  title={reverseMode ? 'Rückwärts-Modus AKTIV – Rückseite ist die Frage' : 'Karten umkehren (Rückseite als Frage)'}
+                >
+                  <FlipHorizontal className="h-4 w-4" />
+                </button>
+              )}
 
               {/* Theme toggle */}
               <button
@@ -1493,6 +1538,9 @@ export default function App() {
             onSetChapter={(key) => { setChapterFilter(key); setViewMode('cards'); }}
             examHistory={examHistory}
             onStartExam={() => setShowExamSimulator(true)}
+            examDate={examDate}
+            onSetExamDate={() => { setExamDateInput(examDate ?? ''); setShowExamDateModal(true); }}
+            onClearExamDate={() => setExamDate(null)}
           />
         )}
 
@@ -1567,6 +1615,7 @@ export default function App() {
                     userProgress={progress[currentCard.id]}
                     isBookmarked={bookmarks.has(currentCard.id)}
                     onToggleBookmark={toggleBookmark}
+                    reverseMode={reverseMode}
                   />
                 </motion.div>
               </AnimatePresence>
@@ -1716,6 +1765,60 @@ export default function App() {
               </button>
               <button onClick={() => setEditingGoal(false)}
                 className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-200">
+                Abbrechen
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Exam date modal */}
+    <AnimatePresence>
+      {showExamDateModal && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40"
+          onClick={() => setShowExamDateModal(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+            onClick={e => e.stopPropagation()}
+            className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl dark:bg-slate-800"
+          >
+            <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-slate-100">📅 Klausurtermin</h3>
+            <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
+              Setze dein Klausurdatum für einen persönlichen Countdown und tägliche Lernempfehlung.
+            </p>
+            <input
+              type="date"
+              value={examDateInput}
+              min={new Date().toISOString().slice(0, 10)}
+              onChange={e => setExamDateInput(e.target.value)}
+              autoFocus
+              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base outline-none focus:border-indigo-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
+            />
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => {
+                  if (examDateInput && /^\d{4}-\d{2}-\d{2}$/.test(examDateInput)) {
+                    setExamDate(examDateInput);
+                  }
+                  setShowExamDateModal(false);
+                }}
+                className="flex-1 rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
+              >
+                Speichern
+              </button>
+              <button
+                onClick={() => setShowExamDateModal(false)}
+                className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
+              >
                 Abbrechen
               </button>
             </div>
