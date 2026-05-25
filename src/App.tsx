@@ -14,6 +14,7 @@ import {
   GraduationCap,
   HelpCircle,
   ListChecks,
+  Moon,
   MoreHorizontal,
   Network,
   Newspaper,
@@ -22,6 +23,7 @@ import {
   RotateCcw,
   Search,
   Star,
+  Sun,
   Target,
   TextCursorInput,
   Upload
@@ -86,6 +88,17 @@ const BOOKMARKS_KEY = 'psychologisch-bookmarks-v1';
 const GOAL_KEY = 'psychologisch-goal-v1';
 const NOTES_KEY = 'psychologisch-notes-v1';
 const EXAM_HISTORY_KEY = 'psychologisch-exam-history-v1';
+const THEME_KEY = 'psychologisch-theme-v1';
+
+const loadTheme = (): 'light' | 'dark' => {
+  try {
+    const saved = window.localStorage.getItem(THEME_KEY);
+    if (saved === 'dark' || saved === 'light') return saved;
+    // System preference fallback
+    if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'dark';
+    return 'light';
+  } catch { return 'light'; }
+};
 
 const loadExamHistory = (): ExamHistoryEntry[] => {
   try {
@@ -252,6 +265,17 @@ export default function App() {
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [showExamSimulator, setShowExamSimulator] = useState(false);
   const [examHistory, setExamHistory] = useState<ExamHistoryEntry[]>(loadExamHistory);
+  const [theme, setTheme] = useState<'light' | 'dark'>(loadTheme);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    try { window.localStorage.setItem(THEME_KEY, theme); } catch { /* ignore */ }
+  }, [theme]);
   const [quizScore, setQuizScore] = useState({ correct: 0, total: 0 });
   const [notes, setNotes] = useState<Record<string, string>>(loadNotes);
   const [showNote, setShowNote] = useState(false);
@@ -572,7 +596,7 @@ export default function App() {
   return (
     <>
     {/* ══ Sticky top navigation ══════════════════════════════════════════ */}
-    <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+    <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/95">
       <div className="mx-auto max-w-6xl px-4">
 
         {/* Primary row ─────────────────────────────────────────────────── */}
@@ -655,10 +679,19 @@ export default function App() {
                 <span className="hidden text-xs font-medium text-slate-600 sm:inline">/ {dailyGoal}</span>
               </button>
 
+              {/* Theme toggle */}
+              <button
+                onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                title={theme === 'dark' ? 'Helles Design' : 'Dunkles Design'}
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+
               {/* Exam simulator */}
               <button
                 onClick={() => setShowExamSimulator(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-semibold text-indigo-700 shadow-sm transition-colors hover:bg-indigo-100"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-semibold text-indigo-700 shadow-sm transition-colors hover:bg-indigo-100 dark:border-indigo-500/30 dark:bg-indigo-500/15 dark:text-indigo-300 dark:hover:bg-indigo-500/25"
                 title="Klausur-Simulator starten"
               >
                 <GraduationCap className="h-4 w-4" />
@@ -768,7 +801,7 @@ export default function App() {
       </div>
     </div>
 
-    <main className="min-h-screen bg-slate-50 pb-24 pt-4 text-slate-900 sm:pb-8 sm:pt-6">
+    <main className="min-h-screen bg-slate-50 pb-24 pt-4 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100 sm:pb-8 sm:pt-6">
       <div className="mx-auto max-w-6xl px-4">
         {appModule === 'finanzen' && <FinancePlanner />}
 
@@ -1606,7 +1639,7 @@ export default function App() {
     </main>
 
     {/* ── Mobile bottom tab bar ──────────────────────────────────────── */}
-    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-slate-200 bg-white/95 backdrop-blur-md sm:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-slate-200 bg-white/95 backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/95 sm:hidden">
       {([
         { key: 'lernen',   label: 'Lernen',   emoji: '🎓' },
         { key: 'finanzen', label: 'Finanzen', emoji: '💰' },
@@ -1631,7 +1664,7 @@ export default function App() {
       ))}
     </nav>
 
-    <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+    <footer className="border-t border-slate-200 bg-slate-50 py-4 text-center text-xs text-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-500">
       <button
         onClick={() => setShowImpressum(true)}
         className="mx-3 hover:text-slate-600 underline-offset-2 hover:underline"

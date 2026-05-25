@@ -176,12 +176,12 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
               exit={{ rotateY: 90, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
               style={{ transformOrigin: 'center' }}
-              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-lg sm:p-6 lg:p-8"
+              className="absolute inset-0 flex flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-700 dark:bg-slate-800 sm:p-6 lg:p-8"
             >
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                   <p className="mb-3 text-sm font-medium text-slate-400">{card.chapter_title}</p>
-                  <h3 className="text-lg sm:text-xl font-semibold leading-relaxed text-slate-800">
+                  <h3 className="text-lg sm:text-xl font-semibold leading-relaxed text-slate-800 dark:text-slate-100">
                     {card.front}
                   </h3>
                   {card.image_url && (
@@ -208,10 +208,10 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, onRate, onSkip, flip
               exit={{ rotateY: -90, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
               style={{ transformOrigin: 'center' }}
-              className="absolute inset-0 flex flex-col overflow-y-auto rounded-2xl border border-teal-200 bg-white p-4 shadow-lg sm:p-6 lg:p-8"
+              className="absolute inset-0 flex flex-col overflow-y-auto rounded-2xl border border-teal-200 bg-white p-4 shadow-lg dark:border-teal-700/50 dark:bg-slate-800 sm:p-6 lg:p-8"
             >
               <div className="flex-1">
-                <div className="whitespace-pre-line text-base sm:text-lg leading-relaxed text-slate-700">
+                <div className="whitespace-pre-line text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-200">
                   {card.back}
                 </div>
 
